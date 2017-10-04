@@ -13,7 +13,7 @@ div.input-stack input:first-child {
 div.input-stack input:last-child {
     border-radius: 0 0 5px 5px;
 }
-nav.navbar ul.navbar-nav a.nav-link, nav.navbar button.btn {
+nav.navbar ul.navbar-nav a.nav-link, button.btn {
     text-transform: uppercase;
     font-size: 90%;
     font-weight: bold;
