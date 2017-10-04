@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<form class="form">
+    <div class="input-stack mb-3">
+        <input type="text" class="form-control form-control-lg" placeholder="Gare de départ" />
+        <input type="text" class="form-control form-control-lg" placeholder="Gare d'arrivée" />
+    </div>
+    <input type="date" class="form-control form-control-lg mb-3" placeholder="Date du voyage" />
+    <button type="submit" class="btn btn-lg btn-info d-block mx-auto">Rechercher</button>
+</form>
+{% endblock %}
