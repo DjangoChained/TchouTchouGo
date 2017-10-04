@@ -3,4 +3,6 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
-# Create your views here.
+
+def search(request):
+    return render(request, 'main/search.html', dict(active="search"))
