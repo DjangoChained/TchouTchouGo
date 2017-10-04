@@ -5,6 +5,7 @@ Modèles de l'application.
 
 from __future__ import unicode_literals
 from django.db import models
+from django.conf import settings
 
 
 class Station(models.Model):
@@ -28,8 +29,8 @@ class Halt(models.Model):
     arrival = models.TimeField()
     departure = models.TimeField()
     sequence = models.PositiveSmallIntegerField()
-    train = models.ForeignKey(Train, on_delete=models.CASCADE)
-    station = models.ForeignKey(Station, on_delete=models.PROTECT)
+    train = models.ForeignKey('Train', on_delete=models.CASCADE)
+    station = models.ForeignKey('Station', on_delete=models.PROTECT)
 
 
 class Train(models.Model):
@@ -37,8 +38,8 @@ class Train(models.Model):
     Décrit un train, avec son numéro et sa période de service.
     """
     number = models.PositiveIntegerField()
-    period = models.ForeignKey(Period, on_delete=models.PROTECT)
-    traintype = models.ForeignKey(TrainType, on_delete=models.PROTECT)
+    period = models.ForeignKey('Period', on_delete=models.PROTECT)
+    traintype = models.ForeignKey('TrainType', on_delete=models.PROTECT)
 
 
 class TrainType(models.Model):
@@ -46,7 +47,7 @@ class TrainType(models.Model):
     Décrit un type de train.
     """
     name = models.CharField(max_length=20)
-    icon = models.FilePathField(path=BASE_DIR+'/static/img/icons')
+    icon = models.FilePathField(path=settings.BASE_DIR+'/main/static/main/img')
 
 
 class Period(models.Model):
@@ -72,7 +73,7 @@ class Period(models.Model):
     end_date = models.DateTimeField()
 
 
-class PeriodExceptions(models.Model):
+class PeriodException(models.Model):
     """
     Décrit une exception de période de service.
     Les exceptions de période de service sont des jours durant lesquels un
@@ -89,4 +90,4 @@ class PeriodExceptions(models.Model):
     """
     date = models.DateField()
     add_day = models.BooleanField()
-    period = models.ForeignKey(Period, on_delete=models.CASCADE)
+    period = models.ForeignKey('Period', on_delete=models.CASCADE)
