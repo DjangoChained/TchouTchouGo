@@ -32,6 +32,9 @@ class Halt(models.Model):
     train = models.ForeignKey('Train', on_delete=models.CASCADE)
     station = models.ForeignKey('Station', on_delete=models.PROTECT)
 
+    def __str__(self):
+        return "Arrêt du " + str(train) + " à " + str(station)
+
 
 class Train(models.Model):
     """
@@ -41,6 +44,9 @@ class Train(models.Model):
     period = models.ForeignKey('Period', on_delete=models.PROTECT)
     traintype = models.ForeignKey('TrainType', on_delete=models.PROTECT)
 
+    def __str__(self):
+        return str(traintype) + str(number)
+
 
 class TrainType(models.Model):
     """
@@ -48,6 +54,9 @@ class TrainType(models.Model):
     """
     name = models.CharField(max_length=20)
     icon = models.FilePathField(path=settings.BASE_DIR+'/main/static/main/img')
+
+    def __str__(self):
+        return self.name
 
 
 class Period(models.Model):
@@ -72,6 +81,10 @@ class Period(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
+    def __str__(self):
+        return "Service entre " + str(self.start_date) + " et " + \
+            str(self.end_date)
+
 
 class PeriodException(models.Model):
     """
@@ -91,3 +104,6 @@ class PeriodException(models.Model):
     date = models.DateField()
     add_day = models.BooleanField()
     period = models.ForeignKey('Period', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "Exception pour le " + str(period) + ", le " + str(date)
