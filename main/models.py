@@ -131,8 +131,10 @@ class Ticket(models.Model):
     train, d'un arrêt à un autre.
     """
     sequence = models.PositiveSmallIntegerField()
-    start_halt = models.ForeignKey('Halt', on_delete=models.PROTECT)
-    end_halt = models.ForeignKey('Halt', on_delete=models.PROTECT)
+    start_halt = models.ForeignKey('Halt', on_delete=models.PROTECT,
+                                   related_name='+')
+    end_halt = models.ForeignKey('Halt', on_delete=models.PROTECT,
+                                 related_name='+')
     travel = models.ForeignKey('Travel', on_delete=models.CASCADE)
 
     @property
