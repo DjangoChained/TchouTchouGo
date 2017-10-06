@@ -3,9 +3,10 @@
 import zipfile
 import os
 import csv
+import re
 from datetime import date, time
 from .utility import remove_if_exists
-from .models import Period, PeriodException
+from .models import Period, PeriodException, TrainType
 from django.db import IntegrityError
 
 
@@ -39,6 +40,8 @@ def parse_gtfs_sncf(*args):
         print("Parsing " + f + "calendar_dates.txt")
         parse_gtfs_calendar_dates(
             csv_reader_skip_header(f + 'calendar_dates.txt'))
+        print("Parsing " + f + "stops.txt (first pass)")
+        parse_gtfs_stops_traintype(csv_reader_skip_header(f + "stops.txt"))
 
 
 def csv_reader_skip_header(path):
@@ -99,3 +102,26 @@ def parse_gtfs_calendar_dates(lines):
     print("Writing to database...")
     for ex in pex:
         ex.save()
+
+
+def parse_gtfs_stops_traintype(lines):
+    """Créer des objets TrainType depuis les données du fichier stops.txt du
+    format GTFS."""
+    # L'expression régulière convertit un identifiant de station SNCF du type
+    # StopPoint:OCETrain TER-87576173
+    # en un type de train ("Train TER" dans l'exemple).
+    regex = re.compile(r"^.*OCE(.*)-[0-9]+$", re.MULTILINE)
+    # Une compréhension de liste utilisant lines va trier et ne récupérer que
+    # les ID commençant par "StopPoint" puisque StopArea ne contient pas de
+    # types de trains. Une seconde compréhension de liste va ensuite exécuter
+    # l'expression régulière.
+    # set() permet de supprimer les très nombreux doublons.
+    # On reconvertit ensuite en liste avec list() pour créer des TrainTypes,
+    # dans une troisième compréhension de liste.
+    traintypes = [TrainType.objects.create(name=name) for name in list(set(
+        [regex.sub('\\1', stopid) for stopid in
+            [line[0] for line in lines if line[0].startswith("StopPoint")]]))
+        if not TrainType.objects.filter(name=name).exists()]
+    print("Writing to database...")
+    for tt in traintypes:
+        tt.save()

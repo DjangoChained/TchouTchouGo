@@ -68,7 +68,7 @@ class TrainType(models.Model):
     """
     name = models.CharField(max_length=20)
     icon = models.FilePathField(path=settings.BASE_DIR+'/main/static/main/img')
-    km_price = models.FloatField()
+    km_price = models.FloatField(default=1.0)
 
     def __str__(self):
         return self.name
