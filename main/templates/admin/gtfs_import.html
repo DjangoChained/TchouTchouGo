@@ -4,7 +4,7 @@
 
 {% block content %}
 <div id="content-main">
-    {% if success %}<div class="system-message">L'importation a été effectuée.</div>{% endif %}
+    {% if success %}<div class="system-message">L'importation a été effectuée.<br />Pensez à mettre à jour les informations sur la tarification, que la SNCF ne renseigne pas, et les icônes.</div>{% endif %}
     <span class="helptext">< <a href="/admin">Retour à l'accueil</a></span>
     <p>Ce formulaire vous permet d'effectuer l'importation de données ferroviaires depuis les données fournies mensuellement sur <a href="https://data.sncf.com/explore/">le portail Open Data SNCF</a>.</p>
     <form action="{% url 'gtfs-import' %}" method="post" enctype="multipart/form-data">
