@@ -91,3 +91,4 @@ class PeriodException(models.Model):
     date = models.DateField()
     add_day = models.BooleanField()
     period = models.ForeignKey('Period', on_delete=models.CASCADE)
+    unique_together = ("date", "period")

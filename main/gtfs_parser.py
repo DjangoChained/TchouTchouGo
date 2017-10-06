@@ -5,7 +5,7 @@ import os
 import csv
 from datetime import date, time
 from .utility import remove_if_exists
-from .models import Period
+from .models import Period, PeriodException
 from django.db import IntegrityError
 
 
@@ -36,6 +36,9 @@ def parse_gtfs_sncf(*args):
         remove_if_exists(f + "transfers.txt")
         print("Parsing " + f + "calendar.txt")
         parse_gtfs_calendar(csv_reader_skip_header(f + 'calendar.txt'))
+        print("Parsing " + f + "calendar_dates.txt")
+        parse_gtfs_calendar_dates(
+            csv_reader_skip_header(f + 'calendar_dates.txt'))
 
 
 def csv_reader_skip_header(path):
@@ -56,7 +59,7 @@ def parse_gtfs_date(datestr):
 
 
 def parse_gtfs_calendar(lines):
-    """Créer un objet Period correspondant à une ligne du fichier calendar
+    """Créer des objets Period correspondant au fichier calendar
     du format GTFS."""
     p = []
     for line in lines:
@@ -72,5 +75,27 @@ def parse_gtfs_calendar(lines):
                                        sunday=(line[7] == '1'),
                                        start_date=parse_gtfs_date(line[8]),
                                        end_date=parse_gtfs_date(line[9])))
+    print("Writing to database...")
     for per in p:
         per.save()
+
+
+def parse_gtfs_calendar_dates(lines):
+    """Créer des objets PeriodException correspondant au fichier
+    calendar_dates du format GTFS."""
+    pex = []
+    for line in lines:
+        p = Period.objects.filter(id=int(line[0]))
+        if not p.exists():
+            continue
+        else:
+            p = p.get()
+        date = parse_gtfs_date(line[1])
+        if PeriodException.objects.filter(period=p, date=date).exists():
+            continue
+        pex.append(PeriodException.objects.create(date=date,
+                                                  add_day=line[2] == '1',
+                                                  period=p))
+    print("Writing to database...")
+    for ex in pex:
+        ex.save()
