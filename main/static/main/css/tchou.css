@@ -13,7 +13,7 @@ div.input-stack input:first-child {
 div.input-stack input:last-child {
     border-radius: 0 0 5px 5px;
 }
-nav.navbar ul.navbar-nav a.nav-link, nav.navbar button.btn {
+nav.navbar ul.navbar-nav a.nav-link, button.btn {
     text-transform: uppercase;
     font-size: 90%;
     font-weight: bold;
@@ -31,4 +31,22 @@ nav.navbar ul.navbar-nav li.nav-item i {
     font-size: 140%;
     margin-right: 0.5em;
     color: #17A2B8;
+}
+
+.price {
+    font-size: 150%;
+    text-align: center;
+}
+
+.hour {
+font-size: 130%;
+margin-right: 10px;
+}
+
+.train {
+    margin-left: 15px;
+}
+
+.card-columns {
+    column-count: 2;
 }
