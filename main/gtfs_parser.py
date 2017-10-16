@@ -6,7 +6,7 @@ import csv
 import re
 from datetime import date, time
 from .utility import remove_if_exists
-from .models import Period, PeriodException, TrainType
+from .models import Period, PeriodException, TrainType, Station
 from django.db import IntegrityError
 
 
@@ -42,6 +42,8 @@ def parse_gtfs_sncf(*args):
             csv_reader_skip_header(f + 'calendar_dates.txt'))
         print("Parsing " + f + "stops.txt (first pass)")
         parse_gtfs_stops_traintype(csv_reader_skip_header(f + "stops.txt"))
+        print("Parsing " + f + "stops.txt (second pass)")
+        parse_gtfs_stops_station(csv_reader_skip_header(f + "stops.txt"))
 
 
 def csv_reader_skip_header(path):
@@ -117,7 +119,7 @@ def parse_gtfs_stops_traintype(lines):
     # l'expression régulière.
     # set() permet de supprimer les très nombreux doublons.
     # On reconvertit ensuite en liste avec list() pour créer des TrainTypes,
-    # dans une troisième compréhension de liste.
+    # dans une troisième compréhension de liste, en évitant les doublons.
     traintypes = [TrainType.objects.create(name=name) for name in list(set(
         [regex.sub('\\1', stopid) for stopid in
             [line[0] for line in lines if line[0].startswith("StopPoint")]]))
@@ -125,3 +127,18 @@ def parse_gtfs_stops_traintype(lines):
     print("Writing to database...")
     for tt in traintypes:
         tt.save()
+
+
+def parse_gtfs_stops_station(lines):
+    """Créer des objets Station depuis les données du fichier stops.txt du
+    format GTFS."""
+    id_regex = re.compile(r"^.*OCE.*-([0-9]+)$", re.MULTILINE)
+    name_regex = re.compile(r"^(gare de)? (.*)$", re.MULTILINE)
+    stations = [Station.objects.create(id=int(id_regex.sub('\\1', line[0])),
+                name=name_regex.sub('\\2', line[1]), lat=line[3], lng=line[4])
+                for line in lines
+                if line[0].startswith("StopPoint") and not Station.objects
+                .filter(id=int(id_regex.sub('\\1', line[0]))).exists()]
+    print("Writing to database...")
+    for station in stations:
+        station.save()
