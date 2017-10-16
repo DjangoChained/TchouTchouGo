@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %} {% block title %}Login{% endblock %} {% block content %}
+<div class="bloc_connexion">
+<form method="post" class="m-0">
+    {% csrf_token %} {#{{ form.as_p }}#}
+
+        {% if form.errors %}
+        <div class="errorlist alert alert-danger p-1">
+            {% if form.non_field_errors %}
+            <p>{{ form.non_field_errors }}</p>
+            {% endif %} {% for field in form %} {% if field.errors %}
+                <strong>{{ field.label }}</strong>
+                    {% for error in field.errors %}
+                    {{ error }}
+                    {% endfor %}
+            {% endif %} {% endfor %}
+        </div>
+        {% endif %}
+        <input id="id_username" name="username" type="text" class="form-control w-75 mx-auto mb-2" placeholder="Nom d'utilisateur" required="" autofocus=""
+        />
+        <input id="id_password" name="password" type="password" class="form-control w-75 mx-auto mb-2" placeholder="Mot de passe" required="" />
+        <button class="btn btn-lg btn-primary btn-block w-75 mx-auto mb-4" type="submit">Se connecter</button>
+        <a href="#">Pas encore inscrit ?</a>
+</form>
+</div>
+{% endblock %}
