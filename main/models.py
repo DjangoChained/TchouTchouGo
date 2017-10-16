@@ -55,7 +55,7 @@ class Train(models.Model):
     Décrit un train, avec son numéro et sa période de service.
     """
     number = models.PositiveIntegerField()
-    period = models.ForeignKey('Period', on_delete=models.PROTECT)
+    period = models.ForeignKey('Period', null=True, on_delete=models.PROTECT)
     traintype = models.ForeignKey('TrainType', on_delete=models.PROTECT)
 
     def __str__(self):

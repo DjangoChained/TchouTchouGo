@@ -6,7 +6,8 @@ import csv
 import re
 from datetime import date, time
 from .utility import remove_if_exists
-from .models import Period, PeriodException, TrainType, Station
+from .models import Period, PeriodException, TrainType, Station, Train, Halt
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 
 
@@ -44,6 +45,8 @@ def parse_gtfs_sncf(*args):
         parse_gtfs_stops_traintype(csv_reader_skip_header(f + "stops.txt"))
         print("Parsing " + f + "stops.txt (second pass)")
         parse_gtfs_stops_station(csv_reader_skip_header(f + "stops.txt"))
+        print("Parsing " + f + "trips.csv and " + f + "stop_times.txt")
+        parse_gtfs_trains(f + "trips.txt", f + "stop_times.txt")
 
 
 def csv_reader_skip_header(path):
@@ -142,3 +145,49 @@ def parse_gtfs_stops_station(lines):
     print("Writing to database...")
     for station in stations:
         station.save()
+
+
+def parse_gtfs_trains(trips, stop_times_path):
+    """Créer des objets Train et Halt correspondant aux données des fichiers
+    trips.txt et stop_times.txt du format GTFS.
+    Attention : Cette méthode prend en paramètre un lecteur de fichiers CSV
+    pour trips.txt et un chemin d'accès seulement pour stop_times.txt."""
+    stop_times_file = open(stop_times_path)
+    stop_times = csv.reader(stop_times_file)
+    # Permet de trouver le type de train
+    tt_regex = re.compile(r"^.*OCE(.*)-[0-9]+$", re.MULTILINE)
+    trains, halts = [], []
+    for trip in trips:
+        stop_times_file.seek(0)
+        trip_stop_times = [s for s in stop_times if s[0] == trip[2]]
+        try:
+            p = Period.objects.get(id=int(trip[1]))
+        except Period.DoesNotExist:
+            # Une quantité affolante de trains n'a pas de service associé !
+            p = None
+        t = Train.objects.create(
+            number=int(trip[3]), period=p,
+            traintype=TrainType.objects.get(
+                name=tt_regex.sub('\\1', trip_stop_times[0][3])))
+        trains.append(t)
+        halts.extend(parse_gtfs_halts_train(trip[2], trip_stop_times, t))
+    print("Writing to database...")
+    Train.objects.bulk_create(trains)
+    Halt.objects.bulk_create(halts)
+
+
+def parse_gtfs_halts_train(trip_id, stop_times, train):
+    """Créer des objets Halt pour un train donné depuis les données du fichier
+    stop_times.txt du format GTFS."""
+    halts = []
+    station_id_regex = re.compile(r"^.*OCE.*-([0-9]+)$", re.MULTILINE)
+    for stop_time in stop_times:
+        ar_time = stop_time[1].split(':', 2)
+        ar_sec = time(hour=int(ar_time[0]) % 24, minute=int(ar_time[1]))
+        dep_time = stop_time[2].split(':', 2)
+        dep_sec = time(hour=int(dep_time[0]) % 24, minute=int(dep_time[1]))
+        halts.append(Halt.objects.create(
+            arrival=ar_sec, departure=dep_sec, sequence=stop_time[4],
+            train=train, station=Station.objects.get(
+                id=int(station_id_regex.sub('\\1', stop_time[3])))))
+    return halts

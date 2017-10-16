@@ -23,11 +23,11 @@ def gtfs_import(request):
         ic_path = handle_uploaded_zip(request.FILES['zip_ic'])
         if form.cleaned_data['clear_everything']:
             Halt.objects.all().delete()
-            PeriodException.objects.all().delete()
-            Period.objects.all().delete()
             Station.objects.all().delete()
             Train.objects.all().delete()
             TrainType.objects.all().delete()
+            PeriodException.objects.all().delete()
+            Period.objects.all().delete()
         parse_gtfs_sncf(ter_path, ic_path)
         success = True
 
