@@ -85,7 +85,8 @@ def parse_gtfs_calendar(lines):
                                        start_date=parse_gtfs_date(line[8]),
                                        end_date=parse_gtfs_date(line[9])))
     print("Writing to database...")
-    Period.objects.bulk_create(p)
+    for per in p:
+        per.save()
 
 
 def parse_gtfs_calendar_dates(lines):
@@ -105,7 +106,8 @@ def parse_gtfs_calendar_dates(lines):
                                                   add_day=line[2] == '1',
                                                   period=p))
     print("Writing to database...")
-    PeriodException.objects.bulk_create(pex)
+    for ex in pex:
+        ex.save()
 
 
 def parse_gtfs_stops_traintype(lines):
@@ -127,7 +129,8 @@ def parse_gtfs_stops_traintype(lines):
             [line[0] for line in lines if line[0].startswith("StopPoint")]]))
         if not TrainType.objects.filter(name=name).exists()]
     print("Writing to database...")
-    TrainType.objects.bulk_create(traintypes)
+    for tt in traintypes:
+        tt.save()
 
 
 def parse_gtfs_stops_station(lines):
@@ -142,7 +145,8 @@ def parse_gtfs_stops_station(lines):
                 if line[0].startswith("StopPoint") and not Station.objects
                 .filter(id=int(id_regex.sub('\\1', line[0]))).exists()]
     print("Writing to database...")
-    Station.objects.bulk_create(stations)
+    for s in stations:
+        s.save()
 
 
 def parse_gtfs_trains(trips, stop_times_path):
@@ -170,8 +174,10 @@ def parse_gtfs_trains(trips, stop_times_path):
         trains.append(t)
         halts.extend(parse_gtfs_halts_train(trip[2], trip_stop_times, t.id))
     print("Writing to database...")
-    Train.objects.bulk_create(trains)
-    Halt.objects.bulk_create(halts)
+    for t in trains:
+        t.save()
+    for h in halts:
+        h.save()
 
 
 def parse_gtfs_halts_train(trip_id, stop_times, train_id):
