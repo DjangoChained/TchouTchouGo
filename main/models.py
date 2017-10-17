@@ -43,8 +43,8 @@ class Halt(models.Model):
     arrival = models.TimeField()
     departure = models.TimeField()
     sequence = models.PositiveSmallIntegerField()
-    train = models.ForeignKey('Train', on_delete=models.CASCADE)
-    station = models.ForeignKey('Station', on_delete=models.PROTECT)
+    train = models.ForeignKey('Train', null=True, on_delete=models.CASCADE)
+    station = models.ForeignKey('Station', null=True, on_delete=models.PROTECT)
 
     def __str__(self):
         return "Arrêt du " + str(self.train) + " à " + str(self.station)
@@ -55,11 +55,11 @@ class Train(models.Model):
     Décrit un train, avec son numéro et sa période de service.
     """
     number = models.PositiveIntegerField()
-    period = models.ForeignKey('Period', on_delete=models.PROTECT)
+    period = models.ForeignKey('Period', null=True, on_delete=models.PROTECT)
     traintype = models.ForeignKey('TrainType', on_delete=models.PROTECT)
 
     def __str__(self):
-        return str(self.traintype) + str(self.number)
+        return str(self.traintype) + " " + str(self.number)
 
 
 class TrainType(models.Model):
@@ -67,8 +67,9 @@ class TrainType(models.Model):
     Décrit un type de train.
     """
     name = models.CharField(max_length=20)
-    icon = models.FilePathField(path=settings.BASE_DIR+'/main/static/main/img')
-    km_price = models.FloatField()
+    icon = models.FilePathField(
+        path=settings.BASE_DIR + '/main/static/main/img')
+    km_price = models.FloatField(default=1.0)
 
     def __str__(self):
         return self.name
@@ -119,9 +120,10 @@ class PeriodException(models.Model):
     date = models.DateField()
     add_day = models.BooleanField()
     period = models.ForeignKey('Period', on_delete=models.CASCADE)
+    unique_together = ("date", "period")
 
     def __str__(self):
-        return "Exception pour le " + str(self.period) + \
+        return u"Exception pour le " + str(self.period) + \
             ", le " + str(self.date)
 
 
@@ -146,6 +148,11 @@ class Ticket(models.Model):
     def price(self):
         """Prix du billet."""
         return self.distance * self.start_halt.train.traintype.km_price
+
+    def __str__(self):
+        return "Billet de " + str(self.start_halt) + " à " + \
+            str(self.end_halt) + " le " + str(self.travel.date) + \
+            " pour " + str(self.user)
 
 
 class Travel(models.Model):
@@ -186,3 +193,8 @@ class Travel(models.Model):
     def total_distance(self):
         """Distance totale du voyage."""
         return sum([t.distance for t in self.ticket_set.all()])
+
+    def __str__(self):
+        return "Voyage de " + str(self.start_station) + " à " + \
+            str(self.end_station) + " le " + str(self.date) + " pour " + \
+            str(self.passengers) + " passagers"
