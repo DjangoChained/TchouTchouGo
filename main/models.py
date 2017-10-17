@@ -43,8 +43,8 @@ class Halt(models.Model):
     arrival = models.TimeField()
     departure = models.TimeField()
     sequence = models.PositiveSmallIntegerField()
-    train = models.ForeignKey('Train', on_delete=models.CASCADE)
-    station = models.ForeignKey('Station', on_delete=models.PROTECT)
+    train = models.ForeignKey('Train', null=True, on_delete=models.CASCADE)
+    station = models.ForeignKey('Station', null=True, on_delete=models.PROTECT)
 
     def __str__(self):
         return "Arrêt du " + str(self.train) + " à " + str(self.station)
@@ -67,7 +67,8 @@ class TrainType(models.Model):
     Décrit un type de train.
     """
     name = models.CharField(max_length=20)
-    icon = models.FilePathField(path=settings.BASE_DIR+'/main/static/main/img')
+    icon = models.FilePathField(
+        path=settings.BASE_DIR + '/main/static/main/img')
     km_price = models.FloatField(default=1.0)
 
     def __str__(self):
