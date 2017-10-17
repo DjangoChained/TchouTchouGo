@@ -1,130 +1,80 @@
-{% extends 'main/base.html' %}
-{% block content %}
+{% extends 'main/base.html' %} {% block content %}
 
-
-<!--<div class="card">
-	<h4 class="card-header">Itinéraire de Douai à Lille</h4>
-	<ul class="list-group list-group-flush">
-		<li class="list-group-item">
-			<div class="row">
-				<div class="col-12 col-md-8">
+<div class="bloc_cards mb-5">
+	<h4 class="text-center"> Itinéraire de Douai à Lille</h4>
+	<div class="card-columns">
+		<div class="card">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
 					<div><span class="hour">17h02</span> Douai</div>
 					<div class="train">Train TER <strong>843801</strong></div>
-					<div ><span class="hour">18h02</span> Lille</div>
-				</div>
-				<div class="col-6 col-sm-8 col-md-2">
-					<divclass="align-middle vertical-center price">234,63€</div>
-				</div>
-				<div class="col-6 col-sm-4 col-md-2 align-middle">
-					<button type="button" class="btn btn-primary float-right w-100">Réserver</button>
-				</div>
-			</div>
-		</li>
-		<li class="list-group-item">
-			<div class="row">
-				<div class="col-12 col-md-8">
-					<div><span class="hour">20h07</span>Lille</div>
-					<div class="train">Train TER <strong>843849</strong></div>
-					<div ><span class="hour">21h05</span>Valenciennes</div>
-				</div>
-				<div class="col-6 col-sm-8 col-md-2">
-					<divclass="align-middle vertical-center price">234,63€</div>
-				</div>
-				<div class="col-6 col-sm-4 col-md-2 align-middle">
-					<button type="button" class="btn btn-primary float-right w-100">Réserver</button>
-				</div>
-			</div>
-		</li>
-		<li class="list-group-item">
-			<div class="row">
-				<div class="col-12 col-md-8">
-					<div><span class="hour">8h05</span>Terre</div>
-					<div class="train">Train MegaTER <strong>843845</strong></div>
-					<div ><span class="hour">20h30</span> Lune</div>
-				</div>
-				<div class="col-6 col-sm-8 col-md-2">
-					<div class="align-middle vertical-center price">234,63€</div>
-				</div>
-				<div class="col-6 col-sm-4 col-md-2 align-middle">
-					<button type="button" class="btn btn-primary float-right w-100">Réserver</button>
-				</div>
-			</div>
-		</li>
-	</ul>
-</div>-->
-<h4 class="text-center"> Itinéraire de Douai à Lille</h4>
-<div class="card-columns">
-	<div class="card">
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item">
-				<div><span class="hour">17h02</span> Douai</div>
-				<div class="train">Train TER <strong>843801</strong></div>
-				<div><span class="hour">18h02</span> Lille</div>
-			</li>
-			<li class="list-group-item text-center">
-				<div class="price">234,63€</div>
-				<button type="button" class="btn btn-primary">Réserver</button>
-			</li>
-		</ul>
-	</div>
-	<div class="card">
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item">
-				<div><span class="hour">17h02</span> Douai</div>
-				<div class="train">Train TER <strong>843801</strong></div>
-				<div><span class="hour">18h02</span> Lille</div>
-			</li>
-			<li class="list-group-item">
-				<div><span class="hour">17h02</span> Douai</div>
-				<div class="train">Train TER <strong>843801</strong></div>
-				<div><span class="hour">18h02</span> Lille</div>
-			</li>
-			<li class="list-group-item">
-				<div><span class="hour">17h02</span> Douai</div>
-				<div class="train">Train TER <strong>843801</strong></div>
-				<div><span class="hour">18h02</span> Lille</div>
-			</li>
-			<li class="list-group-item text-center">
-				<div class="price">234,63€</div>
-				<button type="button" class="btn btn-primary">Réserver</button>
-			</li>
-		</ul>
-	</div>
-	<div class="card">
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item">
-				<div><span class="hour">17h02</span> Douai</div>
-				<div class="train">Train TER <strong>843801</strong></div>
-				<div><span class="hour">18h02</span> Lille</div>
-			</li>
-			<li class="list-group-item text-center">
-				<div class="price">234,63€</div>
-				<button type="button" class="btn btn-primary">Réserver</button>
-			</li>
-		</ul>
-	</div>
-	<div class="card">
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item">
-				<div><span class="hour">17h02</span> Douai</div>
-				<div class="train">Train TER <strong>843801</strong></div>
-				<div><span class="hour">18h02</span> Lille</div>
-			</li>
-			<li class="list-group-item">
-				<div><span class="hour">17h02</span> Douai</div>
-				<div class="train">Train TER <strong>843801</strong></div>
-				<div><span class="hour">18h02</span> Lille</div>
-			</li>
-			<li class="list-group-item">
-				<div><span class="hour">17h02</span> Douai</div>
-				<div class="train">Train TER <strong>843801</strong></div>
-				<div><span class="hour">18h02</span> Lille</div>
-			</li>
-			<li class="list-group-item text-center">
-				<div class="price">234,63€</div>
-				<button type="button" class="btn btn-primary">Réserver</button>
-			</li>
-		</ul>
+					<div><span class="hour">18h02</span> Lille</div>
+				</li>
+				<li class="list-group-item text-center">
+					<div class="price">234,63€</div>
+					<button type="button" class="btn btn-primary">Réserver</button>
+				</li>
+			</ul>
+		</div>
+		<div class="card">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<div><span class="hour">17h02</span> Douai</div>
+					<div class="train">Train TER <strong>843801</strong></div>
+					<div><span class="hour">18h02</span> Lille</div>
+				</li>
+				<li class="list-group-item">
+					<div><span class="hour">17h02</span> Douai</div>
+					<div class="train">Train TER <strong>843801</strong></div>
+					<div><span class="hour">18h02</span> Lille</div>
+				</li>
+				<li class="list-group-item">
+					<div><span class="hour">17h02</span> Douai</div>
+					<div class="train">Train TER <strong>843801</strong></div>
+					<div><span class="hour">18h02</span> Lille</div>
+				</li>
+				<li class="list-group-item text-center">
+					<div class="price">234,63€</div>
+					<button type="button" class="btn btn-primary">Réserver</button>
+				</li>
+			</ul>
+		</div>
+		<div class="card">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<div><span class="hour">17h02</span> Douai</div>
+					<div class="train">Train TER <strong>843801</strong></div>
+					<div><span class="hour">18h02</span> Lille</div>
+				</li>
+				<li class="list-group-item text-center">
+					<div class="price">234,63€</div>
+					<button type="button" class="btn btn-primary">Réserver</button>
+				</li>
+			</ul>
+		</div>
+		<div class="card">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<div><span class="hour">17h02</span> Douai</div>
+					<div class="train">Train TER <strong>843801</strong></div>
+					<div><span class="hour">18h02</span> Lille</div>
+				</li>
+				<li class="list-group-item">
+					<div><span class="hour">17h02</span> Douai</div>
+					<div class="train">Train TER <strong>843801</strong></div>
+					<div><span class="hour">18h02</span> Lille</div>
+				</li>
+				<li class="list-group-item">
+					<div><span class="hour">17h02</span> Douai</div>
+					<div class="train">Train TER <strong>843801</strong></div>
+					<div><span class="hour">18h02</span> Lille</div>
+				</li>
+				<li class="list-group-item text-center">
+					<div class="price">234,63€</div>
+					<button type="button" class="btn btn-primary">Réserver</button>
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>
 
