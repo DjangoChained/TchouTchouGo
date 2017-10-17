@@ -67,8 +67,6 @@ class TrainType(models.Model):
     Décrit un type de train.
     """
     name = models.CharField(max_length=20)
-    icon = models.FilePathField(
-        path=settings.BASE_DIR + '/main/static/main/img')
     km_price = models.FloatField(default=1.0)
 
     def __str__(self):
