@@ -59,7 +59,7 @@ class Train(models.Model):
     traintype = models.ForeignKey('TrainType', on_delete=models.PROTECT)
 
     def __str__(self):
-        return str(self.traintype) + str(self.number)
+        return str(self.traintype) + " " + str(self.number)
 
 
 class TrainType(models.Model):
@@ -123,7 +123,7 @@ class PeriodException(models.Model):
     unique_together = ("date", "period")
 
     def __str__(self):
-        return "Exception pour le " + str(self.period) + \
+        return u"Exception pour le " + str(self.period) + \
             ", le " + str(self.date)
 
 
@@ -148,6 +148,11 @@ class Ticket(models.Model):
     def price(self):
         """Prix du billet."""
         return self.distance * self.start_halt.train.traintype.km_price
+
+    def __str__(self):
+        return "Billet de " + str(self.start_halt) + " à " + \
+            str(self.end_halt) + " le " + str(self.travel.date) + \
+            " pour " + str(self.user)
 
 
 class Travel(models.Model):
@@ -188,3 +193,8 @@ class Travel(models.Model):
     def total_distance(self):
         """Distance totale du voyage."""
         return sum([t.distance for t in self.ticket_set.all()])
+
+    def __str__(self):
+        return "Voyage de " + str(self.start_station) + " à " + \
+            str(self.end_station) + " le " + str(self.date) + " pour " + \
+            str(self.passengers) + " passagers"

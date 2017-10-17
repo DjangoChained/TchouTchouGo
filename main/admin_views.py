@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from os.path import basename
 from django.shortcuts import render
-from admin_forms import GTFSImportForm
+from .admin_forms import GTFSImportForm
 from main.gtfs_parser import parse_gtfs_sncf
 from main.models import \
     Train, TrainType, Station, Halt, Period, PeriodException
