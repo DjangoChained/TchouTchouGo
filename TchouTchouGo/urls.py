@@ -14,11 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.contrib import admin
+from main.admin import admin_site
+from main import admin_views
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin_site.urls),
+    url(r'^admin/gtfs-import/?$', admin_views.gtfs_import, name="gtfs-import"),
     url(r'^$', RedirectView.as_view(url='/train/', permanent=False)),
     url(r'^train/', include('main.urls')),
 ]
