@@ -122,6 +122,10 @@ USE_L10N = True
 
 USE_TZ = False
 
+
+# Login page settings
+
+LOGIN_URL = '/train/login'
 LOGIN_REDIRECT_URL = '/train/search'
 
 

@@ -18,6 +18,9 @@ class Station(models.Model):
     lat = models.FloatField()
     lng = models.FloatField()
 
+    class Meta:
+        verbose_name = "gare"
+
     def __str__(self):
         return self.name
 
@@ -46,6 +49,12 @@ class Halt(models.Model):
     train = models.ForeignKey('Train', null=True, on_delete=models.CASCADE)
     station = models.ForeignKey('Station', null=True, on_delete=models.PROTECT)
 
+    class Meta:
+        ordering = ["train", "sequence"]
+        unique_together = ("train", "sequence")
+        verbose_name = "arrêt d'un train en gare"
+        verbose_name_plural = "arrêts des trains en gares"
+
     def __str__(self):
         return "Arrêt du " + str(self.train) + " à " + str(self.station)
 
@@ -58,6 +67,9 @@ class Train(models.Model):
     period = models.ForeignKey('Period', null=True, on_delete=models.PROTECT)
     traintype = models.ForeignKey('TrainType', on_delete=models.PROTECT)
 
+    class Meta:
+        verbose_name = "train"
+
     def __str__(self):
         return str(self.traintype) + " " + str(self.number)
 
@@ -68,6 +80,9 @@ class TrainType(models.Model):
     """
     name = models.CharField(max_length=20)
     km_price = models.FloatField(default=1.0)
+
+    class Meta:
+        verbose_name = "type de train"
 
     def __str__(self):
         return self.name
@@ -95,6 +110,10 @@ class Period(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
+    class Meta:
+        verbose_name = "période de service"
+        verbose_name_plural = "périodes de service"
+
     def __str__(self):
         return "Service entre " + str(self.start_date) + " et " + \
             str(self.end_date)
@@ -118,7 +137,12 @@ class PeriodException(models.Model):
     date = models.DateField()
     add_day = models.BooleanField()
     period = models.ForeignKey('Period', on_delete=models.CASCADE)
-    unique_together = ("date", "period")
+
+    class Meta:
+        ordering = ["period"]
+        verbose_name = "exception à une période de service"
+        verbose_name_plural = "exceptions à une période de service"
+        unique_together = ("date", "period")
 
     def __str__(self):
         return u"Exception pour le " + str(self.period) + \
@@ -136,6 +160,12 @@ class Ticket(models.Model):
     end_halt = models.ForeignKey('Halt', on_delete=models.PROTECT,
                                  related_name='+')
     travel = models.ForeignKey('Travel', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ["travel", "sequence"]
+        unique_together = ("travel", "sequence")
+        verbose_name = "billet"
+        get_latest_by = "sequence"
 
     @property
     def distance(self):
@@ -162,10 +192,14 @@ class Travel(models.Model):
     passengers = models.PositiveSmallIntegerField(default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ["date", "user"]
+        verbose_name = "voyage"
+
     @property
     def start_station(self):
         """Station de départ du voyage."""
-        return self.ticket_set.get(sequence=0).start_halt.station
+        return self.ticket_set.order_by('sequence')[0].start_halt.station
 
     @property
     def end_station(self):
@@ -175,7 +209,7 @@ class Travel(models.Model):
     @property
     def start_time(self):
         """Heure de départ du voyage."""
-        return self.ticket_set.get(sequence=0).start_halt.departure
+        return self.ticket_set.order_by('sequence')[0].start_halt.departure
 
     @property
     def end_time(self):

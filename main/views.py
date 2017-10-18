@@ -59,7 +59,7 @@ def print_ticket(request, travel_id):
 
 
 @login_required()
-def updateProfile(request):
+def update_profile(request):
     user = User.objects.get(pk=request.user.id)
     # prepopulate UserProfileForm with retrieved user values from above.
     form = UserForm(instance=user)
@@ -71,7 +71,7 @@ def updateProfile(request):
             if form.is_valid():
                 created_user = form.save(commit=False)
                 created_user.save()
-                return redirect('/train/updateProfile')
+                return redirect('/train/updateprofile')
         return render(request, "registration/updateProfile.html", {
             'form': form
         })
