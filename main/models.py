@@ -31,7 +31,7 @@ class Station(models.Model):
         self.lng = value[1]
 
     def distance_to(self, station):
-        return haversine(self.lon, self.lat, station.lon, station.lat)
+        return haversine(self.lng, self.lat, station.lng, station.lat)
 
 
 class Halt(models.Model):
@@ -150,7 +150,7 @@ class Ticket(models.Model):
     def __str__(self):
         return "Billet de " + str(self.start_halt) + " à " + \
             str(self.end_halt) + " le " + str(self.travel.date) + \
-            " pour " + str(self.user)
+            " pour " + str(self.travel.user)
 
 
 class Travel(models.Model):
@@ -170,7 +170,7 @@ class Travel(models.Model):
     @property
     def end_station(self):
         """Station d'arrivée du voyage."""
-        return self.ticket_set.order_by('-sequence')[:1].station
+        return self.ticket_set.order_by('-sequence')[:1].get().end_halt.station
 
     @property
     def start_time(self):
@@ -193,6 +193,8 @@ class Travel(models.Model):
         return sum([t.distance for t in self.ticket_set.all()])
 
     def __str__(self):
-        return "Voyage de " + str(self.start_station) + " à " + \
-            str(self.end_station) + " le " + str(self.date) + " pour " + \
+        return ("Voyage vide" if not self.ticket_set.count() else
+                "Voyage de " + str(self.start_station) + " à " +
+                str(self.end_station)) + \
+            " le " + str(self.date) + " pour " + \
             str(self.passengers) + " passagers"
