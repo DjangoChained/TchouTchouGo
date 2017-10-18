@@ -3,8 +3,9 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SearchForm, SignUpForm
+from .models import Travel
 
 
 def search(request):
@@ -36,3 +37,11 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'main/signup.html', {'form': form})
+
+
+def print_ticket(request, travel_id):
+    """Vue permettant l'impression d'un ensemble de billets."""
+    if not request.user.is_authenticated():
+        return redirect('search')
+    return render(request, 'main/print.html',
+                  {'travel': get_object_or_404(Travel, id=travel_id)})

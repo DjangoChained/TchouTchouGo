@@ -7,9 +7,9 @@
         <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
         <meta charset="utf-8" />
     </head>
-    <body>
-        <h1><i class="fa fa-train"></i> TchouTchouGo</h1>
-        <div class="row">
+    <body style="font-size: 18pt">
+        <h1 class="my-3"><i class="fa fa-train"></i> TchouTchouGo</h1>
+        <div class="row mb-3">
             <div class="col-3 mr-auto text-left">
                 réf. <big><strong>{{ travel.id|stringformat:"06d" }}</strong></big>
             </div>
@@ -18,9 +18,9 @@
                 <big>{{ travel.user.first_name|title }} {{ travel.user.last_name|title }}</big>
             </div>
         </div>
-        <table>
+        <table class="table table-bordered">
             <tbody>
-                {% for ticket in travel.ticket_set %}
+                {% for ticket in travel.ticket_set.all %}
                     <tr>
                         <th>{{ ticket.start_halt.departure|time:"H:i" }}</th>
                         <td>{{ ticket.start_halt.station.name|upper }}</td>
@@ -38,10 +38,13 @@
                 {{ travel.passengers }} passager{{ travel.passengers|pluralize }}
             </div>
             <div class="col-6 ml-auto text-right">
-                <big><strong>{{ travel.price|stringformat:".2f" }} €</strong></big>
+                <big><strong>{{ travel.total_price|stringformat:".2f" }} €</strong></big>
             </div>
         </div>
-        <p>Édité le {% now 'd/m/Y' %} à {% now 'H:i' %}</p>
+        <p class="mt-5"><small>Édité le {% now 'd/m/Y' %} à {% now 'H:i' %}</small></p>
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <script type="text/javascript">$(function() { window.print(); });</script>
     </body>
 </html>
