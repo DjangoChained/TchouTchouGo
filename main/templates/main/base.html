@@ -27,7 +27,7 @@
                 {% if user.is_authenticated %}
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item {% if active == "account" %}active{% endif %}">
-                        <a class="nav-link" href="#"><i class="fa fa-user-circle"></i>{{ user.username }}</a>
+                        <a class="nav-link" href="{% url "updateProfile" %}"><i class="fa fa-user-circle"></i>{{ user.username }}</a>
                     </li>
                 </ul>
                 {% else %}
