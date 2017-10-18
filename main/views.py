@@ -4,8 +4,13 @@ from __future__ import unicode_literals
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SearchForm, SignUpForm
+from .forms import SearchForm, SignUpForm, UserForm
 from .models import Travel
+
+from django.shortcuts import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 
 
 def search(request):
@@ -45,3 +50,24 @@ def print_ticket(request, travel_id):
         return redirect('search')
     return render(request, 'main/print.html',
                   {'travel': get_object_or_404(Travel, id=travel_id)})
+
+
+@login_required()
+def updateProfile(request):
+    user = User.objects.get(pk=request.user.id)
+    # prepopulate UserProfileForm with retrieved user values from above.
+    form = UserForm(instance=user)
+
+    if request.user.is_authenticated() and request.user.id == user.id:
+        if request.method == "POST":
+            form = UserForm(request.POST, request.FILES, instance=user)
+
+            if form.is_valid():
+                created_user = form.save(commit=False)
+                created_user.save()
+                return redirect('/train/updateProfile')
+        return render(request, "registration/updateProfile.html", {
+            'form': form
+        })
+    else:
+        raise PermissionDenied

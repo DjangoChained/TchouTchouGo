@@ -14,4 +14,5 @@ urlpatterns = [
         name='logout'),
     url(r'^signup$', views.signup, name='signup'),
     url(r'^print/(\d+)$', views.print_ticket, name='print_ticket'),
+    url(r'^updateProfile$', views.updateProfile, name="updateProfile")
 ]
