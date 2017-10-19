@@ -9,6 +9,7 @@
         <meta charset="utf-8" />
     </head>
     <body>
+        <script src="{% static 'js/jquery.min.js' %}"></script>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="{% url "search" %}"><i class="fa fa-train"></i> TchouTchouGo</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Ouvrir la barre de navigation">
@@ -44,7 +45,6 @@
             </div>
         </nav>
         <div class="global">{% block content %}{% endblock %}</div>
-        <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/popper.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
     </body>

@@ -1,4 +1,5 @@
-{% extends 'main/base.html' %} {% block content %}
+{% extends 'main/base.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'main/css/pikaday.css' %}" />
 <div class="bloc_connexion">
     <form class="form m-0" action="{% url 'search' %}" method="post">
         {% csrf_token %}
@@ -6,7 +7,7 @@
             <input type="text" class="form-control form-control-lg" placeholder="Gare de départ" name="startStation" required />
             <input type="text" class="form-control form-control-lg" placeholder="Gare d'arrivée" name="endStation" required />
         </div>
-        <input type="date" class="form-control form-control-lg mb-3" placeholder="Date du voyage" name="travelDate" min="{% now "
+        <input id="datepicker" type="date" class="datepicker form-control form-control-lg mb-3" placeholder="Date du voyage" name="travelDate" min="{% now "
             Y-m-d " %}" required />
         <div class="form-row justify-content-end">
             <div class="form-group col-sm-8 col-12 text-sm-right text-center mt-1">
@@ -55,4 +56,7 @@
         </div>
     </form>
 </div>
+<script src="{% static 'main/js/pikaday.js' %}"></script>
+<script src="{% static 'main/js/pikaday.jquery.js' %}"></script>
+<script src="{% static 'main/js/tchou.js' %}"></script>
 {% endblock %}
