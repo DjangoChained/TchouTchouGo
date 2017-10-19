@@ -8,14 +8,22 @@ from . import models
 
 
 class TicketAdmin(ModelAdmin):
+    """Gestionnaire d'administration des billets de train."""
+    ## Colonnes affichées pour décrire un billet.
     list_display = ('travel', 'sequence',)
+    ## Champs n'affichant pas une sélection par dropdown.
     raw_id_fields = ('start_halt', 'end_halt',)
 
 
 class TchouAdminSite(AdminSite):
+    """Paramètres des fonctionnalités d'administration de l'application."""
+    ## En-tête du site d'administration.
     site_header = "Administration de TchouTchouGo"
+    ## Titre du site
     site_title = "TchouTchouGo Admin"
+    ## Titre de la page d'accueil
     index_title = "Accueil"
+    ## Template utilisé pour la page d'accueil
     index_template = settings.BASE_DIR + "/main/templates/admin/index.html"
 
 admin_site = TchouAdminSite()
