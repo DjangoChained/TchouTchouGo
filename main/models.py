@@ -16,11 +16,11 @@ class Station(models.Model):
     Décrit une gare avec son nom et ses coordonnées GPS.
     """
     ## Nom de la gare.
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40, verbose_name="Nom")
     ## Composante de latitude des coordonnées GPS de la gare.
-    lat = models.FloatField()
+    lat = models.FloatField(verbose_name="Latitude")
     ## Composante de longitude des coordonnées GPS de la gare.
-    lng = models.FloatField()
+    lng = models.FloatField(verbose_name="Longitude")
 
     class Meta:
         """Métadonnées du modèle de station."""
@@ -57,19 +57,20 @@ class Halt(models.Model):
     ainsi que le train et la gare concernés.
     """
     ## Heure d'arrivée du train en gare.
-    arrival = models.TimeField()
+    arrival = models.TimeField(verbose_name="Heure d'arrivée en gare")
     ## Heure de départ du train depuis la gare.
-    departure = models.TimeField()
+    departure = models.TimeField(verbose_name="Heure de départ")
     ## Numéro de séquence de l'arrêt. Base 0.
     #  Permet d'ordonner les arrêts pour un train.
-    sequence = models.PositiveSmallIntegerField()
+    sequence = models.PositiveSmallIntegerField(verbose_name="Numéro d'ordre")
     ## Association avec un train.
     #  La suppression d'un train entraîne la suppression de ses arrêts.
     train = models.ForeignKey('Train', null=True, on_delete=models.CASCADE)
     ## Association avec une gare.
     #  Il est impossible de supprimer une gare s'il existe un train s'y
     #  arrêtant.
-    station = models.ForeignKey('Station', null=True, on_delete=models.PROTECT)
+    station = models.ForeignKey(
+        'Station', null=True, on_delete=models.PROTECT, verbose_name="Gare")
 
     class Meta:
         """Métadonnées du modèle d'arrêt de train en gare."""
@@ -97,13 +98,16 @@ class Train(models.Model):
     #  Le numéro donné par la SNCF n'est pas unique ; il est seulement affiché
     #  pour faciliter sa reconnaissance par les utilisateurs, le format GTFS
     #  oblige la SNCF à faire de la redondance sur ce numéro.
-    number = models.PositiveIntegerField()
+    number = models.PositiveIntegerField(verbose_name="Numéro du train")
     ## Association avec une période de service.
     #  Si un train utilise une période, on ne peut pas la supprimer.
-    period = models.ForeignKey('Period', null=True, on_delete=models.PROTECT)
+    period = models.ForeignKey(
+        'Period', null=True, on_delete=models.PROTECT,
+        verbose_name="Période de service")
     ## Association avec un type de train.
     #  Si un train utilise un type de train, on ne peut pas le supprimer.
-    traintype = models.ForeignKey('TrainType', on_delete=models.PROTECT)
+    traintype = models.ForeignKey(
+        'TrainType', on_delete=models.PROTECT, verbose_name="Type de train")
 
     class Meta:
         """Métadonnées du modèle de train."""
@@ -124,11 +128,11 @@ class TrainType(models.Model):
     Décrit un type de train.
     """
     ## Nom affiché du type de train.
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, verbose_name="Nom")
     ## Prix kilométrique pour ce type de train.
     #  Permet de simuler un calcul des prix à l'aide des distances entre
     #  stations.
-    km_price = models.FloatField(default=1.0)
+    km_price = models.FloatField(default=1.0, verbose_name="Prix kilométrique")
 
     class Meta:
         """Métadonnées du modèle de type de train."""
@@ -153,23 +157,23 @@ class Period(models.Model):
     True True True True True False False 01/01/2018 31/12/2018
     """
     ## Indique si les trains circulent le lundi.
-    monday = models.BooleanField()
+    monday = models.BooleanField(verbose_name="Circule le lundi")
     ## Indique si les trains circulent le mardi.
-    tuesday = models.BooleanField()
+    tuesday = models.BooleanField(verbose_name="Circule le mardi")
     ## Indique si les trains circulent le mercredi.
-    wednesday = models.BooleanField()
+    wednesday = models.BooleanField(verbose_name="Circule le mercredi")
     ## Indique si les trains circulent le jeudi.
-    thursday = models.BooleanField()
+    thursday = models.BooleanField(verbose_name="Circule le jeudi")
     ## Indique si les trains circulent le vendredi.
-    friday = models.BooleanField()
+    friday = models.BooleanField(verbose_name="Circule le vendredi")
     ## Indique si les trains circulent le samedi.
-    saturday = models.BooleanField()
+    saturday = models.BooleanField(verbose_name="Circule le samedi")
     ## Indique si les trains circulent le dimanche.
-    sunday = models.BooleanField()
+    sunday = models.BooleanField(verbose_name="Circule le dimanche")
     ## Indique la date de début de validité de la période.
-    start_date = models.DateField()
+    start_date = models.DateField(verbose_name="Date de début")
     ## Indique la date de fin de validité de la période.
-    end_date = models.DateField()
+    end_date = models.DateField(verbose_name="Date de fin")
 
     class Meta:
         """Métadonnées du modèle de période de service."""
@@ -222,11 +226,12 @@ class PeriodException(models.Model):
     date = models.DateField()
     ## Indique si c'est un jour supplémentaire ou un jour supprimé.
     #  Vaut True si le train circulera ce jour-là, False sinon.
-    add_day = models.BooleanField()
+    add_day = models.BooleanField(verbose_name="Circulation du train")
     ## Association avec une période de service.
     #  Les exceptions sont automatiquement supprimées quand une période
     #  de service est supprimée.
-    period = models.ForeignKey('Period', on_delete=models.CASCADE)
+    period = models.ForeignKey(
+        'Period', on_delete=models.CASCADE, verbose_name="Période associée")
 
     class Meta:
         """Métadonnées du modèle d'exception de période de service."""
@@ -253,16 +258,17 @@ class Ticket(models.Model):
     """
     ## Numéro de séquence du billet dans un voyage. Base zéro.
     #  Permet d'ordonner les billets dans un voyage donné.
-    sequence = models.PositiveSmallIntegerField()
+    sequence = models.PositiveSmallIntegerField(verbose_name="Numéro d'ordre")
     ## Arrêt de départ. Ce n'est pas une station ou un train puisqu'il est
     #  tout à fait possible de monter dans un train à une gare intermédiaire.
-    start_halt = models.ForeignKey('Halt', on_delete=models.PROTECT,
-                                   related_name='+')
+    start_halt = models.ForeignKey(
+        'Halt', on_delete=models.PROTECT, verbose_name="Arrêt de départ")
     ## Arrêt de destination.
-    end_halt = models.ForeignKey('Halt', on_delete=models.PROTECT,
-                                 related_name='+')
+    end_halt = models.ForeignKey(
+        'Halt', on_delete=models.PROTECT, verbose_name="Arrêt d'arrivée")
     ## Voyage contenant le billet.
-    travel = models.ForeignKey('Travel', on_delete=models.CASCADE)
+    travel = models.ForeignKey(
+        'Travel', on_delete=models.CASCADE, verbose_name="Voyage associé")
 
     class Meta:
         """Métadonnées du modèle de billet de train."""
@@ -303,9 +309,11 @@ class Travel(models.Model):
     ## Date du voyage.
     date = models.DateField()
     ## Nombre de passagers du voyage.
-    passengers = models.PositiveSmallIntegerField(default=1)
+    passengers = models.PositiveSmallIntegerField(
+        default=1, verbose_name="Nombre de passagers")
     ## Association avec un utilisateur.
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name="Utilisateur")
 
     class Meta:
         """Métadonnées du modèle de voyage."""
