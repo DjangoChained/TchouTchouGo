@@ -8,6 +8,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 from .utility import haversine
+from datetime import date
 
 
 class Station(models.Model):
@@ -109,6 +110,10 @@ class Train(models.Model):
         ## Nom affiché dans l'interface d'administration de Django.
         verbose_name = "train"
 
+    def runs(self, date):
+        """Déterminer si un train roule à une certaine date."""
+        return self.period.includes_date(date)
+
     def __str__(self):
         """Représentation textuelle du train pour l'affichage."""
         return str(self.traintype) + " " + str(self.number)
@@ -162,9 +167,9 @@ class Period(models.Model):
     ## Indique si les trains circulent le dimanche.
     sunday = models.BooleanField()
     ## Indique la date de début de validité de la période.
-    start_date = models.DateTimeField()
+    start_date = models.DateField()
     ## Indique la date de fin de validité de la période.
-    end_date = models.DateTimeField()
+    end_date = models.DateField()
 
     class Meta:
         """Métadonnées du modèle de période de service."""
@@ -172,6 +177,25 @@ class Period(models.Model):
         verbose_name = "période de service"
         ## Nom au pluriel affiché dans l'administration de Django.
         verbose_name_plural = "périodes de service"
+
+    def week_tuple(self):
+        """Obtenir un tuple de booléens correspondant aux jours de la semaine.
+        Correspond à :
+        (monday, tuesday, wednesday, thursday, friday, saturday, sunday)"""
+        return (
+            self.monday, self.tuesday, self.wednesday, self.thursday,
+            self.friday, self.saturday, self.sunday)
+
+    def includes_date(self, date):
+        """Teste si une date fait partie de la période concernée.
+        Quand une date fait partie d'une période, un train ayant cette période
+        roulera à cette date."""
+        if not start_date < date < end_date:
+            return False
+        ex = self.periodexception_set.objects.filter(date=date)
+        if ex.exists():
+            return ex.add_day()
+        return self.week_tuple()[date.weekday()]
 
     def __str__(self):
         """Représentation textuelle de la période pour l'affichage."""
