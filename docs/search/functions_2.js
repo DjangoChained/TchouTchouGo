@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['price',['price',['../classmain_1_1models_1_1Ticket.html#aa8ee50c8fa1c8424d759aa05aa8a8241',1,'main::models::Ticket']]]
+  ['distance',['distance',['../classmain_1_1models_1_1Ticket.html#a3d02f3740caac949bf8fd45438c9f626',1,'main::models::Ticket']]],
+  ['distance_5fto',['distance_to',['../classmain_1_1models_1_1Station.html#a461059d20bcddac84ce47a10f901cd70',1,'main::models::Station']]]
 ];

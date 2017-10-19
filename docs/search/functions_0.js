@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['distance',['distance',['../classmain_1_1models_1_1Ticket.html#a3d02f3740caac949bf8fd45438c9f626',1,'main::models::Ticket']]]
+  ['_5f_5fstr_5f_5f',['__str__',['../classmain_1_1models_1_1Station.html#a19e5eeb1dfde6754fa679422b0eb87d1',1,'main.models.Station.__str__()'],['../classmain_1_1models_1_1Halt.html#a8ea94996efbdff1bd5c8d44ec7a1cbfd',1,'main.models.Halt.__str__()'],['../classmain_1_1models_1_1Train.html#a5309e9b629b4fb3b215f53dbd5daf954',1,'main.models.Train.__str__()'],['../classmain_1_1models_1_1TrainType.html#aca957277e21ae7484162b0e09abf4f22',1,'main.models.TrainType.__str__()'],['../classmain_1_1models_1_1Period.html#a39c109ebcb20186aa192292c0b37e8fc',1,'main.models.Period.__str__()'],['../classmain_1_1models_1_1PeriodException.html#a78320bc9a4193b8c8e6dda738419b257',1,'main.models.PeriodException.__str__()'],['../classmain_1_1models_1_1Ticket.html#ab90bf3291557ab2c4a6a6bbb683e4e0d',1,'main.models.Ticket.__str__()'],['../classmain_1_1models_1_1Travel.html#aa3dd4a6aa2a1dafbabdf36b16796ead7',1,'main.models.Travel.__str__()']]]
 ];
