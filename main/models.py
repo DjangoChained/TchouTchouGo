@@ -108,6 +108,11 @@ class Train(models.Model):
     #  Si un train utilise un type de train, on ne peut pas le supprimer.
     traintype = models.ForeignKey(
         'TrainType', on_delete=models.PROTECT, verbose_name="Type de train")
+    ## Capacité maximale d'un train.
+    #  Une réservation devrait être impossible si un train ne peut pas contenir
+    #  tous les passagers.
+    capacity = models.PositiveIntegerField(
+        verbose_name="Capacité de passagers")
 
     class Meta:
         """Métadonnées du modèle de train."""
@@ -117,6 +122,16 @@ class Train(models.Model):
     def runs(self, date):
         """Déterminer si un train roule à une certaine date."""
         return self.period.includes_date(date)
+
+    def can_hold(self, start_halt, end_halt, passengers):
+        """Détermine si un train peut accepter d'embarquer un nombre donné de
+        passagers entre deux arrêts."""
+        return True not in [
+            sum([t.travel.passengers for t in h.ticket_set.objects.all()]) +
+            passengers > self.capacity
+            for h in self.halt_set.objects.filter(
+                sequence__gte=start_halt.sequence,
+                sequence__lte=end_halt.sequence)]
 
     def __str__(self):
         """Représentation textuelle du train pour l'affichage."""
@@ -293,6 +308,11 @@ class Ticket(models.Model):
     def price(self):
         """Prix du billet."""
         return self.distance * self.start_halt.train.traintype.km_price
+
+    @property
+    def passengers(self):
+        """Nombre de passagers pour ce billet."""
+        return self.travel.passengers
 
     def __str__(self):
         """Représentation textuelle du billet pour affichage."""
