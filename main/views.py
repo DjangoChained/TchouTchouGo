@@ -12,6 +12,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 
+'''JUSTE POUR LES TEST'''
+from pprint import pprint
+
 
 def search(request):
     form = SearchForm(request.POST or None)
@@ -26,6 +29,9 @@ def searchResult(request):
 
 
 def tickets(request):
+    """return render(request, 'main/tickets.html', dict(active="list"))"""
+    if not request.user.is_authenticated():
+        return redirect('search')
     return render(request, 'main/tickets.html', dict(active="list"))
 
 
