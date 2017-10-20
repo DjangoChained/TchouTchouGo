@@ -356,7 +356,7 @@ class Travel(models.Model):
     @property
     def end_station(self):
         """Station d'arrivée du voyage."""
-        return self.ticket_set.order_by('-sequence')[0].get().end_halt.station
+        return self.ticket_set.order_by('-sequence')[0].end_halt.station
 
     @property
     def start_time(self):
