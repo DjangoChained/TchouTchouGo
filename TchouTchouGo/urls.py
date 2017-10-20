@@ -24,3 +24,7 @@ urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/train/', permanent=False)),
     url(r'^train/', include('main.urls')),
 ]
+handler500 = 'main.errors_views.handler500'
+handler404 = 'main.errors_views.handler404'
+handler403 = 'main.errors_views.handler403'
+handler400 = 'main.errors_views.handler400'

@@ -57,6 +57,23 @@ margin-right: 10px;
     column-count: 2;
 }
 
+.bloc_erreurs {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 50rem;
+    border: 1px solid #0D6BAA;
+    text-align: center;
+    padding: 2em;
+    margin: 5em auto 0;
+    border-radius: 20px;
+}
+
+.bloc_erreurs h1, h2, h3, h4, h5, h6, p {
+    font-size: 300%;
+    color: #0A003F;
+    text-shadow: 2px 2px white
+}
+
 .bloc_cards{
     display: block;
     background-color: rgba(255, 255, 255, 0.3);
