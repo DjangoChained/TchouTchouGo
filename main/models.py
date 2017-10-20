@@ -120,7 +120,12 @@ class Train(models.Model):
         verbose_name = "train"
 
     def runs(self, date):
-        """Déterminer si un train roule à une certaine date."""
+        """Déterminer si un train roule à une certaine date.
+        Si les données de la SNCF sont mauvaises (et c'est le cas), et qu'il
+        n'y a pas de période de service associée, un train roulera tous les
+        jours, toute l'année."""
+        if not self.period:
+            return true
         return self.period.includes_date(date)
 
     def can_hold(self, start_halt, end_halt, passengers):
