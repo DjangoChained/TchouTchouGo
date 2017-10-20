@@ -120,16 +120,21 @@ class Train(models.Model):
         verbose_name = "train"
 
     def runs(self, date):
-        """Déterminer si un train roule à une certaine date."""
+        """Déterminer si un train roule à une certaine date.
+        Si les données de la SNCF sont mauvaises (et c'est le cas), et qu'il
+        n'y a pas de période de service associée, un train roulera tous les
+        jours, toute l'année."""
+        if not self.period:
+            return true
         return self.period.includes_date(date)
 
     def can_hold(self, start_halt, end_halt, passengers):
         """Détermine si un train peut accepter d'embarquer un nombre donné de
         passagers entre deux arrêts."""
         return True not in [
-            sum([t.travel.passengers for t in h.ticket_set.objects.all()]) +
+            sum([t.travel.passengers for t in h.ticket_set.all()]) +
             passengers > self.capacity
-            for h in self.halt_set.objects.filter(
+            for h in self.halt_set.filter(
                 sequence__gte=start_halt.sequence,
                 sequence__lte=end_halt.sequence)]
 
@@ -209,17 +214,17 @@ class Period(models.Model):
         """Teste si une date fait partie de la période concernée.
         Quand une date fait partie d'une période, un train ayant cette période
         roulera à cette date."""
-        if not start_date < date < end_date:
+        if not self.start_date.date() < date < self.end_date.date():
             return False
-        ex = self.periodexception_set.objects.filter(date=date)
+        ex = self.periodexception_set.filter(date=date)
         if ex.exists():
             return ex.add_day()
         return self.week_tuple()[date.weekday()]
 
     def __str__(self):
         """Représentation textuelle de la période pour l'affichage."""
-        return "Service entre " + str(self.start_date) + " et " + \
-            str(self.end_date)
+        return "Service entre " + str(self.start_date.date()) + " et " + \
+            str(self.end_date.date())
 
 
 class PeriodException(models.Model):
@@ -263,7 +268,7 @@ class PeriodException(models.Model):
     def __str__(self):
         """Représentation textuelle de l'exception pour affichage."""
         return u"Exception pour le " + str(self.period) + \
-            ", le " + str(self.date)
+            ", le " + str(self.date.date())
 
 
 class Ticket(models.Model):
@@ -386,5 +391,5 @@ class Travel(models.Model):
         return ("Voyage vide" if not self.ticket_set.count() else
                 "Voyage de " + str(self.start_station) + " à " +
                 str(self.end_station)) + \
-            " le " + str(self.date) + " pour " + \
+            " le " + str(self.date.date()) + " pour " + \
             str(self.passengers) + " passagers"

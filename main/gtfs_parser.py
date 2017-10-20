@@ -74,19 +74,18 @@ def parse_gtfs_calendar(lines):
     for line in lines:
         if Period.objects.filter(id=int(line[0])).exists():
             continue
-        p.append(Period.objects.create(id=int(line[0]),
-                                       monday=(line[1] == '1'),
-                                       tuesday=(line[2] == '1'),
-                                       wednesday=(line[3] == '1'),
-                                       thursday=(line[4] == '1'),
-                                       friday=(line[5] == '1'),
-                                       saturday=(line[6] == '1'),
-                                       sunday=(line[7] == '1'),
-                                       start_date=parse_gtfs_date(line[8]),
-                                       end_date=parse_gtfs_date(line[9])))
+        p.append(Period(id=int(line[0]),
+                        monday=(line[1] == '1'),
+                        tuesday=(line[2] == '1'),
+                        wednesday=(line[3] == '1'),
+                        thursday=(line[4] == '1'),
+                        friday=(line[5] == '1'),
+                        saturday=(line[6] == '1'),
+                        sunday=(line[7] == '1'),
+                        start_date=parse_gtfs_date(line[8]),
+                        end_date=parse_gtfs_date(line[9])))
     print("Writing to database...")
-    for per in p:
-        per.save()
+    [per.save() for per in p]
 
 
 def parse_gtfs_calendar_dates(lines):
@@ -102,12 +101,11 @@ def parse_gtfs_calendar_dates(lines):
         date = parse_gtfs_date(line[1])
         if PeriodException.objects.filter(period=p, date=date).exists():
             continue
-        pex.append(PeriodException.objects.create(date=date,
-                                                  add_day=line[2] == '1',
-                                                  period=p))
+        pex.append(PeriodException(date=date,
+                                   add_day=line[2] == '1',
+                                   period=p))
     print("Writing to database...")
-    for ex in pex:
-        ex.save()
+    [ex.save() for ex in pex]
 
 
 def parse_gtfs_stops_traintype(lines):
@@ -124,13 +122,12 @@ def parse_gtfs_stops_traintype(lines):
     # set() permet de supprimer les très nombreux doublons.
     # On reconvertit ensuite en liste avec list() pour créer des TrainTypes,
     # dans une troisième compréhension de liste, en évitant les doublons.
-    traintypes = [TrainType.objects.create(name=name) for name in list(set(
+    traintypes = [TrainType(name=name) for name in list(set(
         [regex.sub('\\1', stopid) for stopid in
             [line[0] for line in lines if line[0].startswith("StopPoint")]]))
         if not TrainType.objects.filter(name=name).exists()]
     print("Writing to database...")
-    for tt in traintypes:
-        tt.save()
+    [tt.save() for tt in traintypes]
 
 
 def parse_gtfs_stops_station(lines):
@@ -138,15 +135,14 @@ def parse_gtfs_stops_station(lines):
     format GTFS."""
     id_regex = re.compile(r"^.*OCE.*-([0-9]+)$", re.MULTILINE)
     name_regex = re.compile(r"^(gare de)? (.*)$", re.MULTILINE)
-    stations = [Station.objects.create(id=int(id_regex.sub('\\1', line[0])),
-                                       name=name_regex.sub('\\2', line[1]),
-                                       lat=line[3], lng=line[4])
+    stations = [Station(id=int(id_regex.sub('\\1', line[0])),
+                        name=name_regex.sub('\\2', line[1]),
+                        lat=line[3], lng=line[4])
                 for line in lines
                 if line[0].startswith("StopPoint") and not Station.objects
                 .filter(id=int(id_regex.sub('\\1', line[0]))).exists()]
     print("Writing to database...")
-    for s in stations:
-        s.save()
+    [s.save() for s in stations]
 
 
 def parse_gtfs_trains(trips, stop_times_path):
@@ -167,17 +163,15 @@ def parse_gtfs_trains(trips, stop_times_path):
             p = int(trip[1])
         else:
             p = None
-        t = Train.objects.create(
+        t = Train(
             number=int(trip[3]), traintype=TrainType.objects.get(
                 name=tt_regex.sub('\\1', trip_stop_times[0][3])))
         t.period_id = p
         trains.append(t)
         halts.extend(parse_gtfs_halts_train(trip[2], trip_stop_times, t.id))
     print("Writing to database...")
-    for t in trains:
-        t.save()
-    for h in halts:
-        h.save()
+    [t.save() for t in trains]
+    [h.save() for h in halts]
 
 
 def parse_gtfs_halts_train(trip_id, stop_times, train_id):
@@ -190,8 +184,7 @@ def parse_gtfs_halts_train(trip_id, stop_times, train_id):
         ar_sec = time(hour=int(ar_time[0]) % 24, minute=int(ar_time[1]))
         dep_time = stop_time[2].split(':', 2)
         dep_sec = time(hour=int(dep_time[0]) % 24, minute=int(dep_time[1]))
-        h = Halt.objects.create(
-            arrival=ar_sec, departure=dep_sec, sequence=stop_time[4])
+        h = Halt(arrival=ar_sec, departure=dep_sec, sequence=stop_time[4])
         h.station_id = int(station_id_regex.sub('\\1', stop_time[3]))
         h.train_id = train_id
         halts.append(h)

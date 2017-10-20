@@ -4,10 +4,7 @@
     <form class="form m-0" action="{% url 'search' %}" method="post">
         {% csrf_token %}
         {% for error in field.errors %}
-            <p style="color: red">{{ error }}</p>
-        {% endfor %}
-        {% for station in stations  %}
-            <p>{{ station.name }}</p>
+            <div class="alert alert-danger">{{ error }}</p>
         {% endfor %}
         <div class="input-stack mb-3">
             <input type="text" class="form-control form-control-lg" placeholder="Gare de départ" name="startStation" required />
@@ -19,12 +16,12 @@
             <div class="form-group col-sm-8 col-12 text-sm-right text-center mt-1">
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="timeOptions" id="timeOption1" value="leaveAfter" required /><span class="bigger">Partir après</span>
+                        <input class="form-check-input" type="radio" name="timeOptions" id="timeOption1" value="DEPART_AFTER" required /><span class="bigger">Partir après</span>
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="timeOptions" id="timeOption2" value="arriveBefore" required /><span class="bigger">Arriver avant</span>
+                        <input class="form-check-input" type="radio" name="timeOptions" id="timeOption2" value="ARRIVE_BEFORE" required /><span class="bigger">Arriver avant</span>
                     </label>
                 </div>
             </div>
@@ -53,7 +50,7 @@
         </div>
         <div class="form-row">
             <div class="form-group col-sm-6 col-12 align-self-center mb-0">
-                <input type="number" class="form-control form-control-lg mb-0" placeholder="passagers" name="passenger" required min="1"
+                <input type="number" class="form-control form-control-lg mb-0" placeholder="passagers" name="passengers" required min="1"
                     max="9" value="1"/>
             </div>
             <div class="form-group col-sm-6 col-12 align-self-center mb-0">
