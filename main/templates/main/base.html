@@ -9,6 +9,7 @@
         <meta charset="utf-8" />
     </head>
     <body>
+        <script src="{% static 'js/jquery.min.js' %}"></script>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="{% url "search" %}"><i class="fa fa-train"></i> TchouTchouGo</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Ouvrir la barre de navigation">
@@ -16,31 +17,39 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
+                    {% if user.is_authenticated %}
                     <li class="nav-item {% if active == "search" %}active{% endif %}">
                         <a class="nav-link" href="{% url "search" %}"><i class="fa fa-search"></i> Recherche</a>
                     </li>
-                    {% if user|length > 0 %}
                     <li class="nav-item {% if active == "list" %}active{% endif %}">
-                        <a class="nav-link" href="#"><i class="fa fa-ticket"></i> Billets</a>
+                        <a class="nav-link" href="{% url "tickets" %}"><i class="fa fa-ticket"></i> Billets</a>
                     </li>
                     {% endif %}
                 </ul>
                 {% if user.is_authenticated %}
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item {% if active == "account" %}active{% endif %}">
-                        <a class="nav-link" href="{% url "updateProfile" %}"><i class="fa fa-user-circle"></i>{{ user.username }}</a>
+                        {% if request.user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin" %}><i class="fa fa-wrench"></i>Administration</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle"></i> {{ user.first_name|default:user.username }}</a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{% url "update_profile" %}"><i class="fa fa-pencil"></i> Mon compte</a>
+                            <a class="dropdown-item" href="{% url "logout" %}"><i class="fa fa-sign-out"></i> Déconnexion</a>
+                        </div>
                     </li>
                 </ul>
                 {% else %}
                 <form class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Se connecter</button>
-                    <button class="btn btn-info ml-2 my-2 my-sm-0" type="submit">S'inscrire</button>
+                    <a href="{% url 'login' %}"><button class="btn btn-outline-secondary my-2 my-sm-0" type="button">Se connecter</button></a>
+                    <a href="{% url 'signup' %}"><button class="btn btn-info ml-2 my-2 my-sm-0" type="button">S'inscrire</button></a>
                 </form>
                 {% endif %}
             </div>
         </nav>
         <div class="global">{% block content %}{% endblock %}</div>
-        <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/popper.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
     </body>

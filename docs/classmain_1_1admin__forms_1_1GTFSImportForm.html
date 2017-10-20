@@ -102,15 +102,18 @@ Graphe de collaboration de main.admin_forms.GTFSImportForm:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Attributs publics statiques</h2></td></tr>
-<tr class="memitem:a9fba7a4d84f83e938af14c0733fa4667"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><b>zip_ter</b></td></tr>
+<tr class="memitem:a9fba7a4d84f83e938af14c0733fa4667"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1admin__forms_1_1GTFSImportForm.html#a9fba7a4d84f83e938af14c0733fa4667">zip_ter</a></td></tr>
+<tr class="memdesc:a9fba7a4d84f83e938af14c0733fa4667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Champ pour l'archive ZIP des données TER SNCF.  <a href="#a9fba7a4d84f83e938af14c0733fa4667">Plus de détails...</a><br /></td></tr>
 <tr class="separator:a9fba7a4d84f83e938af14c0733fa4667"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9102ba203a3bc60569806d76f1b38d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><b>zip_ic</b></td></tr>
+<tr class="memitem:af9102ba203a3bc60569806d76f1b38d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1admin__forms_1_1GTFSImportForm.html#af9102ba203a3bc60569806d76f1b38d8">zip_ic</a></td></tr>
+<tr class="memdesc:af9102ba203a3bc60569806d76f1b38d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Champ pour l'archive ZIP des données IC SNCF.  <a href="#af9102ba203a3bc60569806d76f1b38d8">Plus de détails...</a><br /></td></tr>
 <tr class="separator:af9102ba203a3bc60569806d76f1b38d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a349ffb6aadcaff32b578b6ad20f5d8a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><b>clear_everything</b></td></tr>
+<tr class="memitem:a349ffb6aadcaff32b578b6ad20f5d8a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1admin__forms_1_1GTFSImportForm.html#a349ffb6aadcaff32b578b6ad20f5d8a3">clear_everything</a></td></tr>
+<tr class="memdesc:a349ffb6aadcaff32b578b6ad20f5d8a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Case à cocher définissant s'il faut nettoyer toute la base de données avant d'effectuer l'importation.  <a href="#a349ffb6aadcaff32b578b6ad20f5d8a3">Plus de détails...</a><br /></td></tr>
 <tr class="separator:a349ffb6aadcaff32b578b6ad20f5d8a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
-<div class="textblock">
+<div class="textblock"><pre class="fragment">Formulaire de l'interface d'administration pour l'importation GTFS.</pre> 
 <p>Définition à la ligne <a class="el" href="admin__forms_8py_source.html#l00005">5</a> du fichier <a class="el" href="admin__forms_8py_source.html">admin_forms.py</a>.</p>
 </div><h2 class="groupheader">Documentation des données membres</h2>
 <a class="anchor" id="a349ffb6aadcaff32b578b6ad20f5d8a3"></a>
@@ -131,7 +134,9 @@ Attributs publics statiques</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Valeur initiale :</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= forms.BooleanField(</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;        label=<span class="stringliteral">&quot;Effacer tout&quot;</span>, required=<span class="keyword">False</span>,</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;        help_text=<span class="stringliteral">&quot;Effacer l&#39;intégralité des données ferroviaires avant de &quot;</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;                  <span class="stringliteral">&quot;procéder à l&#39;importation.&quot;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    )</div></div><!-- fragment -->
-<p>Définition à la ligne <a class="el" href="admin__forms_8py_source.html#l00016">16</a> du fichier <a class="el" href="admin__forms_8py_source.html">admin_forms.py</a>.</p>
+<p>Case à cocher définissant s'il faut nettoyer toute la base de données avant d'effectuer l'importation. </p>
+
+<p>Définition à la ligne <a class="el" href="admin__forms_8py_source.html#l00021">21</a> du fichier <a class="el" href="admin__forms_8py_source.html">admin_forms.py</a>.</p>
 
 </div>
 </div>
@@ -153,7 +158,9 @@ Attributs publics statiques</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Valeur initiale :</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= forms.FileField(</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;        allow_empty_file=<span class="keyword">False</span>, label=<span class="stringliteral">&quot;Archive IC&quot;</span>, required=<span class="keyword">True</span>,</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;        help_text=<span class="stringliteral">&quot;Archive au format ZIP fournie par la SNCF et contenant &quot;</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;                  <span class="stringliteral">&quot;les données d&#39;horaires des Intercités au format GTFS.&quot;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    )</div></div><!-- fragment -->
-<p>Définition à la ligne <a class="el" href="admin__forms_8py_source.html#l00011">11</a> du fichier <a class="el" href="admin__forms_8py_source.html">admin_forms.py</a>.</p>
+<p>Champ pour l'archive ZIP des données IC SNCF. </p>
+
+<p>Définition à la ligne <a class="el" href="admin__forms_8py_source.html#l00014">14</a> du fichier <a class="el" href="admin__forms_8py_source.html">admin_forms.py</a>.</p>
 
 </div>
 </div>
@@ -175,7 +182,9 @@ Attributs publics statiques</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Valeur initiale :</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= forms.FileField(</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;        allow_empty_file=<span class="keyword">False</span>, label=<span class="stringliteral">&quot;Archive TER&quot;</span>, required=<span class="keyword">True</span>,</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;        help_text=<span class="stringliteral">&quot;Archive au format ZIP fournie par la SNCF et contenant &quot;</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;                  <span class="stringliteral">&quot;les données d&#39;horaires des TER au format GTFS.&quot;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    )</div></div><!-- fragment -->
-<p>Définition à la ligne <a class="el" href="admin__forms_8py_source.html#l00006">6</a> du fichier <a class="el" href="admin__forms_8py_source.html">admin_forms.py</a>.</p>
+<p>Champ pour l'archive ZIP des données TER SNCF. </p>
+
+<p>Définition à la ligne <a class="el" href="admin__forms_8py_source.html#l00008">8</a> du fichier <a class="el" href="admin__forms_8py_source.html">admin_forms.py</a>.</p>
 
 </div>
 </div>

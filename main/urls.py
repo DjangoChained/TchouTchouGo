@@ -7,12 +7,11 @@ from . import views
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/train/search', permanent=False)),
     url(r'^search$', views.search, name='search'),
-    url(r'^searchResult$', views.searchResult, name='searchResult'),
     url(r'^tickets$', views.tickets, name='tickets'),
     url(r'^login$', auth_views.login, name='login'),
     url(r'^logout$', auth_views.logout, {'next_page': '/train'},
         name='logout'),
     url(r'^signup$', views.signup, name='signup'),
     url(r'^print/(\d+)$', views.print_ticket, name='print_ticket'),
-    url(r'^updateProfile$', views.updateProfile, name="updateProfile")
+    url(r'^updateprofile$', views.update_profile, name='update_profile'),
 ]

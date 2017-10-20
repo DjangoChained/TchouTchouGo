@@ -1,31 +1,46 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SearchForm, SignUpForm, UserForm
-from .models import Travel
+from .models import Travel, Station
+from .search import TimeOptions, search as search_trains
 
-from django.shortcuts import HttpResponseRedirect
+from datetime import time
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.shortcuts import \
+    render, redirect, get_object_or_404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 
 
 def search(request):
-    form = SearchForm(request.POST or None)
-    if form.is_valid():
-        # TODO: Rediriger vers la vue de résultats
-        pass
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            start_station = Station.objects.get(
+                name=form.cleaned_data.get('startStation'))
+            end_station = Station.objects.get(
+                name=form.cleaned_data.get('endStation'))
+
+            return render(
+                request, 'main/searchResult.html',
+                dict(active="search",
+                     start_station=start_station,
+                     end_station=end_station,
+                     results=search_trains(
+                         start_station, end_station,
+                         form.cleaned_data.get('travelDate'),
+                         time(hour=int(form.cleaned_data.get('hour'))),
+                         form.cleaned_data.get('passengers'),
+                         TimeOptions[form.cleaned_data.get('timeOptions')])))
     return render(request, 'main/search.html', dict(active="search"))
 
 
-def searchResult(request):
-    return render(request, 'main/searchResult.html', dict(active="search"))
-
-
 def tickets(request):
+    if not request.user.is_authenticated():
+        return redirect('search')
     return render(request, 'main/tickets.html', dict(active="list"))
 
 
@@ -53,7 +68,7 @@ def print_ticket(request, travel_id):
 
 
 @login_required()
-def updateProfile(request):
+def update_profile(request):
     user = User.objects.get(pk=request.user.id)
     # prepopulate UserProfileForm with retrieved user values from above.
     form = UserForm(instance=user)

@@ -80,12 +80,8 @@ WSGI_APPLICATION = 'TchouTchouGo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tchou',
-        'USER': 'tchou',
-        'PASSWORD': 'tchoutchougo',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -126,6 +122,10 @@ USE_L10N = True
 
 USE_TZ = False
 
+
+# Login page settings
+
+LOGIN_URL = '/train/login'
 LOGIN_REDIRECT_URL = '/train/search'
 
 

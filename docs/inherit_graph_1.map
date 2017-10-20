@@ -1,4 +1,3 @@
 <map id="Graphe hiérarchique des classes" name="Graphe hiérarchique des classes">
-<area shape="rect" id="node2" href="$classmain_1_1admin__forms_1_1GTFSImportForm.html" title="main.admin_forms.GTFSImportForm" alt="" coords="105,5,340,32"/>
-<area shape="rect" id="node3" href="$classmain_1_1forms_1_1SearchForm.html" title="main.forms.SearchForm" alt="" coords="141,56,304,83"/>
+<area shape="rect" id="node2" href="$classmain_1_1admin_1_1TicketAdmin.html" title="main.admin.TicketAdmin" alt="" coords="148,5,315,32"/>
 </map>

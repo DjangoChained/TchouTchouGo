@@ -1,80 +1,31 @@
 {% extends 'main/base.html' %} {% block content %}
 
 <div class="bloc_cards mb-5">
-	<h4 class="text-center"> Itinéraire de Douai à Lille</h4>
+	<h4 class="text-center"> Itinéraire de {{ start_station.name }} à {{ end_station.name }}</h4>
 	<div class="card-columns">
+		{% for result in results %}
 		<div class="card">
 			<ul class="list-group list-group-flush">
+				{% for ticket in result.tickets %}
 				<li class="list-group-item">
-					<div><span class="hour">17h02</span> Douai</div>
-					<div class="train">Train TER <strong>843801</strong></div>
-					<div><span class="hour">18h02</span> Lille</div>
+					<div>
+						<span class="hour">{{ ticket.start_halt.arrival }}</span>{{ ticket.start_halt.station }}</div>
+					<div class="train">{{ ticket.start_halt.train.traintype }}
+						<strong>{{ ticket.start_halt.train.number }}</strong>
+					</div>
+					<div>
+						<span class="hour">{{ ticket.end_halt.arrival }}</span>{{ ticket.end_halt.station }}</div>
 				</li>
-				<li class="list-group-item text-center">
-					<div class="price">234,63€</div>
-					<button type="button" class="btn btn-primary">Réserver</button>
+				{% endfor %}
+				<li class="list-group-item">
+					<div class="price float-right">{{ travel.total_price|stringformat:".2f" }} €</div>
+					<div class="mt-1">{{ result.passengers }} passagers</div>
+					<div class="clearfix"></div>
+					<a href="#" class="btn btn-primary mx-auto d-block">Réserver</a>
 				</li>
 			</ul>
 		</div>
-		<div class="card">
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item">
-					<div><span class="hour">17h02</span> Douai</div>
-					<div class="train">Train TER <strong>843801</strong></div>
-					<div><span class="hour">18h02</span> Lille</div>
-				</li>
-				<li class="list-group-item">
-					<div><span class="hour">17h02</span> Douai</div>
-					<div class="train">Train TER <strong>843801</strong></div>
-					<div><span class="hour">18h02</span> Lille</div>
-				</li>
-				<li class="list-group-item">
-					<div><span class="hour">17h02</span> Douai</div>
-					<div class="train">Train TER <strong>843801</strong></div>
-					<div><span class="hour">18h02</span> Lille</div>
-				</li>
-				<li class="list-group-item text-center">
-					<div class="price">234,63€</div>
-					<button type="button" class="btn btn-primary">Réserver</button>
-				</li>
-			</ul>
-		</div>
-		<div class="card">
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item">
-					<div><span class="hour">17h02</span> Douai</div>
-					<div class="train">Train TER <strong>843801</strong></div>
-					<div><span class="hour">18h02</span> Lille</div>
-				</li>
-				<li class="list-group-item text-center">
-					<div class="price">234,63€</div>
-					<button type="button" class="btn btn-primary">Réserver</button>
-				</li>
-			</ul>
-		</div>
-		<div class="card">
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item">
-					<div><span class="hour">17h02</span> Douai</div>
-					<div class="train">Train TER <strong>843801</strong></div>
-					<div><span class="hour">18h02</span> Lille</div>
-				</li>
-				<li class="list-group-item">
-					<div><span class="hour">17h02</span> Douai</div>
-					<div class="train">Train TER <strong>843801</strong></div>
-					<div><span class="hour">18h02</span> Lille</div>
-				</li>
-				<li class="list-group-item">
-					<div><span class="hour">17h02</span> Douai</div>
-					<div class="train">Train TER <strong>843801</strong></div>
-					<div><span class="hour">18h02</span> Lille</div>
-				</li>
-				<li class="list-group-item text-center">
-					<div class="price">234,63€</div>
-					<button type="button" class="btn btn-primary">Réserver</button>
-				</li>
-			</ul>
-		</div>
+		{% endfor %}
 	</div>
 </div>
 
