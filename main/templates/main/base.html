@@ -28,6 +28,11 @@
                 </ul>
                 {% if user.is_authenticated %}
                 <ul class="navbar-nav ml-auto">
+                        {% if request.user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin" %}><i class="fa fa-wrench"></i>Administration</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle"></i> {{ user.first_name|default:user.username }}</a>
                         <div class="dropdown-menu dropdown-menu-right">
