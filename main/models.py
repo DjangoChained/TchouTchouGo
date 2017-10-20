@@ -156,9 +156,9 @@ class Ticket(models.Model):
     """
     sequence = models.PositiveSmallIntegerField()
     start_halt = models.ForeignKey('Halt', on_delete=models.PROTECT,
-                                   related_name='+')
+                                   related_name='ticket_start_set')
     end_halt = models.ForeignKey('Halt', on_delete=models.PROTECT,
-                                 related_name='+')
+                                 related_name='ticket_end_set')
     travel = models.ForeignKey('Travel', on_delete=models.CASCADE)
 
     class Meta:

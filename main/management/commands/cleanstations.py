@@ -16,4 +16,4 @@ class Command(BaseCommand):
         newcount = Station.objects.count()
         self.stdout.write(self.style.SUCCESS(
             'Nettoyage des stations effectué. ' +
-            (oldcount - newcount) + ' stations supprimées.'))
+            str(oldcount - newcount) + ' stations supprimées.'))

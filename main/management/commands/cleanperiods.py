@@ -17,4 +17,4 @@ class Command(BaseCommand):
         newcount = Period.objects.count()
         self.stdout.write(self.style.SUCCESS(
             'Nettoyage des périodes de service effectué. ' +
-            (oldcount - newcount) + ' périodes supprimées.'))
+            str(oldcount - newcount) + ' périodes supprimées.'))
