@@ -3,6 +3,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Station
+from django.core.exceptions import ValidationError
+
+
+def validate_station(value):
+    if not value or not Station.objects.filter(name=value).exists():
+        raise ValidationError("La gare de %(value)s n'existe pas.",
+                              code='notfound', params={'value': value})
 
 
 class SearchForm(forms.Form):
@@ -11,19 +19,23 @@ class SearchForm(forms.Form):
     #  Permet de demander à l'utilisateur s'il veut partir après ou arriver
     #  avant l'heure qu'il spécifie.
     TIME_OPTIONS = [
-        ('leaveAfter', 'Partir après'),
-        ('arriveBefore', 'Arriver avant')
+        ('DEPART_AFTER', 'Partir après'),
+        ('ARRIVE_BEFORE', 'Arriver avant')
     ]
     ## Champ indiquant le nom de la gare de départ.
-    startStation = forms.CharField(max_length=40, required=True)
+    startStation = forms.CharField(max_length=40, required=True,
+                                   validators=[validate_station])
     ## Champ indiquant le nom de la gare d'arrivée.
-    endStation = forms.CharField(max_length=40, required=True)
+    endStation = forms.CharField(max_length=40, required=True,
+                                 validators=[validate_station])
     ## Champ indiquant la date souhaitée du voyage.
     travelDate = forms.DateField(required=True)
     ## Champ utilisé pour les options de l'heure (voir TIME_OPTIONS).
     timeOptions = forms.ChoiceField(choices=TIME_OPTIONS)
     ## Champ utilisé pour la sélection du créneau horaire.
     hour = forms.ChoiceField(choices=[(str(i), str(i)) for i in range(5, 22)])
+    ## Champ utilisé pour le nombre de passagers.
+    passengers = forms.IntegerField(min_value=1, max_value=9)
 
 
 class SignUpForm(UserCreationForm):
