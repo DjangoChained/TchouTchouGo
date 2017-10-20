@@ -5,15 +5,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SearchForm, SignUpForm, UserForm
-from .models import Travel
+from .models import Travel, Station
 
 from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
-
-'''JUSTE POUR LES TEST'''
-from pprint import pprint
 
 
 def search(request):
@@ -21,15 +18,18 @@ def search(request):
     if form.is_valid():
         # TODO: Rediriger vers la vue de résultats
         pass
-    return render(request, 'main/search.html', dict(active="search"))
+    stations = Station.objects.all()
+    return render(request, 'main/search.html', dict(
+        active="search", stations=stations))
 
 
 def searchResult(request):
-    return render(request, 'main/searchResult.html', dict(active="search"))
+    return render(request, 'main/searchResult.html', dict(
+        active="search",
+        travels=request.user.travel_set.all))
 
 
 def tickets(request):
-    """return render(request, 'main/tickets.html', dict(active="list"))"""
     if not request.user.is_authenticated():
         return redirect('search')
     return render(request, 'main/tickets.html', dict(active="list"))
@@ -71,7 +71,7 @@ def update_profile(request):
             if form.is_valid():
                 created_user = form.save(commit=False)
                 created_user.save()
-                return redirect('/train/updateprofile')
+                return redirect('/train/updateProfile')
         return render(request, "registration/updateProfile.html", {
             'form': form
         })
