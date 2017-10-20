@@ -276,11 +276,21 @@ class Ticket(models.Model):
     sequence = models.PositiveSmallIntegerField(verbose_name="Numéro d'ordre")
     ## Arrêt de départ. Ce n'est pas une station ou un train puisqu'il est
     #  tout à fait possible de monter dans un train à une gare intermédiaire.
+    #  L'accès en sens inverse depuis Halt se fait avec Halt.ticket_start_set
+    #  pour éviter une collision avec l'ensemble des tickets ayant l'arrêt
+    #  de destination (ticket_end_set), qui autrement s'appellerait aussi
+    #  ticket_set par défaut.
     start_halt = models.ForeignKey(
-        'Halt', on_delete=models.PROTECT, verbose_name="Arrêt de départ")
+        'Halt', on_delete=models.PROTECT, verbose_name="Arrêt de départ",
+        related_name="ticket_start_set")
     ## Arrêt de destination.
+    #  L'accès en sens inverse depuis Halt se fait avec Halt.ticket_end_set
+    #  pour éviter une collision avec l'ensemble des tickets ayant l'arrêt
+    #  de départ (ticket_start_set), qui s'appellerait aussi ticket_set
+    #  par défaut.
     end_halt = models.ForeignKey(
-        'Halt', on_delete=models.PROTECT, verbose_name="Arrêt d'arrivée")
+        'Halt', on_delete=models.PROTECT, verbose_name="Arrêt d'arrivée",
+        related_name="ticket_end_set")
     ## Voyage contenant le billet.
     travel = models.ForeignKey(
         'Travel', on_delete=models.CASCADE, verbose_name="Voyage associé")
@@ -308,11 +318,6 @@ class Ticket(models.Model):
     def price(self):
         """Prix du billet."""
         return self.distance * self.start_halt.train.traintype.km_price
-
-    @property
-    def passengers(self):
-        """Nombre de passagers pour ce billet."""
-        return self.travel.passengers
 
     def __str__(self):
         """Représentation textuelle du billet pour affichage."""
@@ -351,7 +356,7 @@ class Travel(models.Model):
     @property
     def end_station(self):
         """Station d'arrivée du voyage."""
-        return self.ticket_set.order_by('-sequence')[:1].get().end_halt.station
+        return self.ticket_set.order_by('-sequence')[0].get().end_halt.station
 
     @property
     def start_time(self):
@@ -361,7 +366,7 @@ class Travel(models.Model):
     @property
     def end_time(self):
         """Heure d'arrivée du voyage."""
-        return self.ticket_set.order_by('-seqeunce')[:1].arrival
+        return self.ticket_set.order_by('-sequence')[0].arrival
 
     @property
     def total_price(self):
