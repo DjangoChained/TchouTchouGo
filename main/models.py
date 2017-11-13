@@ -343,7 +343,9 @@ class Travel(models.Model):
         default=1, verbose_name="Nombre de passagers")
     ## Association avec un utilisateur.
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Utilisateur")
+        User, on_delete=models.CASCADE, verbose_name="Utilisateur", null=True)
+    ## Voyage réservé ou état de résultat de recherche
+    booked = models.BooleanField(verbose_name="Trajet réservé")
 
     class Meta:
         """Métadonnées du modèle de voyage."""
