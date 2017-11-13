@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %} {% block content %}
+
+<div class="bloc_cards">
+	<h4 class="text-center" style="color:white;text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;">Mon panier</h4>
+	<div class="card-columns">
+		
+		
+		{% for travel in user.travel_set.all %}
+		<div class="card">
+			<div class="card-header">
+				{{ travel.date }}
+			</div>
+			<ul class="list-group list-group-flush">
+				{% for ticket in travel.ticket_set.all %}
+				<li class="list-group-item">
+					<div><span class="hour">{{ ticket.start_halt.arrival }}</span>{{ ticket.start_halt.station }}</div>
+					<div class="train">{{ ticket.start_halt.train.traintype }} <strong>{{ ticket.start_halt.train.number }}</strong></div>
+					<div><span class="hour">{{ ticket.end_halt.arrival }}</span>{{ ticket.end_halt.station }}</div>
+				</li>
+				{% endfor %}
+				<li class="list-group-item">
+					<span>{{ travel.passengers }} passagers</span>
+					<div class="price float-right">{{ travel.price|stringformat:".2f" }} €</div>
+				</li>
+			</ul>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}

@@ -24,6 +24,9 @@
                     <li class="nav-item {% if active == "list" %}active{% endif %}">
                         <a class="nav-link" href="{% url "tickets" %}"><i class="fa fa-ticket"></i> Billets</a>
                     </li>
+                    <li class="nav-item {% if active == "basket" %}active{% endif %}">
+                        <a class="nav-link" href="{% url "basket" %}"><i class="fa fa-shopping-cart"></i>Panier</a>
+                    </li>
                     {% endif %}
                 </ul>
                 {% if user.is_authenticated %}
