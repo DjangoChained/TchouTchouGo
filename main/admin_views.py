@@ -10,10 +10,10 @@ from main.models import \
 
 
 def handle_uploaded_zip(f):
-    with open('/tmp/'+basename(f.name), 'wb+') as destination:
+    with open('/tmp/' + basename(f.name), 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
-        return '/tmp/'+basename(f.name)
+        return '/tmp/' + basename(f.name)
 
 
 def gtfs_import(request):
