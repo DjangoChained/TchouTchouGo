@@ -165,7 +165,7 @@ def parse_gtfs_trains(trips, stop_times_path):
         else:
             p = None
         t = Train(
-            number=int(trip[3]), traintype=TrainType.objects.get(
+            number=int(trip[3]), capacity=3, traintype=TrainType.objects.get(
                 name=tt_regex.sub('\\1', trip_stop_times[0][3])))
         t.period_id = p
         trains.append(t)
