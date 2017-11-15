@@ -10,8 +10,7 @@
             <input type="text" class="form-control form-control-lg" placeholder="Gare de départ" name="startStation" required />
             <input type="text" class="form-control form-control-lg" placeholder="Gare d'arrivée" name="endStation" required />
         </div>
-        <input id="datepicker" type="date" class="datepicker form-control form-control-lg mb-3" placeholder="Date du voyage" name="travelDate" min="{% now "
-            Y-m-d " %}" required />
+        <input id="datepicker" type="date" class="datepicker form-control form-control-lg mb-3" placeholder="Date du voyage" name="travelDate" min="{% now " Y-m-d " %}" required />
         <div class="form-row justify-content-end">
             <div class="form-group col-sm-8 col-12 text-sm-right text-center mt-1">
                 <div class="form-check form-check-inline">
@@ -27,24 +26,9 @@
             </div>
             <div class="form-group col-sm-4 col-12">
                 <select class="custom-select form-control-lg d-block w-100" name="hour" required>
-                    <option value="5">05:00</option>
-                    <option value="6">06:00</option>
-                    <option value="7">07:00</option>
-                    <option value="8">08:00</option>
-                    <option value="9">09:00</option>
-                    <option value="10">10:00</option>
-                    <option value="11">11:00</option>
-                    <option value="12">12:00</option>
-                    <option value="13">13:00</option>
-                    <option value="14">14:00</option>
-                    <option value="15">15:00</option>
-                    <option value="16">16:00</option>
-                    <option value="17">17:00</option>
-                    <option value="18">18:00</option>
-                    <option value="19">19:00</option>
-                    <option value="20">20:00</option>
-                    <option value="21">21:00</option>
-                    <option value="22">22:00</option>
+                    {% for h in hours %}
+                        <option value={{h}}>{{h|stringformat:"02d"}}:00</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
@@ -55,8 +39,7 @@
                     <div class="dropdown-menu">
                         {% for passenger in passengers %}
                             <div class="dropdown-item">
-                                <input type="checkbox" name="passengers[]" id={{ passenger.id }} value={{ passenger }}>
-                                <label for={{ passenger.id }}>{{ passenger }}</label>
+                                <label for="passenger{{ passenger.id }}"><input type="checkbox" name="passengers" id="passenger{{ passenger.id }}" value="{{ passenger.id }}"> {{ passenger }}</label>
                             </div>
                         {% endfor %}
                         {% if passengers.count == 1 %}

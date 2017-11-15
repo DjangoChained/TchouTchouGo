@@ -18,14 +18,16 @@ from django.http import HttpResponseBadRequest
 
 
 def search(request):
+    passengers = []
+    if request.user.is_authenticated():
+        passengers = request.user.passenger_set.filter(display=True).all()
     if request.method == 'POST':
-        form = SearchForm(request.POST)
-        if form.is_valid():
+        form = SearchForm(request.POST, passengers=passengers)
+        if form.is_valid() and 'passengers' in dict(request.POST.lists()):
             start_station = Station.objects.get(
                 name=form.cleaned_data.get('startStation'))
             end_station = Station.objects.get(
                 name=form.cleaned_data.get('endStation'))
-
             return render(
                 request, 'main/searchResult.html',
                 dict(active="search",
@@ -35,13 +37,10 @@ def search(request):
                          start_station, end_station,
                          form.cleaned_data.get('travelDate'),
                          time(hour=int(form.cleaned_data.get('hour'))),
-                         request.POST.getlist('passengers'),
+                         [passengers.get(id=id) for id in dict(request.POST.lists())['passengers']],
                          TimeOptions[form.cleaned_data.get('timeOptions')])))
-    passengers = ""
-    if request.user.is_authenticated():
-        passengers = request.user.passenger_set.filter(display=True)
     return render(request, 'main/search.html',
-                  dict(active="search", passengers=passengers))
+                  dict(active="search", passengers=passengers, hours=range(5,23)))
 
 
 @login_required
@@ -51,6 +50,7 @@ def tickets(request):
                        travel_set=Travel.objects.filter(booked=True)))
 
 
+@login_required
 def basket(request):
     if not request.user.is_authenticated():
         return redirect('search')

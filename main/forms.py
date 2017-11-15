@@ -35,8 +35,11 @@ class SearchForm(forms.Form):
     timeOptions = forms.ChoiceField(choices=TIME_OPTIONS)
     ## Champ utilisé pour la sélection du créneau horaire.
     hour = forms.ChoiceField(choices=[(str(i), str(i)) for i in range(5, 22)])
-    ## Champ utilisé pour le nombre de passagers.
-    passengers = forms.IntegerField(min_value=1, max_value=9)
+
+    def __init__(self, *args, **kwargs):
+        ps = kwargs.pop('passengers')
+        super(SearchForm, self).__init__(*args, **kwargs)
+        passengers = forms.MultipleChoiceField(required=True, choices=[(str(p.id), str(p)) for p in ps])
 
 
 class SignUpForm(UserCreationForm):
