@@ -49,11 +49,25 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-sm-6 col-12 align-self-center mb-0">
-                <input type="number" class="form-control form-control-lg mb-0" placeholder="passagers" name="passengers" required min="1"
-                    max="9" value="1"/>
-            </div>
-            <div class="form-group col-sm-6 col-12 align-self-center mb-0">
+            {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>&nbsp;Passagers</button>
+                    <div class="dropdown-menu">
+                        {% for passenger in passengers %}
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="passengers[]" id={{ passenger.id }} value={{ passenger }}>
+                                <label for={{ passenger.id }}>{{ passenger }}</label>
+                            </div>
+                        {% endfor %}
+                        {% if passengers.count == 1 %}
+                        <div class="dropdown-item" style="width: 300px; white-space: normal; color: #333; font-size: 80%">
+                            Vous pouvez ajouter des passagers via l'onglet "Passagers" dans votre menu utilisateur.
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="col-sm-6 col-12 mb-0 d-inline-block mx-auto">
                 <button type="submit" class="btn btn-info d-block w-100 mb-0">Rechercher</button>
             </div>
         </div>

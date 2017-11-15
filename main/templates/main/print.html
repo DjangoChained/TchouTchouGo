@@ -38,7 +38,7 @@
                 {{ travel.passengers }} passager{{ travel.passengers|pluralize }}
             </div>
             <div class="col-6 ml-auto text-right">
-                <big><strong>{{ travel.total_price|stringformat:".2f" }} €</strong></big>
+                <big><strong>{{ travel.price|stringformat:".2f" }} €</strong></big>
             </div>
         </div>
         <p class="mt-5"><small>Édité le {% now 'd/m/Y' %} à {% now 'H:i' %}</small></p>

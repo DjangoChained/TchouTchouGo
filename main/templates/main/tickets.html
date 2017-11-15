@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %} {% block content %}
 
 <div class="bloc_cards">
-	<h4 class="text-center" style="color:white;text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;">Mes billets</h4>
+	<h1 class="text-center titre">Mes billets</h1>
 	<div class="card-columns">
 		
 		
@@ -23,7 +23,7 @@
 				{% endfor %}
 				<li class="list-group-item">
 					<span>{{ travel.passengers }} passagers</span>
-					<div class="price float-right">{{ travel.total_price|stringformat:".2f" }} €</div>
+					<div class="price float-right">{{ travel.price|stringformat:".2f" }} €</div>
 				</li>
 			</ul>
 		</div>
