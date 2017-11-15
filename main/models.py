@@ -369,6 +369,8 @@ class Travel(models.Model):
     ## Association avec des passagers.
     passengers_aboard = models.ManyToManyField(
         Passenger, verbose_name="Passager")
+    ## Voyage réservé ou état de résultat de recherche
+    booked = models.BooleanField(verbose_name="Trajet réservé")
 
     class Meta:
         """Métadonnées du modèle de voyage."""

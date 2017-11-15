@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import \
     render, redirect, get_object_or_404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseBadRequest
 
 
 def search(request):
@@ -43,10 +44,11 @@ def search(request):
                   dict(active="search", passengers=passengers))
 
 
+@login_required()
 def tickets(request):
-    if not request.user.is_authenticated():
-        return redirect('search')
-    return render(request, 'main/tickets.html', dict(active="list"))
+    return render(request, 'main/tickets.html',
+                  dict(active="list",
+                       travel_set=Travel.objects.filter(booked=False)))
 
 
 def basket(request):
@@ -135,12 +137,14 @@ def signup(request):
     return render(request, 'main/signup.html', {'form': form})
 
 
+@login_required()
 def print_ticket(request, travel_id):
     """Vue permettant l'impression d'un ensemble de billets."""
-    if not request.user.is_authenticated():
-        return redirect('search')
+    travel = get_object_or_404(Travel, id=travel_id)
+    if not travel.booked:
+        return HttpResponseBadRequest()
     return render(request, 'main/print.html',
-                  {'travel': get_object_or_404(Travel, id=travel_id)})
+                  {'travel': travel})
 
 
 @login_required()

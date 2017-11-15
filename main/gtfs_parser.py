@@ -45,7 +45,8 @@ def parse_gtfs_sncf(*args):
         parse_gtfs_stops_traintype(csv_reader_skip_header(f + "stops.txt"))
         print("Parsing " + f + "stops.txt (second pass)")
         parse_gtfs_stops_station(csv_reader_skip_header(f + "stops.txt"))
-        print("Parsing " + f + "trips.txt and " + f + "stop_times.txt")
+        print("Parsing " + f + "trips.txt and " + f +
+              "stop_times.txt, writing trains to database")
         parse_gtfs_trains(
             csv_reader_skip_header(f + "trips.txt"), f + "stop_times.txt")
 
@@ -53,8 +54,8 @@ def parse_gtfs_sncf(*args):
 def csv_reader_skip_header(path):
     """Ouvrir un fichier CSV en lecture,
     et passer la ligne d'en-tête s'il y en a une."""
-    file = open(path, "rb")
-    has_header = csv.Sniffer().has_header(file.read(1024))
+    file = open(path, "r")
+    has_header = csv.Sniffer().has_header(str(file.read(1024)))
     file.seek(0)
     csvreader = csv.reader(file)
     if has_header:
@@ -85,7 +86,7 @@ def parse_gtfs_calendar(lines):
                         start_date=parse_gtfs_date(line[8]),
                         end_date=parse_gtfs_date(line[9])))
     print("Writing to database...")
-    [per.save() for per in p]
+    Period.objects.bulk_create(p)
 
 
 def parse_gtfs_calendar_dates(lines):
@@ -105,7 +106,7 @@ def parse_gtfs_calendar_dates(lines):
                                    add_day=line[2] == '1',
                                    period=p))
     print("Writing to database...")
-    [ex.save() for ex in pex]
+    PeriodException.objects.bulk_create(pex)
 
 
 def parse_gtfs_stops_traintype(lines):
@@ -142,7 +143,7 @@ def parse_gtfs_stops_station(lines):
                 if line[0].startswith("StopPoint") and not Station.objects
                 .filter(id=int(id_regex.sub('\\1', line[0]))).exists()]
     print("Writing to database...")
-    [s.save() for s in stations]
+    Station.objects.bulk_create(stations)
 
 
 def parse_gtfs_trains(trips, stop_times_path):
@@ -150,11 +151,12 @@ def parse_gtfs_trains(trips, stop_times_path):
     trips.txt et stop_times.txt du format GTFS.
     Attention : Cette méthode prend en paramètre un lecteur de fichiers CSV
     pour trips.txt et un chemin d'accès seulement pour stop_times.txt."""
+    station_id_regex = re.compile(r"^.*OCE.*-([0-9]+)$", re.MULTILINE)
     stop_times_file = open(stop_times_path)
     stop_times = csv.reader(stop_times_file)
     # Permet de trouver le type de train
     tt_regex = re.compile(r"^.*OCE(.*)-[0-9]+$", re.MULTILINE)
-    trains, halts = [], []
+    halts = []
     period_ids = Period.objects.values_list("id", flat=True)
     for trip in trips:
         stop_times_file.seek(1)
@@ -164,28 +166,18 @@ def parse_gtfs_trains(trips, stop_times_path):
         else:
             p = None
         t = Train(
-            number=int(trip[3]), traintype=TrainType.objects.get(
+            number=int(trip[3]), capacity=3, traintype=TrainType.objects.get(
                 name=tt_regex.sub('\\1', trip_stop_times[0][3])))
         t.period_id = p
-        trains.append(t)
-        halts.extend(parse_gtfs_halts_train(trip[2], trip_stop_times, t.id))
-    print("Writing to database...")
-    [t.save() for t in trains]
+        t.save()
+        for stop_time in trip_stop_times:
+            ar_time = stop_time[1].split(':', 2)
+            ar_sec = time(hour=int(ar_time[0]) % 24, minute=int(ar_time[1]))
+            dep_time = stop_time[2].split(':', 2)
+            dep_sec = time(hour=int(dep_time[0]) % 24, minute=int(dep_time[1]))
+            h = Halt(arrival=ar_sec, departure=dep_sec, sequence=stop_time[4])
+            h.station_id = int(station_id_regex.sub('\\1', stop_time[3]))
+            h.train_id = t.id
+            halts.append(h)
+    print("Writing halts to database...")
     [h.save() for h in halts]
-
-
-def parse_gtfs_halts_train(trip_id, stop_times, train_id):
-    """Créer des objets Halt pour un train donné depuis les données du fichier
-    stop_times.txt du format GTFS."""
-    halts = []
-    station_id_regex = re.compile(r"^.*OCE.*-([0-9]+)$", re.MULTILINE)
-    for stop_time in stop_times:
-        ar_time = stop_time[1].split(':', 2)
-        ar_sec = time(hour=int(ar_time[0]) % 24, minute=int(ar_time[1]))
-        dep_time = stop_time[2].split(':', 2)
-        dep_sec = time(hour=int(dep_time[0]) % 24, minute=int(dep_time[1]))
-        h = Halt(arrival=ar_sec, departure=dep_sec, sequence=stop_time[4])
-        h.station_id = int(station_id_regex.sub('\\1', stop_time[3]))
-        h.train_id = train_id
-        halts.append(h)
-    return halts
