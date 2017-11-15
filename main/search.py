@@ -46,8 +46,8 @@ def _search_zero(start_station, end_station, date, time, passengers,
     travels = []
     for trip in halt_ids:
         if Train.objects.get(id=trip[2]).runs(date):
-            t = Travel(date=date, passengers=passengers,
-                       user=None, booked=False)
+            t = Travel(date=date, user=None, booked=False)
+            t.passengers_aboard.add(*passengers)
             Ticket(start_halt=Halt.objects.get(id=trip[0]),
                    end_halt=Halt.objects.get(id=trip[1]),
                    sequence=0, travel=t)

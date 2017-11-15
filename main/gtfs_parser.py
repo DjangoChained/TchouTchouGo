@@ -45,7 +45,8 @@ def parse_gtfs_sncf(*args):
         parse_gtfs_stops_traintype(csv_reader_skip_header(f + "stops.txt"))
         print("Parsing " + f + "stops.txt (second pass)")
         parse_gtfs_stops_station(csv_reader_skip_header(f + "stops.txt"))
-        print("Parsing " + f + "trips.txt and " + f + "stop_times.txt")
+        print("Parsing " + f + "trips.txt and " + f +
+              "stop_times.txt, writing trains to database")
         parse_gtfs_trains(
             csv_reader_skip_header(f + "trips.txt"), f + "stop_times.txt")
 
@@ -155,7 +156,7 @@ def parse_gtfs_trains(trips, stop_times_path):
     stop_times = csv.reader(stop_times_file)
     # Permet de trouver le type de train
     tt_regex = re.compile(r"^.*OCE(.*)-[0-9]+$", re.MULTILINE)
-    trains, halts = [], []
+    halts = []
     period_ids = Period.objects.values_list("id", flat=True)
     for trip in trips:
         stop_times_file.seek(1)
@@ -168,7 +169,7 @@ def parse_gtfs_trains(trips, stop_times_path):
             number=int(trip[3]), capacity=3, traintype=TrainType.objects.get(
                 name=tt_regex.sub('\\1', trip_stop_times[0][3])))
         t.period_id = p
-        trains.append(t)
+        t.save()
         for stop_time in trip_stop_times:
             ar_time = stop_time[1].split(':', 2)
             ar_sec = time(hour=int(ar_time[0]) % 24, minute=int(ar_time[1]))
@@ -178,6 +179,5 @@ def parse_gtfs_trains(trips, stop_times_path):
             h.station_id = int(station_id_regex.sub('\\1', stop_time[3]))
             h.train_id = t.id
             halts.append(h)
-    print("Writing to database...")
-    [t.save() for t in trains]
+    print("Writing halts to database...")
     [h.save() for h in halts]
