@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %} {% block title %}Ajout{% endblock %} {% block content %}
+<div class="bloc_connexion">
+    <h1 class="titre">{{ edit|yesno:"Éditer,Ajouter,Ajouter" }} un passager</h1>
+    <form method="POST">
+        {% csrf_token %} {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+        <p><input name="first_name" id="id_first_name" required="" type="text" placeholder="Prénom" value="{{ first_name|default:"" }}"></p>
+        <p><input name="last_name" id="id_last_name" required="" type="text" placeholder="Nom" value="{{ last_name|default:"" }}"></p>
+        
+        <button class="btn btn-lg btn-info btn-block w-75 mx-auto mb-0" type="submit">{{ edit|yesno:"Éditer,Ajouter,Ajouter" }}</button>
+    </form>
+    {% endblock %}

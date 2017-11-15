@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %} {% block content %}		
+		
+<div class="bloc_connexion">
+    <h2 class="titre">Mes passagers</h2>
+    <div class="card">
+        <ul class="list-group list-group-flush">
+        {% for passenger in passengers %}
+            <li class="passager list-group-item text-left">
+                <div class="pull-right mr-2 mt-2 d-inline">
+                    <a class="editer mr-1" href="{% url 'updatePassenger' passenger.id %}"><i class="fa fa-pencil"></i>&nbsp;Éditer</a>
+                    {% if passengers.count > 1 %}
+                        <a class="supprimer" href="{% url 'deletePassenger' passenger.id %}"><i class="fa fa-trash"></i>&nbsp;Supprimer</a>
+                    {% endif %}
+                </div>
+                <span class="d-block p-2">{{ passenger }}</span>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    <a href="{% url "addPassenger" %}" class="btn btn-info" role="button">Ajouter un passager</a>
+</div>
+
+{% endblock %}

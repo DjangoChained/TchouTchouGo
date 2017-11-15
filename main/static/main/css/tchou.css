@@ -68,29 +68,30 @@ margin-right: 10px;
     border-radius: 20px;
 }
 
-.bloc_erreurs h1, h2, h3, h4, h5, h6, p {
+.bloc_erreurs h1, .bloc_erreurs h2, .bloc_erreurs h3, 
+.bloc_erreurs h4, .bloc_erreurs h5, .bloc_erreursh6, .bloc_erreursp {
     font-size: 300%;
     color: #0A003F;
     text-shadow: 2px 2px white
 }
 
-.bloc_cards{
+.bloc_cards, .bloc_connexion{
     display: block;
     background-color: rgba(255, 255, 255, 0.3);
-    width: 45rem;
-    border: 1px solid #0D6BAA;
     padding: 2em;
     margin: 5em auto 0;
+    border-radius: 10px;
+}
+
+.bloc_cards{
+    width: 45rem;
+    border: 1px solid #0D6BAA;
 }
 
 .bloc_connexion {
-    display: block;
-    background-color: rgba(255, 255, 255, 0.3);
     width: 30rem;
     border: 1px solid #0D6BAA;
     text-align: center;
-    padding: 2em;
-    margin: 5em auto 0;
 }
 
 .bloc_connexion ul, .bloc_connexion ol, .bloc_connexion li {
@@ -103,6 +104,29 @@ margin-right: 10px;
     font-size: 15px;
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.bloc_connexion h2 {
+    margin-bottom: 1em;
+}
+
+.titre {
+    background-color: rgba(255, 255, 255, 0.5);
+    color:  white;
+    /*text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;*/
+    margin-bottom: 1em;
+}
+
+.card {
+    margin-bottom: 1.5em;
+}
+
+.passager .fa-pencil, .passager .editer{
+    color: #17A2B8;
+}
+
+.passager .fa-trash, .passager .supprimer{
+    color: red;
 }
 
 .bigger {

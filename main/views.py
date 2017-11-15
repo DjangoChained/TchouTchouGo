@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from .forms import SearchForm, SignUpForm, UserForm
-from .models import Travel, Station
+from .forms import SearchForm, SignUpForm, UserForm, PassengerForm
+from django.forms.models import model_to_dict
+from .models import Travel, Station, Passenger
 from .search import TimeOptions, search as search_trains
 
 from datetime import time
@@ -33,15 +34,90 @@ def search(request):
                          start_station, end_station,
                          form.cleaned_data.get('travelDate'),
                          time(hour=int(form.cleaned_data.get('hour'))),
-                         form.cleaned_data.get('passengers'),
+                         request.POST.getlist('passengers'),
                          TimeOptions[form.cleaned_data.get('timeOptions')])))
-    return render(request, 'main/search.html', dict(active="search"))
+    passengers = ""
+    if request.user.is_authenticated():
+        passengers = request.user.passenger_set.filter(display=True)
+    return render(request, 'main/search.html',
+                  dict(active="search", passengers=passengers))
 
 
 def tickets(request):
     if not request.user.is_authenticated():
         return redirect('search')
     return render(request, 'main/tickets.html', dict(active="list"))
+
+
+def basket(request):
+    if not request.user.is_authenticated():
+        return redirect('search')
+    return render(request, 'main/basket.html', dict(active="basket"))
+
+
+def passengers(request):
+    if not request.user.is_authenticated():
+        return redirect('search')
+    passengers = request.user.passenger_set.filter(display=True)
+    return render(request, 'main/passengers.html', dict(passengers=passengers))
+
+
+def addPassenger(request):
+    if not request.user.is_authenticated():
+        return redirect('search')
+    form = PassengerForm()
+
+    if request.method == "POST":
+        form = PassengerForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('passengers')
+    else:
+        form = PassengerForm()
+
+    return render(request, 'main/addPassenger.html', {'form': form})
+
+
+def updatePassenger(request, passenger_id):
+    if not request.user.is_authenticated():
+        return redirect('search')
+
+    passenger = Passenger.objects.get(id=passenger_id)
+    # On remplit PassengerForm avec les données de l'utilisateur récupérées
+
+    form = PassengerForm(request.POST or None, instance=passenger)
+
+    if request.method == "POST":
+        edit = False
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('passengers')
+    else:
+        edit = True
+
+    return render(request, 'main/addPassenger.html',
+                  {'form': form, 'last_name': passenger.last_name,
+                   'first_name': passenger.first_name, 'edit': edit})
+
+
+def deletePassenger(request, passenger_id):
+    passenger = request.user.passenger_set.filter(display=True) \
+        .get(id=passenger_id)
+    #l'utilisateur doit toujours avoir au moins 1 passager
+    if passenger.user.passenger_set.filter(display=True).count() > 1:
+        #Si le passager est associé à des voyages, on ne le supprime pas,
+        #on se contente de ne plus l'afficher à l'utilisateur
+        if passenger.travel_set.count() > 0:
+            passenger.display = False
+            passenger.save()
+        #Sinon on peut le supprimer
+        else:
+            passenger.delete()
+    return redirect('/train/passengers')
 
 
 def signup(request):
@@ -70,7 +146,7 @@ def print_ticket(request, travel_id):
 @login_required()
 def update_profile(request):
     user = User.objects.get(pk=request.user.id)
-    # prepopulate UserProfileForm with retrieved user values from above.
+    # On remplit UserProfileForm avec les données de l'utilisateur récupéré
     form = UserForm(instance=user)
 
     if request.user.is_authenticated() and request.user.id == user.id:

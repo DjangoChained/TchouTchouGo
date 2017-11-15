@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Station
+from .models import Passenger
 from django.core.exceptions import ValidationError
 
 
@@ -71,3 +72,19 @@ class UserForm(forms.ModelForm):
         #  Permet d'hériter automatiquement des champs depuis le formulaire
         #  par défaut pour l'utilisateur Django.
         fields = ('first_name', 'last_name', 'email')
+
+
+class PassengerForm(forms.ModelForm):
+    """Formulaire de mise à jour d'un passager """
+
+    ## Champ du prénom du passager
+    first_name = forms.CharField(max_length=30, required=True)
+    ## Champ du nom du passager
+    last_name = forms.CharField(max_length=30, required=True)
+
+    class Meta:
+        """Métadonnées du formulaire de mise à jour d'un passager"""
+        ## Modèle associé au formulaire.
+        model = Passenger
+        ##Champs associés au formulaire.
+        fields = ('first_name', 'last_name')
