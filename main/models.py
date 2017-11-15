@@ -11,6 +11,31 @@ from .utility import haversine
 from datetime import date
 
 
+class Passenger(models.Model):
+    """
+    Décrit un passager avec ses nom et prénom.
+    """
+    ## Nom du passager
+    last_name = models.CharField(max_length=40, verbose_name="Nom")
+    ## Préom du passager
+    first_name = models.CharField(max_length=40, verbose_name="Prénom")
+    ## Booléen indiquant si on doit afficher le passager
+    display = models.BooleanField(default=True)
+
+    class Meta:
+        """Métadonnées du modèle de passager."""
+        ## Nom affiché dans l'interface d'administration Django.
+        verbose_name = "passager"
+
+    def __str__(self):
+        """Représentation textuelle du passager pour affichage."""
+        return self.last_name + " " + self.first_name
+
+    ## Association avec un utilisateur.
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name="Utilisateur")
+
+
 class Station(models.Model):
     """
     Décrit une gare avec son nom et ses coordonnées GPS.
@@ -338,12 +363,12 @@ class Travel(models.Model):
     """
     ## Date du voyage.
     date = models.DateField()
-    ## Nombre de passagers du voyage.
-    passengers = models.PositiveSmallIntegerField(
-        default=1, verbose_name="Nombre de passagers")
     ## Association avec un utilisateur.
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Utilisateur")
+    ## Association avec des passagers.
+    passengers_aboard = models.ManyToManyField(
+        Passenger, verbose_name="Passager")
 
     class Meta:
         """Métadonnées du modèle de voyage."""
@@ -374,7 +399,7 @@ class Travel(models.Model):
         return self.ticket_set.order_by('-sequence')[0].arrival
 
     @property
-    def total_price(self):
+    def price(self):
         """Prix total du voyage."""
         return sum([t.price for t in self.ticket_set.all()]) * self.passengers
 
@@ -382,6 +407,10 @@ class Travel(models.Model):
     def total_distance(self):
         """Distance totale du voyage."""
         return sum([t.distance for t in self.ticket_set.all()])
+
+    @property
+    def passengers(self):
+        return self.passengers_aboard.count()
 
     def __str__(self):
         """Représentation textuelle du voyage pour affichage."""
@@ -391,5 +420,5 @@ class Travel(models.Model):
         return ("Voyage vide" if not self.ticket_set.count() else
                 "Voyage de " + str(self.start_station) + " à " +
                 str(self.end_station)) + \
-            " le " + str(self.date.date()) + " pour " + \
+            " le " + str(self.date) + " pour " + \
             str(self.passengers) + " passagers"
