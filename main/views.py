@@ -44,11 +44,11 @@ def search(request):
                   dict(active="search", passengers=passengers))
 
 
-@login_required()
+@login_required
 def tickets(request):
     return render(request, 'main/tickets.html',
                   dict(active="list",
-                       travel_set=Travel.objects.filter(booked=False)))
+                       travel_set=Travel.objects.filter(booked=True)))
 
 
 def basket(request):
@@ -57,16 +57,14 @@ def basket(request):
     return render(request, 'main/basket.html', dict(active="basket"))
 
 
+@login_required
 def passengers(request):
-    if not request.user.is_authenticated():
-        return redirect('search')
     passengers = request.user.passenger_set.filter(display=True)
     return render(request, 'main/passengers.html', dict(passengers=passengers))
 
 
+@login_required
 def addPassenger(request):
-    if not request.user.is_authenticated():
-        return redirect('search')
     form = PassengerForm()
 
     if request.method == "POST":
@@ -82,10 +80,8 @@ def addPassenger(request):
     return render(request, 'main/addPassenger.html', {'form': form})
 
 
+@login_required
 def updatePassenger(request, passenger_id):
-    if not request.user.is_authenticated():
-        return redirect('search')
-
     passenger = Passenger.objects.get(id=passenger_id)
     # On remplit PassengerForm avec les données de l'utilisateur récupérées
 
@@ -106,6 +102,7 @@ def updatePassenger(request, passenger_id):
                    'first_name': passenger.first_name, 'edit': edit})
 
 
+@login_required
 def deletePassenger(request, passenger_id):
     passenger = request.user.passenger_set.filter(display=True) \
         .get(id=passenger_id)
@@ -137,7 +134,7 @@ def signup(request):
     return render(request, 'main/signup.html', {'form': form})
 
 
-@login_required()
+@login_required
 def print_ticket(request, travel_id):
     """Vue permettant l'impression d'un ensemble de billets."""
     travel = get_object_or_404(Travel, id=travel_id)
@@ -147,7 +144,7 @@ def print_ticket(request, travel_id):
                   {'travel': travel})
 
 
-@login_required()
+@login_required
 def update_profile(request):
     user = User.objects.get(pk=request.user.id)
     # On remplit UserProfileForm avec les données de l'utilisateur récupéré
