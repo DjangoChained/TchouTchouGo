@@ -72,10 +72,7 @@ def cart_show(request):
 
 @login_required
 def cart_add(request, travel_id):
-    c = Cart(request)
-    c.add(travel_id)
-    print('cart.items : ', c.items)
-    print('session : ', request.session)
+    Cart(request).add(travel_id)
     return redirect('/train/cart')
 
 
@@ -83,6 +80,15 @@ def cart_add(request, travel_id):
 def cart_remove(request, travel_id):
     Cart(request).remove(travel_id)
     return redirect('/train/cart')
+
+
+@login_required
+def order(request):
+    for i in Cart(request).list_items():
+        i.obj.booked = True
+        i.obj.save()
+    return redirect('/train/tickets')
+
 
 ###############################################################################
 # Gestion des passagers

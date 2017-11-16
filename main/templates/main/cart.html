@@ -1,12 +1,17 @@
 {% extends 'main/base.html' %} {% block content %}
 
 <div class="bloc_cards">
+	<div class="pull-left"><a href="{% url "search" %}"><button type="button" class="btn btn-info">Réserver un autre billet</button></a></div>
+	<div class="pull-right"><a href="{% url "order" %}"><button type="button" class="btn btn-info">Payer</button></a></div>
 	<h4 class="text-center" style="color:white;text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;">Mon panier</h4>
 	<div class="card-columns">
 		{% for travel in cart.list_items %}
 		<div class="card">
 			<div class="card-header">
 				{{ travel.obj.date }}
+				<div class="pull-right">
+					<a class="supprimer" href="{% url 'cart_remove' travel.obj.id %}"><i class="fa fa-trash"></i></a>
+				</div>
 			</div>
 			<ul class="list-group list-group-flush">
 				{% for ticket in travel.obj.ticket_set.all %}
