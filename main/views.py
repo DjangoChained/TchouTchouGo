@@ -15,6 +15,7 @@ from django.shortcuts import \
     render, redirect, get_object_or_404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseBadRequest
+import json
 from easycart import BaseCart
 
 
@@ -41,8 +42,16 @@ def search(request):
                          [passengers.get(id=id)
                           for id in dict(request.POST.lists())['passengers']],
                          TimeOptions[form.cleaned_data.get('timeOptions')])))
-    return render(request, 'main/search.html', dict(
-        active="search", passengers=passengers, hours=range(5, 23)))
+    passengers = ""
+    if request.user.is_authenticated():
+        passengers = request.user.passenger_set.filter(display=True)
+    #Stations pour l'autocomplétion des gares
+    stations = Station.objects.all()
+    res = [{'id': s.id, 'label': s.name, 'value': s.name} for s in stations]
+    return render(request, 'main/search.html',
+                  dict(active="search", passengers=passengers,
+                       stations=json.dumps(res),
+                       hours=range(5, 23)))
 
 
 @login_required
@@ -169,6 +178,9 @@ def signup(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            passenger = Passenger(
+                first_name=form.cleaned_data.get('first_name'),
+                last_name=form.cleaned_data.get('last_name'))
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
