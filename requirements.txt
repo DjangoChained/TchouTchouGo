@@ -1,3 +1,4 @@
 django
 django-apptemplates
+django-easycart
 psycopg2

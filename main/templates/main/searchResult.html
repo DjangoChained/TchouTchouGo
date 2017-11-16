@@ -3,10 +3,10 @@
 <div class="bloc_cards mb-5">
 	<h4 class="text-center"> Itinéraire de {{ start_station.name }} à {{ end_station.name }}</h4>
 	<div class="card-columns">
-		{% for result in results %}
+		{% for travel in results %}
 		<div class="card">
 			<ul class="list-group list-group-flush">
-				{% for ticket in result.tickets %}
+				{% for ticket in travel.ticket_set.all %}
 				<li class="list-group-item">
 					<div>
 						<span class="hour">{{ ticket.start_halt.arrival }}</span>{{ ticket.start_halt.station }}</div>
@@ -19,9 +19,9 @@
 				{% endfor %}
 				<li class="list-group-item">
 					<div class="price float-right">{{ travel.price|stringformat:".2f" }} €</div>
-					<div class="mt-1">{{ result.passengers }} passagers</div>
+					<div class="mt-1">{{ travel.passengers }} passager{{ travel.passengers|pluralize }}</div>
 					<div class="clearfix"></div>
-					<a href="#" class="btn btn-primary mx-auto d-block">Réserver</a>
+					<a href="{% url 'cart_add' travel.id %}" class="btn btn-info mx-auto d-block">Réserver</a>
 				</li>
 			</ul>
 		</div>

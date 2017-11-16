@@ -150,7 +150,7 @@ class Train(models.Model):
         n'y a pas de période de service associée, un train roulera tous les
         jours, toute l'année."""
         if not self.period:
-            return true
+            return True
         return self.period.includes_date(date)
 
     def can_hold(self, start_halt, end_halt, passengers):
@@ -239,7 +239,7 @@ class Period(models.Model):
         """Teste si une date fait partie de la période concernée.
         Quand une date fait partie d'une période, un train ayant cette période
         roulera à cette date."""
-        if not self.start_date.date() < date < self.end_date.date():
+        if not self.start_date < date < self.end_date:
             return False
         ex = self.periodexception_set.filter(date=date)
         if ex.exists():
@@ -248,8 +248,8 @@ class Period(models.Model):
 
     def __str__(self):
         """Représentation textuelle de la période pour l'affichage."""
-        return "Service entre " + str(self.start_date.date()) + " et " + \
-            str(self.end_date.date())
+        return "Service entre " + str(self.start_date) + " et " + \
+            str(self.end_date)
 
 
 class PeriodException(models.Model):
@@ -293,7 +293,7 @@ class PeriodException(models.Model):
     def __str__(self):
         """Représentation textuelle de l'exception pour affichage."""
         return u"Exception pour le " + str(self.period) + \
-            ", le " + str(self.date.date())
+            ", le " + str(self.date)
 
 
 class Ticket(models.Model):
@@ -419,8 +419,8 @@ class Travel(models.Model):
         # S'il n'y a pas encore de billets dans le voyage (cas de la création
         # manuelle dans l'interface d'administration de Django),
         # "Voyage vide" est indiqué. Voir l'issue #23.
-        return ("Voyage vide" if not self.ticket_set.count() else
-                "Voyage de " + str(self.start_station) + " à " +
-                str(self.end_station)) + \
-            " le " + str(self.date) + " pour " + \
-            str(self.passengers) + " passagers"
+        return (("Voyage" if self.booked else "Résultat de recherche") +
+                (" vide" if not self.ticket_set.count() else
+                 " de " + str(self.start_station) + " à " +
+                 str(self.end_station))) + \
+            " le " + str(self.date)

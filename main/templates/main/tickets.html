@@ -22,7 +22,7 @@
 				</li>
 				{% endfor %}
 				<li class="list-group-item">
-					<span>{{ travel.passengers }} passagers</span>
+					<span>{{ travel.passengers }} passager{{ travel.passengers|pluralize }}</span>
 					<div class="price float-right">{{ travel.price|stringformat:".2f" }} €</div>
 				</li>
 			</ul>

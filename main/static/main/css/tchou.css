@@ -4,6 +4,7 @@ body {
     background-position: right top;
     background-attachment: fixed;
     background-position: center center;
+    background-size: cover;
 }
 div.global {
     max-width: 800px;
