@@ -412,6 +412,7 @@ class Travel(models.Model):
 
     @property
     def passengers(self):
+        """Nombre de passagers effectuant le voyage."""
         return self.passengers_aboard.count()
 
     def __str__(self):

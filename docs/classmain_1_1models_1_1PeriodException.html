@@ -118,10 +118,10 @@ Attributs publics statiques</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1PeriodException.html#a63b5ae9de2af612841590167c6e1c0ad">date</a> = models.DateField()</td></tr>
 <tr class="memdesc:a63b5ae9de2af612841590167c6e1c0ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Date de l'exception. <br /></td></tr>
 <tr class="separator:a63b5ae9de2af612841590167c6e1c0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefc90584f85e5a7599b0dea815969a8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1PeriodException.html#aefc90584f85e5a7599b0dea815969a8e">add_day</a> = models.BooleanField()</td></tr>
+<tr class="memitem:aefc90584f85e5a7599b0dea815969a8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1PeriodException.html#aefc90584f85e5a7599b0dea815969a8e">add_day</a> = models.BooleanField(verbose_name=&quot;Circulation du train&quot;)</td></tr>
 <tr class="memdesc:aefc90584f85e5a7599b0dea815969a8e"><td class="mdescLeft">&#160;</td><td class="mdescRight"> Indique si c'est un jour supplémentaire ou un jour supprimé.  <a href="#aefc90584f85e5a7599b0dea815969a8e">Plus de détails...</a><br /></td></tr>
 <tr class="separator:aefc90584f85e5a7599b0dea815969a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a736a300868ae900db35fe78d4624e913"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1PeriodException.html#a736a300868ae900db35fe78d4624e913">period</a> = models.ForeignKey('<a class="el" href="classmain_1_1models_1_1Period.html">Period</a>', on_delete=models.CASCADE)</td></tr>
+<tr class="memitem:a736a300868ae900db35fe78d4624e913"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1PeriodException.html#a736a300868ae900db35fe78d4624e913">period</a></td></tr>
 <tr class="memdesc:a736a300868ae900db35fe78d4624e913"><td class="mdescLeft">&#160;</td><td class="mdescRight"> Association avec une période de service.  <a href="#a736a300868ae900db35fe78d4624e913">Plus de détails...</a><br /></td></tr>
 <tr class="separator:a736a300868ae900db35fe78d4624e913"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -139,7 +139,7 @@ add_day vaut True si le train circulera, False s'il ne circule pas.
 Dans GTFS, add_day correspond à exception_type et vaut 1 si le train
 circule et 2 s'il ne circule pas.
 </pre> 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00182">182</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00255">255</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 </div><h2 class="groupheader">Documentation des fonctions membres</h2>
 <a class="anchor" id="a78320bc9a4193b8c8e6dda738419b257"></a>
 <div class="memitem">
@@ -155,7 +155,7 @@ circule et 2 s'il ne circule pas.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Représentation textuelle de l'exception pour affichage.</pre> 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00219">219</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00293">293</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -168,7 +168,7 @@ circule et 2 s'il ne circule pas.
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">main.models.PeriodException.add_day = models.BooleanField()</td>
+          <td class="memname">main.models.PeriodException.add_day = models.BooleanField(verbose_name=&quot;Circulation du train&quot;)</td>
         </tr>
       </table>
   </td>
@@ -181,7 +181,7 @@ circule et 2 s'il ne circule pas.
 <p> Indique si c'est un jour supplémentaire ou un jour supprimé. </p>
 <p>Vaut True si le train circulera ce jour-là, False sinon. </p>
 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00201">201</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00274">274</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -193,7 +193,7 @@ circule et 2 s'il ne circule pas.
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">main.models.PeriodException.period = models.ForeignKey('<a class="el" href="classmain_1_1models_1_1Period.html">Period</a>', on_delete=models.CASCADE)</td>
+          <td class="memname">main.models.PeriodException.period</td>
         </tr>
       </table>
   </td>
@@ -202,11 +202,11 @@ circule et 2 s'il ne circule pas.
   </tr>
 </table>
 </div><div class="memdoc">
-
+<b>Valeur initiale :</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= models.ForeignKey(</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;        <span class="stringliteral">&#39;Period&#39;</span>, on_delete=models.CASCADE, verbose_name=<span class="stringliteral">&quot;Période associée&quot;</span>)</div></div><!-- fragment -->
 <p> Association avec une période de service. </p>
 <p>Les exceptions sont automatiquement supprimées quand une période de service est supprimée. </p>
 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00205">205</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00278">278</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>

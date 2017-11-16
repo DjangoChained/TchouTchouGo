@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['total_5fdistance',['total_distance',['../classmain_1_1models_1_1Travel.html#a511aa4acb47834acb06112c2d65dda19',1,'main::models::Travel']]],
-  ['total_5fprice',['total_price',['../classmain_1_1models_1_1Travel.html#ae9bc4ef8c6f9aa1e0f344333ba56e01b',1,'main::models::Travel']]]
+  ['passengers',['passengers',['../classmain_1_1models_1_1Travel.html#ac650af4781408bc394f9d386d74ca96b',1,'main::models::Travel']]],
+  ['price',['price',['../classmain_1_1models_1_1Ticket.html#aa8ee50c8fa1c8424d759aa05aa8a8241',1,'main.models.Ticket.price()'],['../classmain_1_1models_1_1Travel.html#a1ff6c57af38df19ef5290f06e431e458',1,'main.models.Travel.price()']]]
 ];

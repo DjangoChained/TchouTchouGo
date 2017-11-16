@@ -11,7 +11,9 @@ from .models import Train, Halt, Travel, Ticket
 class TimeOptions(Enum):
     """Définit les options de temps. Permet d'effectuer un départ après l'heure
     fournie ou une arrivée avant l'heure fournie."""
+    ## Partir après une heure donnée.
     DEPART_AFTER = 'D.departure'
+    ## Arriver avant une heure donnée.
     ARRIVE_BEFORE = 'A.arrival'
 
 
@@ -49,7 +51,7 @@ def _search_zero(start_station, end_station, date, time, passengers,
             t = Travel.objects.create(date=date, user=None, booked=False)
             t.passengers_aboard.add(*passengers)
             Ticket.objects.create(start_halt=Halt.objects.get(id=trip[0]),
-                   end_halt=Halt.objects.get(id=trip[1]),
-                   sequence=0, travel=t)
+                                  end_halt=Halt.objects.get(id=trip[1]),
+                                  sequence=0, travel=t)
             travels.append(t)
     return travels
