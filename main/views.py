@@ -2,11 +2,11 @@
 from __future__ import unicode_literals
 
 from .forms import SearchForm, SignUpForm, UserForm, PassengerForm
-from django.forms.models import model_to_dict
 from .models import Travel, Station, Passenger
 from .search import TimeOptions, search as search_trains
 
 from datetime import time
+from django.forms.models import model_to_dict
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -15,6 +15,7 @@ from django.shortcuts import \
     render, redirect, get_object_or_404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseBadRequest
+from easycart import BaseCart
 
 
 def search(request):
@@ -37,10 +38,11 @@ def search(request):
                          start_station, end_station,
                          form.cleaned_data.get('travelDate'),
                          time(hour=int(form.cleaned_data.get('hour'))),
-                         [passengers.get(id=id) for id in dict(request.POST.lists())['passengers']],
+                         [passengers.get(id=id)
+                          for id in dict(request.POST.lists())['passengers']],
                          TimeOptions[form.cleaned_data.get('timeOptions')])))
-    return render(request, 'main/search.html',
-                  dict(active="search", passengers=passengers, hours=range(5,23)))
+    return render(request, 'main/search.html', dict(
+        active="search", passengers=passengers, hours=range(5, 23)))
 
 
 @login_required
@@ -50,11 +52,41 @@ def tickets(request):
                        travel_set=Travel.objects.filter(booked=True)))
 
 
+###############################################################################
+# Gestion du panier
+###############################################################################
+
+
+class Cart(BaseCart):
+    """Décrit le panier de billets."""
+    max_quantity = 1
+
+    def get_queryset(self, pks):
+        return Travel.objects.filter(booked=False, pk__in=pks)
+
+
 @login_required
-def basket(request):
-    if not request.user.is_authenticated():
-        return redirect('search')
-    return render(request, 'main/basket.html', dict(active="basket"))
+def cart_show(request):
+    return render(request, 'main/cart.html', dict(active="cart"))
+
+
+@login_required
+def cart_add(request, travel_id):
+    c = Cart(request)
+    c.add(travel_id)
+    print('cart.items : ', c.items)
+    print('session : ', request.session)
+    return redirect('/train/cart')
+
+
+@login_required
+def cart_remove(request, travel_id):
+    Cart(request).remove(travel_id)
+    return redirect('/train/cart')
+
+###############################################################################
+# Gestion des passagers
+###############################################################################
 
 
 @login_required
@@ -132,6 +164,11 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'main/signup.html', {'form': form})
+
+
+###############################################################################
+# Fonctionnalités secondaires
+###############################################################################
 
 
 @login_required
