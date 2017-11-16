@@ -135,7 +135,7 @@ def parse_gtfs_stops_station(lines):
     """Créer des objets Station depuis les données du fichier stops.txt du
     format GTFS."""
     id_regex = re.compile(r"^.*OCE.*-([0-9]+)$", re.MULTILINE)
-    name_regex = re.compile(r"^(gare de)? (.*)$", re.MULTILINE)
+    name_regex = re.compile(r"^(gare de)? (.*)$", re.MULTILINE | re.IGNORECASE)
     stations = [Station(id=int(id_regex.sub('\\1', line[0])),
                         name=name_regex.sub('\\2', line[1]),
                         lat=line[3], lng=line[4])
