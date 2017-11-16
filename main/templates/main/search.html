@@ -1,5 +1,7 @@
 {% extends 'main/base.html' %} {% block content %} {% load static %}
 <link rel="stylesheet" href="{% static 'main/css/pikaday.css' %}" />
+<link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/jquery-ui.structure.min.css' %}" />
 <div class="bloc_connexion">
     <form class="form m-0" action="{% url 'search' %}" method="post">
         {% csrf_token %}
@@ -7,11 +9,10 @@
             <div class="alert alert-danger">{{ error }}</p>
         {% endfor %}
         <div class="input-stack mb-3">
-            <input type="text" class="form-control form-control-lg" placeholder="Gare de départ" name="startStation" required />
-            <input type="text" class="form-control form-control-lg" placeholder="Gare d'arrivée" name="endStation" required />
+            <input id="startStation" type="text" class="form-control form-control-lg" placeholder="Gare de départ" name="startStation" />
+            <input id="endStation" type="text" class="form-control form-control-lg" placeholder="Gare d'arrivée" name="endStation" />
         </div>
-        <input id="datepicker" type="date" class="datepicker form-control form-control-lg mb-3" placeholder="Date du voyage" name="travelDate" min="{% now "
-            Y-m-d " %}" required />
+        <input id="date" type="date" class="form-control form-control-lg mb-3" placeholder="Date du voyage" name="travelDate" required />
         <div class="form-row justify-content-end">
             <div class="form-group col-sm-8 col-12 text-sm-right text-center mt-1">
                 <div class="form-check form-check-inline">
@@ -58,7 +59,30 @@
         </div>
     </form>
 </div>
+<script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'main/js/pikaday.js' %}"></script>
 <script src="{% static 'main/js/pikaday.jquery.js' %}"></script>
 <script src="{% static 'main/js/tchou.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#startStation, #endStation').autocomplete({
+            source : {% autoescape off %}{{ stations }} {% endautoescape %}
+        });
+        $( "#date" ).datepicker({
+                        altField: "#date",
+                        closeText: 'Fermer',
+                        prevText: 'Précédent',
+                        nextText: 'Suivant',
+                        currentText: 'Aujourd\'hui',
+                        monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                        monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+                        dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                        dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+                        dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                        weekHeader: 'Sem.',
+                        dateFormat: 'dd/mm/yy'
+        });
+    });
+</script>
 {% endblock %}
