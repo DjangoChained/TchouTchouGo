@@ -419,7 +419,8 @@ class Travel(models.Model):
         # S'il n'y a pas encore de billets dans le voyage (cas de la création
         # manuelle dans l'interface d'administration de Django),
         # "Voyage vide" est indiqué. Voir l'issue #23.
-        return ("Voyage vide" if not self.ticket_set.count() else
-                "Voyage de " + str(self.start_station) + " à " +
-                str(self.end_station)) + \
+        return (("Voyage" if self.booked else "Résultat de recherche") +
+                (" vide" if not self.ticket_set.count() else
+                 " de " + str(self.start_station) + " à " +
+                 str(self.end_station))) + \
             " le " + str(self.date)
