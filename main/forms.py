@@ -37,9 +37,11 @@ class SearchForm(forms.Form):
     hour = forms.ChoiceField(choices=[(str(i), str(i)) for i in range(5, 22)])
 
     def __init__(self, *args, **kwargs):
+        """Instancier un formulaire de recherche."""
         ps = kwargs.pop('passengers')
         super(SearchForm, self).__init__(*args, **kwargs)
-        passengers = forms.MultipleChoiceField(required=True, choices=[(str(p.id), str(p)) for p in ps])
+        passengers = forms.MultipleChoiceField(
+            required=True, choices=[(str(p.id), str(p)) for p in ps])
 
 
 class SignUpForm(UserCreationForm):

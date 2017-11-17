@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['halt',['Halt',['../classmain_1_1models_1_1Halt.html',1,'main::models']]]
+  ['gtfsimportform',['GTFSImportForm',['../classmain_1_1admin__forms_1_1GTFSImportForm.html',1,'main::admin_forms']]]
 ];

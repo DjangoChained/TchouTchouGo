@@ -1,3 +1,11 @@
 <map id="Graphe hiérarchique des classes" name="Graphe hiérarchique des classes">
-<area shape="rect" id="node1" href="$classmain_1_1models_1_1Halt_1_1Meta.html" title="main.models.Halt.Meta" alt="" coords="5,5,163,32"/>
+<area shape="rect" id="node2" href="$classmain_1_1models_1_1Halt.html" title="main.models.Halt" alt="" coords="146,5,270,32"/>
+<area shape="rect" id="node3" href="$classmain_1_1models_1_1Passenger.html" title="main.models.Passenger" alt="" coords="127,56,289,83"/>
+<area shape="rect" id="node4" href="$classmain_1_1models_1_1Period.html" title="main.models.Period" alt="" coords="139,107,277,133"/>
+<area shape="rect" id="node5" href="$classmain_1_1models_1_1PeriodException.html" title="main.models.PeriodException" alt="" coords="111,157,305,184"/>
+<area shape="rect" id="node6" href="$classmain_1_1models_1_1Station.html" title="main.models.Station" alt="" coords="137,208,279,235"/>
+<area shape="rect" id="node7" href="$classmain_1_1models_1_1Ticket.html" title="main.models.Ticket" alt="" coords="140,259,276,285"/>
+<area shape="rect" id="node8" href="$classmain_1_1models_1_1Train.html" title="main.models.Train" alt="" coords="143,309,273,336"/>
+<area shape="rect" id="node9" href="$classmain_1_1models_1_1TrainType.html" title="main.models.TrainType" alt="" coords="129,360,287,387"/>
+<area shape="rect" id="node10" href="$classmain_1_1models_1_1Travel.html" title="main.models.Travel" alt="" coords="140,411,276,437"/>
 </map>

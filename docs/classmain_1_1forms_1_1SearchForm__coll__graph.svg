@@ -21,7 +21,7 @@
 <text text-anchor="start" x="8" y="-37.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ timeOptions</text>
 <text text-anchor="start" x="8" y="-26.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ hour</text>
 <polyline fill="none" stroke="black" points="0,-19.5 122,-19.5 "/>
-<text text-anchor="middle" x="61" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
+<text text-anchor="start" x="8" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ __init__()</text>
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['date',['date',['../classmain_1_1models_1_1PeriodException.html#a63b5ae9de2af612841590167c6e1c0ad',1,'main.models.PeriodException.date()'],['../classmain_1_1models_1_1Travel.html#acb9106fa002616e5f31fe2e1883db6a1',1,'main.models.Travel.date()']]],
-  ['departure',['departure',['../classmain_1_1models_1_1Halt.html#ac3d2789dde29dbadee8a2a095649e22b',1,'main::models::Halt']]]
+  ['capacity',['capacity',['../classmain_1_1models_1_1Train.html#a63a6c45c0ef8dbd33784ca52f077633e',1,'main::models::Train']]],
+  ['clear_5feverything',['clear_everything',['../classmain_1_1admin__forms_1_1GTFSImportForm.html#a349ffb6aadcaff32b578b6ad20f5d8a3',1,'main::admin_forms::GTFSImportForm']]]
 ];

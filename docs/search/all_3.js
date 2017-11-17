@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['date',['date',['../classmain_1_1models_1_1PeriodException.html#a63b5ae9de2af612841590167c6e1c0ad',1,'main.models.PeriodException.date()'],['../classmain_1_1models_1_1Travel.html#acb9106fa002616e5f31fe2e1883db6a1',1,'main.models.Travel.date()']]],
-  ['departure',['departure',['../classmain_1_1models_1_1Halt.html#ac3d2789dde29dbadee8a2a095649e22b',1,'main::models::Halt']]],
-  ['distance',['distance',['../classmain_1_1models_1_1Ticket.html#a3d02f3740caac949bf8fd45438c9f626',1,'main::models::Ticket']]],
-  ['distance_5fto',['distance_to',['../classmain_1_1models_1_1Station.html#a461059d20bcddac84ce47a10f901cd70',1,'main::models::Station']]]
+  ['can_5fhold',['can_hold',['../classmain_1_1models_1_1Train.html#a2cb4d542408821b67651c80de84b0633',1,'main::models::Train']]],
+  ['capacity',['capacity',['../classmain_1_1models_1_1Train.html#a63a6c45c0ef8dbd33784ca52f077633e',1,'main::models::Train']]],
+  ['cart',['Cart',['../classmain_1_1views_1_1Cart.html',1,'main::views']]],
+  ['clear_5feverything',['clear_everything',['../classmain_1_1admin__forms_1_1GTFSImportForm.html#a349ffb6aadcaff32b578b6ad20f5d8a3',1,'main::admin_forms::GTFSImportForm']]],
+  ['coords',['coords',['../classmain_1_1models_1_1Station.html#ac0b7548efac336cbefd5d1a292130b82',1,'main::models::Station']]]
 ];

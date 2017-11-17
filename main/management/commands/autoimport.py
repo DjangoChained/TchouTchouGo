@@ -23,7 +23,7 @@ def get_file_url(dataset):
 
 
 class Command(BaseCommand):
-    help = 'Nettoyage automatique des périodes de service inutilisées'
+    help = 'Importation automatique GTFS depuis les données ouvertes SNCF'
 
     def handle(self, *args, **options):
         DATASETS = ['sncf-ter-gtfs', 'sncf-intercites-gtfs']

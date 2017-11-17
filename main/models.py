@@ -157,7 +157,8 @@ class Train(models.Model):
         """Détermine si un train peut accepter d'embarquer un nombre donné de
         passagers entre deux arrêts."""
         return True not in [
-            sum([t.travel.passengers for t in h.ticket_set.all()]) +
+            sum([t.travel.passengers
+                 for t in h.ticket_start_set.all() if t.travel.booked]) +
             passengers > self.capacity
             for h in self.halt_set.filter(
                 sequence__gte=start_halt.sequence,
@@ -408,6 +409,7 @@ class Travel(models.Model):
 
     @property
     def passengers(self):
+        """Nombre de passagers effectuant le voyage."""
         return self.passengers_aboard.count()
 
     def __str__(self):

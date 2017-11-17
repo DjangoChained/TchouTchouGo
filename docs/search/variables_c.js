@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['ordering',['ordering',['../classmain_1_1models_1_1Halt_1_1Meta.html#a750ad6dff212d90bfd70e64865d336d8',1,'main.models.Halt.Meta.ordering()'],['../classmain_1_1models_1_1PeriodException_1_1Meta.html#a1954f31d33b0533a88da3c0cfeb54104',1,'main.models.PeriodException.Meta.ordering()'],['../classmain_1_1models_1_1Ticket_1_1Meta.html#a7f716b6e87c9108c0716584ee49c7a67',1,'main.models.Ticket.Meta.ordering()'],['../classmain_1_1models_1_1Travel_1_1Meta.html#af34dd77d0c61f5455444c2ca55926a4b',1,'main.models.Travel.Meta.ordering()']]]
+  ['name',['name',['../classmain_1_1apps_1_1MainConfig.html#aa4f22f649b0536d455304a3d137d6b2c',1,'main.apps.MainConfig.name()'],['../classmain_1_1models_1_1Station.html#ac78aad3500842a3cc32c33053004217a',1,'main.models.Station.name()'],['../classmain_1_1models_1_1TrainType.html#a739150eea697593e2e3e32a56a756345',1,'main.models.TrainType.name()']]],
+  ['number',['number',['../classmain_1_1models_1_1Train.html#a5caf87c8bbc303fecff0d05249161523',1,'main::models::Train']]]
 ];

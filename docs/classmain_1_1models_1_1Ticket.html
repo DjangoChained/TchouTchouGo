@@ -118,7 +118,7 @@ Fonctions membres publiques</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Attributs publics statiques</h2></td></tr>
-<tr class="memitem:a2e51d7207943bf479a453721a784d4f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1Ticket.html#a2e51d7207943bf479a453721a784d4f3">sequence</a> = models.PositiveSmallIntegerField()</td></tr>
+<tr class="memitem:a2e51d7207943bf479a453721a784d4f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1Ticket.html#a2e51d7207943bf479a453721a784d4f3">sequence</a> = models.PositiveSmallIntegerField(verbose_name=&quot;Numéro d'ordre&quot;)</td></tr>
 <tr class="memdesc:a2e51d7207943bf479a453721a784d4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numéro de séquence du billet dans un voyage.  <a href="#a2e51d7207943bf479a453721a784d4f3">Plus de détails...</a><br /></td></tr>
 <tr class="separator:a2e51d7207943bf479a453721a784d4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb1a3d96df4f225786f479d22354050e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1Ticket.html#aeb1a3d96df4f225786f479d22354050e">start_halt</a></td></tr>
@@ -127,7 +127,7 @@ Attributs publics statiques</h2></td></tr>
 <tr class="memitem:a52c0b0e352c5fea26007b4986dbdf30e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1Ticket.html#a52c0b0e352c5fea26007b4986dbdf30e">end_halt</a></td></tr>
 <tr class="memdesc:a52c0b0e352c5fea26007b4986dbdf30e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Arrêt de destination.  <a href="#a52c0b0e352c5fea26007b4986dbdf30e">Plus de détails...</a><br /></td></tr>
 <tr class="separator:a52c0b0e352c5fea26007b4986dbdf30e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a200a19ccf2c5a10a0d00e0f6acf998e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1Ticket.html#a200a19ccf2c5a10a0d00e0f6acf998e0">travel</a> = models.ForeignKey('<a class="el" href="classmain_1_1models_1_1Travel.html">Travel</a>', on_delete=models.CASCADE)</td></tr>
+<tr class="memitem:a200a19ccf2c5a10a0d00e0f6acf998e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmain_1_1models_1_1Ticket.html#a200a19ccf2c5a10a0d00e0f6acf998e0">travel</a></td></tr>
 <tr class="memdesc:a200a19ccf2c5a10a0d00e0f6acf998e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Voyage contenant le billet.  <a href="#a200a19ccf2c5a10a0d00e0f6acf998e0">Plus de détails...</a><br /></td></tr>
 <tr class="separator:a200a19ccf2c5a10a0d00e0f6acf998e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -135,7 +135,7 @@ Attributs publics statiques</h2></td></tr>
 <div class="textblock"><pre class="fragment">Décrit un billet de train. Un billet représente un voyage dans un seul
 train, d'un arrêt à un autre.
 </pre> 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00225">225</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00299">299</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 </div><h2 class="groupheader">Documentation des fonctions membres</h2>
 <a class="anchor" id="ab90bf3291557ab2c4a6a6bbb683e4e0d"></a>
 <div class="memitem">
@@ -151,7 +151,7 @@ train, d'un arrêt à un autre.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Représentation textuelle du billet pour affichage.</pre> 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00267">267</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00352">352</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -169,7 +169,7 @@ train, d'un arrêt à un autre.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Distance parcourue en kilomètres.</pre> 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00258">258</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00343">343</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -187,7 +187,7 @@ train, d'un arrêt à un autre.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Prix du billet.</pre> 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00263">263</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00348">348</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -209,10 +209,11 @@ train, d'un arrêt à un autre.
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Valeur initiale :</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= models.ForeignKey(<span class="stringliteral">&#39;Halt&#39;</span>, on_delete=models.PROTECT,</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                 related_name=<span class="stringliteral">&#39;+&#39;</span>)</div></div><!-- fragment -->
+<b>Valeur initiale :</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= models.ForeignKey(</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;        <span class="stringliteral">&#39;Halt&#39;</span>, on_delete=models.PROTECT, verbose_name=<span class="stringliteral">&quot;Arrêt d&#39;arrivée&quot;</span>,</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;        related_name=<span class="stringliteral">&quot;ticket_end_set&quot;</span>)</div></div><!-- fragment -->
 <p>Arrêt de destination. </p>
+<p>L'accès en sens inverse depuis <a class="el" href="classmain_1_1models_1_1Halt.html">Halt</a> se fait avec Halt.ticket_end_set pour éviter une collision avec l'ensemble des tickets ayant l'arrêt de départ (ticket_start_set), qui s'appellerait aussi ticket_set par défaut. </p>
 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00238">238</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00321">321</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -224,7 +225,7 @@ train, d'un arrêt à un autre.
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">main.models.Ticket.sequence = models.PositiveSmallIntegerField()</td>
+          <td class="memname">main.models.Ticket.sequence = models.PositiveSmallIntegerField(verbose_name=&quot;Numéro d'ordre&quot;)</td>
         </tr>
       </table>
   </td>
@@ -237,7 +238,7 @@ train, d'un arrêt à un autre.
 <p>Numéro de séquence du billet dans un voyage. </p>
 <p>Base zéro. Permet d'ordonner les billets dans un voyage donné. </p>
 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00232">232</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00306">306</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -258,11 +259,11 @@ train, d'un arrêt à un autre.
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Valeur initiale :</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= models.ForeignKey(<span class="stringliteral">&#39;Halt&#39;</span>, on_delete=models.PROTECT,</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                   related_name=<span class="stringliteral">&#39;+&#39;</span>)</div></div><!-- fragment -->
+<b>Valeur initiale :</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= models.ForeignKey(</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;        <span class="stringliteral">&#39;Halt&#39;</span>, on_delete=models.PROTECT, verbose_name=<span class="stringliteral">&quot;Arrêt de départ&quot;</span>,</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;        related_name=<span class="stringliteral">&quot;ticket_start_set&quot;</span>)</div></div><!-- fragment -->
 <p> Arrêt de départ. </p>
-<p>Ce n'est pas une station ou un train puisqu'il est tout à fait possible de monter dans un train à une gare intermédiaire. </p>
+<p>Ce n'est pas une station ou un train puisqu'il est tout à fait possible de monter dans un train à une gare intermédiaire. L'accès en sens inverse depuis <a class="el" href="classmain_1_1models_1_1Halt.html">Halt</a> se fait avec Halt.ticket_start_set pour éviter une collision avec l'ensemble des tickets ayant l'arrêt de destination (ticket_end_set), qui autrement s'appellerait aussi ticket_set par défaut. </p>
 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00235">235</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00313">313</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -274,7 +275,7 @@ train, d'un arrêt à un autre.
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">main.models.Ticket.travel = models.ForeignKey('<a class="el" href="classmain_1_1models_1_1Travel.html">Travel</a>', on_delete=models.CASCADE)</td>
+          <td class="memname">main.models.Ticket.travel</td>
         </tr>
       </table>
   </td>
@@ -283,10 +284,10 @@ train, d'un arrêt à un autre.
   </tr>
 </table>
 </div><div class="memdoc">
-
+<b>Valeur initiale :</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= models.ForeignKey(</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;        <span class="stringliteral">&#39;Travel&#39;</span>, on_delete=models.CASCADE, verbose_name=<span class="stringliteral">&quot;Voyage associé&quot;</span>)</div></div><!-- fragment -->
 <p>Voyage contenant le billet. </p>
 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00241">241</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00325">325</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>

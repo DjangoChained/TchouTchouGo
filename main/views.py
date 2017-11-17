@@ -68,9 +68,15 @@ def tickets(request):
 
 class Cart(BaseCart):
     """Décrit le panier de billets."""
+    ## Quantité maximale de chaque voyage.
+    # Doit être défini à 1, car il n'est pas question de commander plusieurs
+    # fois un voyage avec un même identifiant, contrairement à un panier de
+    # magasin en ligne par exemple.
     max_quantity = 1
 
     def get_queryset(self, pks):
+        """Obtenir un QuerySet correspondant aux billets pouvant se trouver
+        dans le panier."""
         return Travel.objects.filter(booked=False, pk__in=pks)
 
 
