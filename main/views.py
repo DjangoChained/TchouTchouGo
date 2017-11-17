@@ -123,9 +123,17 @@ def addPassenger(request):
     if request.method == "POST":
         form = PassengerForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.user = request.user
-            post.save()
+            doublon = Passenger.objects.filter(
+                first_name=form.cleaned_data.get('first_name'),
+                last_name=form.cleaned_data.get('last_name'),
+                display=False)
+            if doublon.count():
+                Passenger.objects.select_for_update() \
+                    .filter(id=doublon.first().id).update(display=True)
+            else:
+                post = form.save(commit=False)
+                post.user = request.user
+                post.save()
             return redirect('passengers')
     else:
         form = PassengerForm()
@@ -178,12 +186,13 @@ def signup(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            passenger = Passenger(
-                first_name=form.cleaned_data.get('first_name'),
-                last_name=form.cleaned_data.get('last_name'))
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            Passenger.objects.create(
+                first_name=form.cleaned_data.get('first_name'),
+                last_name=form.cleaned_data.get('last_name'),
+                user=request.user)
             return redirect('/train/')
     else:
         form = SignUpForm()

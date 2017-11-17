@@ -22,8 +22,20 @@
 				</li>
 				{% endfor %}
 				<li class="list-group-item">
-					<span>{{ travel.passengers }} passager{{ travel.passengers|pluralize }}</span>
 					<div class="price float-right">{{ travel.price|stringformat:".2f" }} €</div>
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user mr-3"></i>{{ travel.passengers }}</button>
+						<div class="dropdown-menu">
+							{% for passenger in travel.passengers_aboard.all %}
+								<div class="dropdown-item">{{ passenger }}</div>
+							{% endfor %}
+							{% if passengers.count == 1 %}
+							<div class="dropdown-item" style="width: 300px; white-space: normal; color: #333; font-size: 80%">
+								Vous pouvez ajouter des passagers via l'onglet "Passagers" dans votre menu utilisateur.
+							</div>
+							{% endif %}
+						</div>
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -31,5 +43,4 @@
 	</div>
 	<script type="text/javascript" src="{% static 'main/js/travelmaps.js' %}"></script>
 </div>
-
 {% endblock %}

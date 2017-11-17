@@ -1,5 +1,4 @@
 {% extends 'main/base.html' %} {% block content %} {% load static %}
-<link rel="stylesheet" href="{% static 'main/css/pikaday.css' %}" />
 <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}" />
 <link rel="stylesheet" href="{% static 'css/jquery-ui.structure.min.css' %}" />
 <div class="bloc_connexion">
@@ -12,7 +11,7 @@
             <input id="startStation" type="text" class="form-control form-control-lg" placeholder="Gare de départ" name="startStation" />
             <input id="endStation" type="text" class="form-control form-control-lg" placeholder="Gare d'arrivée" name="endStation" />
         </div>
-        <input id="date" type="date" class="form-control form-control-lg mb-3" placeholder="Date du voyage" min="{% now " Y-m-d " %}" name="travelDate" required />
+        <input type="text" id="date" class="form-control form-control-lg mb-3" placeholder="Date du voyage" min="{% now " Y-m-d " %}" name="travelDate" required>
         <div class="form-row justify-content-end">
             <div class="form-group col-sm-8 col-12 text-sm-right text-center mt-1">
                 <div class="form-check form-check-inline">
@@ -59,14 +58,12 @@
     </form>
 </div>
 <script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'main/js/pikaday.js' %}"></script>
-<script src="{% static 'main/js/pikaday.jquery.js' %}"></script>
-<script src="{% static 'main/js/tchou.js' %}"></script>
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 <script type="text/javascript">
     $(function(){
         $('#startStation, #endStation').autocomplete({
-            source : {% autoescape off %}{{ stations }} {% endautoescape %}
+            source : {% autoescape off %}{{ stations }} {% endautoescape %} ,
+            minLength : 3
         });
         $( "#date" ).datepicker({
                         altField: "#date",
@@ -82,6 +79,7 @@
                         weekHeader: 'Sem.',
                         dateFormat: 'dd/mm/yy'
         });
+        $( "input[name=passengers]").first().prop('checked', true);
     });
 </script>
 {% endblock %}

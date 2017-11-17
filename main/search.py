@@ -53,7 +53,7 @@ def _search_zero(start_station, end_station, date, time, passengers,
     # et créer les résultats de recherche correspondants
     travels = []
     for trip in halt_ids:
-        tr = Train.objects.get(id=trip[2])
+       tr = Train.objects.get(id=trip[2])
         start_halt = Halt.objects.get(id=trip[0])
         end_halt = Halt.objects.get(id=trip[1])
         if tr.runs(date) and \

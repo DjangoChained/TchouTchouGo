@@ -30,6 +30,11 @@
 				</li>
 			</ul>
 		</div>
+		{% empty %}
+			</div>
+			<div class="alert alert-danger text-center">
+			<h1>Aucun résultat trouvé</h1>
+			</div>
 		{% endfor %}
 	</div>
 	<script type="text/javascript" src="{% static 'main/js/travelmaps.js' %}"></script>
