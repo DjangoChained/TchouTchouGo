@@ -158,7 +158,7 @@ class Train(models.Model):
         passagers entre deux arrêts."""
         return True not in [
             sum([t.travel.passengers
-                 for t in h.ticket_set.all() if t.travel.booked]) +
+                 for t in h.ticket_start_set.all() if t.travel.booked]) +
             passengers > self.capacity
             for h in self.halt_set.filter(
                 sequence__gte=start_halt.sequence,
@@ -353,8 +353,7 @@ class Ticket(models.Model):
     def __str__(self):
         """Représentation textuelle du billet pour affichage."""
         return "Billet de " + str(self.start_halt) + " à " + \
-            str(self.end_halt) + " le " + str(self.travel.date) + \
-            " pour " + str(self.travel.user)
+            str(self.end_halt) + " le " + str(self.travel.date)
 
 
 class Travel(models.Model):
