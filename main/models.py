@@ -149,7 +149,7 @@ class Train(models.Model):
         Si les données de la SNCF sont mauvaises (et c'est le cas), et qu'il
         n'y a pas de période de service associée, un train roulera tous les
         jours, toute l'année."""
-        if not self.period:
+        if not self.period_id:
             return True
         return self.period.includes_date(date)
 
@@ -352,8 +352,7 @@ class Ticket(models.Model):
     def __str__(self):
         """Représentation textuelle du billet pour affichage."""
         return "Billet de " + str(self.start_halt) + " à " + \
-            str(self.end_halt) + " le " + str(self.travel.date) + \
-            " pour " + str(self.travel.user)
+            str(self.end_halt) + " le " + str(self.travel.date)
 
 
 class Travel(models.Model):
@@ -363,9 +362,6 @@ class Travel(models.Model):
     """
     ## Date du voyage.
     date = models.DateField()
-    ## Association avec un utilisateur.
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Utilisateur")
     ## Association avec des passagers.
     passengers_aboard = models.ManyToManyField(
         Passenger, verbose_name="Passager")
@@ -376,7 +372,7 @@ class Travel(models.Model):
         """Métadonnées du modèle de voyage."""
         ## Tri par défaut si aucune clause order_by() n'est spécifiée dans un
         #  QuerySet.
-        ordering = ["date", "user"]
+        ordering = ["date"]
         ## Nom affiché dans l'interface d'administration de Django.
         verbose_name = "voyage"
 

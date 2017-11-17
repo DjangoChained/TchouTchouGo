@@ -8,40 +8,43 @@
         <meta charset="utf-8" />
     </head>
     <body style="font-size: 18pt">
-        <h1 class="my-3"><i class="fa fa-train"></i> TchouTchouGo</h1>
-        <div class="row mb-3">
-            <div class="col-3 mr-auto text-left">
-                réf. <big><strong>{{ travel.id|stringformat:"06d" }}</strong></big>
+        {% for passenger in travel.passengers_aboard.all %}
+            <h1 class="my-3"><i class="fa fa-train"></i> TchouTchouGo</h1>
+            <div class="row mb-3">
+                <div class="col-3 mr-auto text-left">
+                    réf. <big><strong>{{ travel.id|stringformat:"06d" }}</strong></big>
+                </div>
+                <div class="col-9 ml-auto text-right">
+                    {{ travel.date|date:'d/m/Y' }}<br />
+                    <small>facturé à {{ user.first_name|title }} {{ user.last_name|title }}</small><big></big><br /></big>
+                    {% if travel.passengers_aboard.count > 1 %}
+                        {{ passenger }}
+                    {% endif %}
+                </div>
             </div>
-            <div class="col-9 ml-auto text-right">
-                {{ travel.date|date:'d/m/Y' }}<br />
-                <small>facturé à </small><big>{{ travel.user.first_name|title }} {{ travel.user.last_name|title }}</big>
+            <table class="table table-bordered">
+                <tbody>
+                    {% for ticket in travel.ticket_set.all %}
+                        <tr>
+                            <th>{{ ticket.start_halt.departure|time:"H:i" }}</th>
+                            <td>{{ ticket.start_halt.station.name|upper }}</td>
+                            <td rowspan="2">{{ ticket.start_halt.train.traintype.name|upper }}<br />{{ ticket.start_halt.train.number }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ ticket.end_halt.arrival|time:"H:i" }}</th>
+                            <td>{{ ticket.end_halt.station.name|upper }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="row">    
+                <div class="col-6 ml-auto text-right">
+                    <big><strong>{{ travel.price|stringformat:".2f" }} €</strong></big>
+                </div>
             </div>
-        </div>
-        <table class="table table-bordered">
-            <tbody>
-                {% for ticket in travel.ticket_set.all %}
-                    <tr>
-                        <th>{{ ticket.start_halt.departure|time:"H:i" }}</th>
-                        <td>{{ ticket.start_halt.station.name|upper }}</td>
-                        <td rowspan="2">{{ ticket.start_halt.train.traintype.name|upper }}<br />{{ ticket.start_halt.train.number }}</td>
-                    </tr>
-                    <tr>
-                        <th>{{ ticket.end_halt.arrival|time:"H:i" }}</th>
-                        <td>{{ ticket.end_halt.station.name|upper }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <div class="row">
-            <div class="col-6 mr-auto text-left">
-                {{ travel.passengers }} passager{{ travel.passengers|pluralize }}
-            </div>
-            <div class="col-6 ml-auto text-right">
-                <big><strong>{{ travel.price|stringformat:".2f" }} €</strong></big>
-            </div>
-        </div>
-        <p class="mt-5"><small>Édité le {% now 'd/m/Y' %} à {% now 'H:i' %}</small></p>
+            <p class="mt-5"><small>Édité le {% now 'd/m/Y' %} à {% now 'H:i' %}</small></p>
+            <div style="page-break-after: always"></div>
+        {% endfor %}
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/popper.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
