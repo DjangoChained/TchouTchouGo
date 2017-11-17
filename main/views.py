@@ -191,6 +191,24 @@ def signup(request):
 
 
 ###############################################################################
+# Cartographie
+###############################################################################
+
+
+def full_map(request):
+    import geojson
+    from TchouTchouGo.settings import GOOGLE_MAPS_API_KEY
+    points = geojson.FeatureCollection([
+        geojson.Feature(geometry=geojson.Point((s.lng, s.lat)),
+                        properties={"title": s.name})
+        for s in Station.objects.all()])
+    return render(request, 'main/map.html', {
+        'active': 'map',
+        'map_geojson': geojson.dumps(points),
+        'api_key': GOOGLE_MAPS_API_KEY})
+
+
+###############################################################################
 # Fonctionnalités secondaires
 ###############################################################################
 
