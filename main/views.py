@@ -208,6 +208,24 @@ def full_map(request):
         'api_key': GOOGLE_MAPS_API_KEY})
 
 
+def travel_map(request, travel_id):
+    import geojson
+    from TchouTchouGo.settings import GOOGLE_MAPS_API_KEY
+    from django.db.models import Q
+    stations = Station.objects.filter(
+        Q(halt__ticket_start_set__travel__id=travel_id) |
+        Q(halt__ticket_end_set__travel__id=travel_id)).distinct()
+    data = [geojson.Feature(geometry=geojson.Point((s.lng, s.lat)),
+                            properties={"title": s.name})
+            for s in stations]
+    data.append(geojson.Feature(
+        geometry=geojson.LineString([(s.lng, s.lat) for s in stations]),
+        properties={"strokeColor": "red", "strokeWeight": 3}))
+    return render(request, 'main/travel_map.html', {
+        'map_geojson': geojson.dumps(geojson.FeatureCollection(data)),
+        'api_key': GOOGLE_MAPS_API_KEY})
+
+
 ###############################################################################
 # Fonctionnalités secondaires
 ###############################################################################

@@ -134,6 +134,6 @@ margin-right: 10px;
     font-size: 1.21em;
 }
 
-#map {
-    height: 80vh;
-}
+#map { height: 80vh; }
+.modal #map { height: 70vh; }
+.modal-dialog { max-width: initial; width: auto; margin: 10px; }

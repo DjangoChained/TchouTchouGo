@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^search$', views.search, name='search'),
     url(r'^tickets$', views.tickets, name='tickets'),
     url(r'^map$', views.full_map, name='map'),
+    url(r'^map/travel/(\d+)$', views.travel_map, name='travel_map'),
     url(r'^cart$', views.cart_show, name='cart'),
     url(r'^cart/add/(\d+)$', views.cart_add, name='cart_add'),
     url(r'^cart/remove/(\d+)$', views.cart_remove, name='cart_remove'),

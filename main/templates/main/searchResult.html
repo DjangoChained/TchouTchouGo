@@ -1,10 +1,15 @@
-{% extends 'main/base.html' %} {% block content %}
+{% extends 'main/base.html' %} {% block content %} {% load static %}
 
 <div class="bloc_cards mb-5">
 	<h4 class="text-center"> Itinéraire de {{ start_station.name }} à {{ end_station.name }}</h4>
 	<div class="card-columns">
 		{% for travel in results %}
 		<div class="card">
+			<div class="card-header">
+				<div class="float-right">
+					<a href="#" class="travel-modal" data-url="{% url 'travel_map' travel.id %}"><i class="fa fa-map-marker bigger" aria-hidden="true"></i></a>
+				</div>
+			</div>
 			<ul class="list-group list-group-flush">
 				{% for ticket in travel.ticket_set.all %}
 				<li class="list-group-item">
@@ -27,6 +32,7 @@
 		</div>
 		{% endfor %}
 	</div>
+	<script type="text/javascript" src="{% static 'main/js/travelmaps.js' %}"></script>
 </div>
 
 {% endblock %}
