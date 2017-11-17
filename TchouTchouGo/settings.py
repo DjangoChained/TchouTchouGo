@@ -143,3 +143,7 @@ STATICFILES_DIRS = (
 # django-easycart
 
 EASYCART_CART_CLASS = 'main.views.Cart'
+
+# Google Maps API
+
+GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY'

@@ -1,4 +1,5 @@
-{% extends 'main/base.html' %} {% block content %}
+{% extends 'main/base.html' %} {% block content %} {% load static %}
+
 <div class="bloc_cards">
 	<h1 class="text-center titre">Mes billets</h1>
 	<div class="card-columns">
@@ -7,6 +8,8 @@
 			<div class="card-header">
 				<div class="float-right">
 					<a href="{% url 'print_ticket' travel.id %}"><i class="fa fa-print bigger" aria-hidden="true"></i></a>
+					&nbsp;
+					<a href="#" class="travel-modal" data-url="{% url 'travel_map' travel.id %}"><i class="fa fa-map-marker bigger" aria-hidden="true"></i></a>
 				</div>
 				{{ travel.date }}
 			</div>
@@ -38,5 +41,6 @@
 		</div>
 		{% endfor %}
 	</div>
+	<script type="text/javascript" src="{% static 'main/js/travelmaps.js' %}"></script>
 </div>
 {% endblock %}
