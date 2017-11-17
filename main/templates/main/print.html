@@ -15,7 +15,7 @@
             </div>
             <div class="col-9 ml-auto text-right">
                 {{ travel.date|date:'d/m/Y' }}<br />
-                <small>facturé à </small><big>{{ travel.user.first_name|title }} {{ travel.user.last_name|title }}</big>
+                <small>facturé à </small><big>{{ user.first_name|title }} {{ user.last_name|title }}</big>
             </div>
         </div>
         <table class="table table-bordered">
