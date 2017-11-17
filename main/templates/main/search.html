@@ -62,7 +62,8 @@
 <script type="text/javascript">
     $(function(){
         $('#startStation, #endStation').autocomplete({
-            source : {% autoescape off %}{{ stations }} {% endautoescape %}
+            source : {% autoescape off %}{{ stations }} {% endautoescape %} ,
+            minLength : 3
         });
         $( "#date" ).datepicker({
                         altField: "#date",
