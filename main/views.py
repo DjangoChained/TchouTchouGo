@@ -117,9 +117,16 @@ def addPassenger(request):
     if request.method == "POST":
         form = PassengerForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.user = request.user
-            post.save()
+            doublon = Passenger.objects.filter(
+                first_name=form.cleaned_data.get('first_name'),
+                last_name=form.cleaned_data.get('last_name'),
+                display=False)
+            if doublon.count():
+                Passenger.objects.select_for_update().filter(id=doublon.first().id).update(display=True)
+            else:
+                post = form.save(commit=False)
+                post.user = request.user
+                post.save()
             return redirect('passengers')
     else:
         form = PassengerForm()
