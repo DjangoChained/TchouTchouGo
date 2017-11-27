@@ -14,8 +14,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import \
     render, redirect, get_object_or_404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 import json
+import geojson
 from easycart import BaseCart
 
 
@@ -205,20 +206,21 @@ def signup(request):
 
 
 def full_map(request):
-    import geojson
     from TchouTchouGo.settings import GOOGLE_MAPS_API_KEY
+    return render(request, 'main/map.html', {
+        'active': 'map',
+        'api_key': GOOGLE_MAPS_API_KEY})
+
+
+def full_map_geojson(request):
     points = geojson.FeatureCollection([
         geojson.Feature(geometry=geojson.Point((s.lng, s.lat)),
                         properties={"title": s.name})
         for s in Station.objects.all()])
-    return render(request, 'main/map.html', {
-        'active': 'map',
-        'map_geojson': geojson.dumps(points),
-        'api_key': GOOGLE_MAPS_API_KEY})
+    return HttpResponse(geojson.dumps(points), content_type='application/json')
 
 
 def travel_map(request, travel_id):
-    import geojson
     from TchouTchouGo.settings import GOOGLE_MAPS_API_KEY
     from django.db.models import Q
     stations = Station.objects.filter(
