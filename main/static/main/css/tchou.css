@@ -160,3 +160,6 @@ margin-right: 10px;
 .btn-lg {
     font-size: 1.25em !important;
 }
+#map { height: 80vh; }
+.modal #map { height: 70vh; }
+.modal-dialog { max-width: initial; width: auto; margin: 10px; }

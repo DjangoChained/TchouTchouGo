@@ -1,0 +1,6 @@
+{% extends 'main/base.html' %} {% block content %} {% load static %}
+    <div id="map"></div>
+    <script src="{% static 'main/js/map.js' %}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&callback=initMap"></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>        
+{% endblock %}

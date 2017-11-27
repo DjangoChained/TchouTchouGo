@@ -11,23 +11,24 @@ Ce manuel présente comment effectuer l'installation sans permissions d'utilisat
 * [Documentation technique](#5)
 
 <a id="1"></a>
+
 ## Installation de l'environnement virtuel
 
 Assurez-vous que les environnements virtuels sont installés sur la machine :
 
-```
+``` bash
 python -m venv
 ```
 
 Si un message d'aide sur l'utilisation de `venv` s'affiche, les environnements virtuels sont installés. Sinon, installez-le avec la commande :
 
-```
+``` bash
 pip install --user virtualenv
 ```
 
 Ensuite, installez `virtualenvwrapper`, un assistant qui facilitera la manipulation des environnements virtuels :
 
-```
+``` bash
 pip install --user virtualenvwrapper
 ```
 
@@ -38,7 +39,7 @@ pip install --user virtualenvwrapper
 
 Il sera ensuite nécessaire d'ajouter à un script d'initialisation de shell (par exemple `~/.bashrc`) les lignes suivantes :
 
-```bash
+``` bash
 export WORKON_HOME=~/.virtualenvs
 mkdir -p $WORKON_HOME
 source ~/.local/bin/virtualenvwrapper.sh
@@ -48,7 +49,7 @@ source ~/.local/bin/virtualenvwrapper.sh
 
 Vous pouvez ensuite créer immédiatement un environnement virtuel et le définir comme votre environnement de travail. Nommez-le comme vous voulez — dans ce tutoriel, on l'appellera `tchou`.
 
-```
+``` bash
 mkvirtualenv tchou
 workon tchou
 ```
@@ -56,6 +57,7 @@ workon tchou
 > Utilisez la commande `deactivate` pour sortir à tout moment d'un environnement virtuel.
 
 <a id="2"></a>
+
 ## Installation des packages
 
 Commencez par cloner le dépôt Git là où vous le souhaitez, puis installez les prérequis depuis le fichier `requirements.txt`.
@@ -66,11 +68,16 @@ Commencez par cloner le dépôt Git là où vous le souhaitez, puis installez le
 ```
 
 <a id="3"></a>
+
 ## Configuration de l'application
 
-Éditez le fichier `TchouTchouGo/settings.py` pour modifier les paramètres de connexion à la base de données. Par défaut, TchouTchouGo utilisera une base de données SQLite dans le dossier de l'application. Ensuite, créez la base de données ainsi qu'un administrateur pour l'interface d'administration :
+Éditez le fichier `TchouTchouGo/settings.py` pour modifier les paramètres de connexion à la base de données. Par défaut, TchouTchouGo utilisera une base de données SQLite dans le dossier de l'application.
 
-```
+Configurez également la constante `GOOGLE_MAPS_API_KEY` avec une clé d'API Google Maps pouvant être obtenue gratuitement depuis la [Google API Console](https://console.developers.google.com/). Une clé gratuite vous donnera droit à 25 000 requêtes par jour.
+
+Ensuite, créez la base de données ainsi qu'un administrateur pour l'interface d'administration :
+
+``` bash
 python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py createsuperuser
@@ -78,29 +85,31 @@ python3 manage.py createsuperuser
 
 Vous pouvez ensuite démarrer le serveur.
 
-```
+``` bash
 python3 manage.py runserver
 ```
 
 L'application sera disponible par défaut sur `http://localhost:8000/train/` et l'administration sur `http://localhost:8000/admin/`. Les administrateurs se connectant via l'application TchouTchouGo sont automatiquement redirigés vers l'administration.
 
 <a id="4"></a>
+
 ## Importation GTFS
 
 Dans l'application TchouTchouGo, connectez-vous en tant qu'administrateur, et accédez à `/admin/gtfs-import`. Un formulaire vous permettra d'envoyer les archives au format ZIP pour les données TER et Intercités de l'Open Data SNCF au format GTFS. Inutile d'effectuer le moindre traitement sur ces archives ; l'application se charge de traiter les archives, telles qu'elles sont proposées sur le site, toute seule.
 
 <a id="5"></a>
+
 ## Documentation technique
 
 Le dépôt contient un fichier de configuration `doxyfile` à sa racine, utilisable par [Doxygen](http://doxygen.org). Il sera nécessaire de télécharger Doxygen puis d'exécuter le programme dans le dossier racine du dépôt, celui qui contient README.md ou INSTALL.md.
 
-```
+``` bash
 ~/TchouTchouGo$ doxygen doxyfile
 ```
 
 Le fichier de configuration a été réglé pour permettre la génération de diagrammes de classes lorsqu'il y a des héritages ou des relations avec d'autres classes. Pour cela, Doxygen utilise [Graphviz](http://www.graphviz.org/), aussi connu sous le nom de `dot`. Il sera donc nécessaire d'installer Graphviz pour générer la documentation.
 
-```
+``` bash
 sudo apt install graphviz
 ```
 

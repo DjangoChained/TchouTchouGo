@@ -1,0 +1,6 @@
+{% load static %}
+<div id="map" data-geojson="{% url 'travel_map_geojson' travel_id %}"></div>
+<script src="{% static 'main/js/travelmap.js' %}"></script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&callback=initMap">
+</script>

@@ -2,3 +2,4 @@ django
 django-apptemplates
 django-easycart
 psycopg2
+geojson

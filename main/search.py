@@ -53,16 +53,16 @@ def _search_zero(start_station, end_station, date, time, passengers,
     # et créer les résultats de recherche correspondants
     travels = []
     for trip in halt_ids:
-       tr = Train.objects.get(id=trip[2])
+        tr = Train.objects.get(id=trip[2])
         start_halt = Halt.objects.get(id=trip[0])
         end_halt = Halt.objects.get(id=trip[1])
         if tr.runs(date) and \
                 tr.can_hold(start_halt, end_halt, len(passengers)):
-            tv = Travel.objects.create(date=date, user=None, booked=False)
+            tv = Travel.objects.create(date=date, booked=False)
             tv.passengers_aboard.add(*passengers)
             Ticket.objects.create(start_halt=start_halt, end_halt=end_halt,
                                   sequence=0, travel=tv)
-            travels.append(tr)
+            travels.append(tv)
     return travels
 
 
@@ -116,7 +116,7 @@ def _search_one(start_station, end_station, date, time, passengers,
         if tr_1.runs(date) and tr_2.runs(date) and \
                 tr_1.can_hold(start_halt, mid_halt_1, len(passengers)) and \
                 tr_2.can_hold(mid_halt_2, end_halt, len(passengers)):
-            tv = Travel.objects.create(date=date, user=None, booked=False)
+            tv = Travel.objects.create(date=date, booked=False)
             tv.passengers_aboard.add(*passengers)
             Ticket.objects.create(start_halt=start_halt, end_halt=mid_halt_1,
                                   sequence=0, travel=tv)

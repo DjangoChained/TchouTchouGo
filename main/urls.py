@@ -7,7 +7,13 @@ from . import views
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/train/search', permanent=False)),
     url(r'^search$', views.search, name='search'),
+    url(r'^stations.json$', views.stations_json, name='stations_json'),
     url(r'^tickets$', views.tickets, name='tickets'),
+    url(r'^map$', views.full_map, name='map'),
+    url(r'^stations.geojson$', views.full_map_geojson, name='map_geojson'),
+    url(r'^map/travel/(\d+)$', views.travel_map, name='travel_map'),
+    url(r'^travel(\d+).geojson', views.travel_map_geojson,
+        name='travel_map_geojson'),
     url(r'^cart$', views.cart_show, name='cart'),
     url(r'^cart/add/(\d+)$', views.cart_add, name='cart_add'),
     url(r'^cart/remove/(\d+)$', views.cart_remove, name='cart_remove'),

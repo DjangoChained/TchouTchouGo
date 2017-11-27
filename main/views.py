@@ -14,8 +14,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import \
     render, redirect, get_object_or_404, HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 import json
+import geojson
 from easycart import BaseCart
 
 
@@ -45,20 +46,15 @@ def search(request):
     passengers = ""
     if request.user.is_authenticated():
         passengers = request.user.passenger_set.filter(display=True)
-    #Stations pour l'autocomplétion des gares
-    stations = Station.objects.all()
-    res = [{'id': s.id, 'label': s.name, 'value': s.name} for s in stations]
-    return render(request, 'main/search.html',
-                  dict(active="search", passengers=passengers,
-                       stations=json.dumps(res),
-                       hours=range(5, 23)))
+    return render(request, 'main/search.html', dict(
+        active="search", passengers=passengers, hours=range(5, 23)))
 
 
 @login_required
 def tickets(request):
-    return render(request, 'main/tickets.html',
-                  dict(active="list",
-                       travel_set=Travel.objects.filter(booked=True)))
+    return render(request, 'main/tickets.html', dict(
+        active="list", travel_set=Travel.objects.filter(
+            booked=True, passengers_aboard__user=request.user).distinct()))
 
 
 ###############################################################################
@@ -137,7 +133,6 @@ def addPassenger(request):
             return redirect('passengers')
     else:
         form = PassengerForm()
-
     return render(request, 'main/addPassenger.html', {'form': form})
 
 
@@ -200,6 +195,48 @@ def signup(request):
 
 
 ###############################################################################
+# Cartographie
+###############################################################################
+
+
+def full_map(request):
+    from TchouTchouGo.settings import GOOGLE_MAPS_API_KEY
+    return render(request, 'main/map.html', {
+        'active': 'map',
+        'api_key': GOOGLE_MAPS_API_KEY})
+
+
+def full_map_geojson(request):
+    points = geojson.FeatureCollection([
+        geojson.Feature(geometry=geojson.Point((s.lng, s.lat)),
+                        properties={"title": s.name})
+        for s in Station.objects.all()])
+    return HttpResponse(geojson.dumps(points), content_type='application/json')
+
+
+def travel_map(request, travel_id):
+    from TchouTchouGo.settings import GOOGLE_MAPS_API_KEY
+    return render(request, 'main/travel_map.html', {
+        'travel_id': travel_id,
+        'api_key': GOOGLE_MAPS_API_KEY})
+
+
+def travel_map_geojson(request, travel_id):
+    from django.db.models import Q
+    stations = Station.objects.filter(
+        Q(halt__ticket_start_set__travel__id=travel_id) |
+        Q(halt__ticket_end_set__travel__id=travel_id)).distinct()
+    data = [geojson.Feature(geometry=geojson.Point((s.lng, s.lat)),
+                            properties={"title": s.name})
+            for s in stations]
+    data.append(geojson.Feature(
+        geometry=geojson.LineString([(s.lng, s.lat) for s in stations]),
+        properties={"strokeColor": "red", "strokeWeight": 3}))
+    return HttpResponse(geojson.dumps(geojson.FeatureCollection(data)),
+                        content_type="application/json")
+
+
+###############################################################################
 # Fonctionnalités secondaires
 ###############################################################################
 
@@ -233,3 +270,9 @@ def update_profile(request):
         })
     else:
         raise PermissionDenied
+
+
+def stations_json(request):
+    return HttpResponse(json.dumps(
+        [{'id': s.id, 'label': s.name, 'value': s.name}
+         for s in Station.objects.all()]), content_type="application/json")

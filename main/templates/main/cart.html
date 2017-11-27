@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %} {% block content %}
+{% extends 'main/base.html' %} {% block content %} {% load static %}
 
 <div class="bloc_cards">
 	<div class="container">
@@ -12,6 +12,8 @@
 			<div class="card-header">
 				{{ travel.obj.date }}
 				<div class="pull-right">
+					<a href="#" class="travel-modal" data-url="{% url 'travel_map' travel.obj.id %}"><i class="fa fa-map-marker bigger" aria-hidden="true"></i></a>
+					&nbsp;
 					<a class="supprimer" href="{% url 'cart_remove' travel.obj.id %}"><i class="fa fa-trash"></i></a>
 				</div>
 			</div>
@@ -51,6 +53,7 @@
 		</div>
 		{% endfor %}
 	</div>
+	<script type="text/javascript" src="{% static 'main/js/searchResult.js' %}"></script>
 </div>
 
 {% endblock %}
