@@ -26,11 +26,15 @@ def search(request):
         passengers = request.user.passenger_set.filter(display=True).all()
     if request.method == 'POST':
         form = SearchForm(request.POST, passengers=passengers)
-        if form.is_valid() and 'passengers' in dict(request.POST.lists()):
+        if form.is_valid():
             start_station = Station.objects.get(
                 name=form.cleaned_data.get('startStation'))
             end_station = Station.objects.get(
                 name=form.cleaned_data.get('endStation'))
+            ps = []
+            if 'passengers' in dict(request.POST.lists()):
+                ps = [passengers.get(id=id)
+                      for id in dict(request.POST.lists())['passengers']]
             return render(
                 request, 'main/searchResult.html',
                 dict(active="search",
@@ -39,9 +43,7 @@ def search(request):
                      results=search_trains(
                          start_station, end_station,
                          form.cleaned_data.get('travelDate'),
-                         time(hour=int(form.cleaned_data.get('hour'))),
-                         [passengers.get(id=id)
-                          for id in dict(request.POST.lists())['passengers']],
+                         time(hour=int(form.cleaned_data.get('hour'))), ps,
                          TimeOptions[form.cleaned_data.get('timeOptions')])))
     passengers = ""
     if request.user.is_authenticated():

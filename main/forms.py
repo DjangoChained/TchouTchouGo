@@ -41,7 +41,7 @@ class SearchForm(forms.Form):
         ps = kwargs.pop('passengers')
         super(SearchForm, self).__init__(*args, **kwargs)
         passengers = forms.MultipleChoiceField(
-            required=True, choices=[(str(p.id), str(p)) for p in ps])
+            required=len(ps) > 0, choices=[(str(p.id), str(p)) for p in ps])
 
 
 class SignUpForm(UserCreationForm):
