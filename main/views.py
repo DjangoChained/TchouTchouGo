@@ -46,13 +46,8 @@ def search(request):
     passengers = ""
     if request.user.is_authenticated():
         passengers = request.user.passenger_set.filter(display=True)
-    #Stations pour l'autocomplétion des gares
-    stations = Station.objects.all()
-    res = [{'id': s.id, 'label': s.name, 'value': s.name} for s in stations]
-    return render(request, 'main/search.html',
-                  dict(active="search", passengers=passengers,
-                       stations=json.dumps(res),
-                       hours=range(5, 23)))
+    return render(request, 'main/search.html', dict(
+        active="search", passengers=passengers, hours=range(5, 23)))
 
 
 @login_required
@@ -138,7 +133,6 @@ def addPassenger(request):
             return redirect('passengers')
     else:
         form = PassengerForm()
-
     return render(request, 'main/addPassenger.html', {'form': form})
 
 
@@ -222,6 +216,12 @@ def full_map_geojson(request):
 
 def travel_map(request, travel_id):
     from TchouTchouGo.settings import GOOGLE_MAPS_API_KEY
+    return render(request, 'main/travel_map.html', {
+        'travel_id': travel_id,
+        'api_key': GOOGLE_MAPS_API_KEY})
+
+
+def travel_map_geojson(request, travel_id):
     from django.db.models import Q
     stations = Station.objects.filter(
         Q(halt__ticket_start_set__travel__id=travel_id) |
@@ -232,9 +232,8 @@ def travel_map(request, travel_id):
     data.append(geojson.Feature(
         geometry=geojson.LineString([(s.lng, s.lat) for s in stations]),
         properties={"strokeColor": "red", "strokeWeight": 3}))
-    return render(request, 'main/travel_map.html', {
-        'map_geojson': geojson.dumps(geojson.FeatureCollection(data)),
-        'api_key': GOOGLE_MAPS_API_KEY})
+    return HttpResponse(geojson.dumps(geojson.FeatureCollection(data)),
+                        content_type="application/json")
 
 
 ###############################################################################
@@ -271,3 +270,9 @@ def update_profile(request):
         })
     else:
         raise PermissionDenied
+
+
+def stations_json(request):
+    return HttpResponse(json.dumps(
+        [{'id': s.id, 'label': s.name, 'value': s.name}
+         for s in Station.objects.all()]), content_type="application/json")
