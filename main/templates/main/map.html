@@ -16,6 +16,9 @@
                 });
                 var clusterer = new MarkerClusterer(map, markers, {imagePath: '/static/main/img/m'});
             });
+            map.data.setStyle(function (feature) {
+                return { icon: feature.getProperty('icon'), visible: false };
+            });
         }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&callback=initMap"></script>
