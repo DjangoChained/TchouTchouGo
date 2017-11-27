@@ -52,9 +52,9 @@ def search(request):
 
 @login_required
 def tickets(request):
-    return render(request, 'main/tickets.html',
-                  dict(active="list",
-                       travel_set=Travel.objects.filter(booked=True)))
+    return render(request, 'main/tickets.html', dict(
+        active="list", travel_set=Travel.objects.filter(
+            booked=True, passengers_aboard__user=request.user).distinct()))
 
 
 ###############################################################################
