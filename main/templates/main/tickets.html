@@ -42,13 +42,14 @@
 					</div>
 				</li>
 			</ul>
+		</div>
 			{% empty %}
-		</div>
-		<div class="alert alert-info text-center mt-3">
-			<h4>Vous n'avez acheté aucun billet</h4>
-		</div>
+	</div>
+	<div class="alert alert-info text-center mt-3">
+		<h4>Vous n'avez acheté aucun billet</h4>
+	</div>
 		{% endfor %}
 	</div>
-	<script type="text/javascript" src="{% static 'main/js/travelmaps.js' %}"></script>
+	<script type="text/javascript" src="{% static 'main/js/searchResult.js' %}"></script>
 </div>
 {% endblock %}
