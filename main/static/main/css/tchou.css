@@ -86,12 +86,11 @@ margin-right: 10px;
 
 .bloc_cards{
     width: 45rem;
-    border: 1px solid #0D6BAA;
+    padding-top: 0px;
 }
 
 .bloc_connexion {
     width: 30rem;
-    border: 1px solid #0D6BAA;
     text-align: center;
 }
 
@@ -118,6 +117,30 @@ margin-right: 10px;
     margin-bottom: 1em;
 }
 
+.titre_bandeau {
+    color : white;
+    background-color: #17a2b8;
+    width: inherit;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin
+}
+
+.titre_bandeau h4 {
+    margin: 10px;
+}
+
+.btn-align-middle {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.container {
+    width: inherit;
+    margin-left: -2em;
+}
+
 .card {
     margin-bottom: 1.5em;
 }
@@ -132,4 +155,8 @@ margin-right: 10px;
 
 .bigger {
     font-size: 1.21em;
+}
+
+.btn-lg {
+    font-size: 1.25em !important;
 }

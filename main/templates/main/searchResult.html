@@ -1,8 +1,12 @@
 {% extends 'main/base.html' %} {% block content %}
 
 <div class="bloc_cards mb-5">
-	<h4 class="text-center"> Itinéraire de {{ start_station.name }} à {{ end_station.name }}</h4>
-	<div class="card-columns">
+		<div class="container">
+			<div class="row justify-content-md-center titre_bandeau">
+				<h4 class="text-center">Itinéraire de {{ start_station.name }} à {{ end_station.name }}</h4>
+			</div>
+		</div>
+	<div class="card-columns mt-3">
 		{% for travel in results %}
 			<div class="card">
 				<ul class="list-group list-group-flush">
@@ -27,8 +31,8 @@
 			</div>
 		{% empty %}
 			</div>
-			<div class="alert alert-danger text-center">
-			<h1>Aucun résultat trouvé</h1>
+			<div class="alert alert-info text-center mt-3">
+				<h4>Aucun résultat trouvé</h4>
 			</div>
 		{% endfor %}
 	</div>

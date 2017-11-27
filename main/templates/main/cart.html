@@ -1,10 +1,12 @@
 {% extends 'main/base.html' %} {% block content %}
 
 <div class="bloc_cards">
-	<div class="pull-left"><a href="{% url "search" %}"><button type="button" class="btn btn-info">Réserver un autre billet</button></a></div>
-	<div class="pull-right"><a href="{% url "order" %}"><button type="button" class="btn btn-info">Payer</button></a></div>
-	<h4 class="text-center" style="color:white;text-shadow: -0.8px 0 black, 0 0.8px black, 0.8px 0 black, 0 -0.8px black;">Mon panier</h4>
-	<div class="card-columns">
+	<div class="container">
+		<div class="row justify-content-md-center titre_bandeau">
+			<h4 class="text-center">Mon panier</h4>
+		</div>
+	</div>
+	<div class="card-columns mt-3">
 		{% for travel in cart.list_items %}
 		<div class="card">
 			<div class="card-header">
@@ -33,6 +35,19 @@
 						</div>
 				</li>
 			</ul>
+		</div>
+	</div>
+
+	<div class="row">
+			<div class="col">
+				<a href="{% url "search" %}"><button type="button" class="btn btn-info pull-left btn-align-middle">Réserver un autre billet</button></a>
+			</div>
+			<div class="col"><a href="{% url "order" %}"><button type="button" class="btn btn-info btn-lg pull-right mb-0">Payer</button></a></div>
+		</div>
+		{% empty %}
+	</div>
+		<div class="alert alert-info text-center">
+			<h4>Votre panier est vide</h4>
 		</div>
 		{% endfor %}
 	</div>
