@@ -13,15 +13,15 @@
         </div>
         <input type="text" id="date" class="form-control form-control-lg mb-3" placeholder="Date du voyage" min="{% now " Y-m-d " %}" name="travelDate" required>
         <div class="form-row justify-content-end">
-            <div class="form-group col-sm-8 col-12 text-sm-right text-center mt-1">
+            <div class="form-group col-sm-8 col-12 text-sm-right text-center mt-1 form-options">
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="timeOptions" id="timeOption1" value="DEPART_AFTER" required /><span class="bigger">Partir après</span>
+                        <input class="form-check-input" type="radio" name="timeOptions" id="timeOption1" value="DEPART_AFTER" required /> Partir après
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="timeOptions" id="timeOption2" value="ARRIVE_BEFORE" required /><span class="bigger">Arriver avant</span>
+                        <input class="form-check-input" type="radio" name="timeOptions" id="timeOption2" value="ARRIVE_BEFORE" required /> Arriver avant
                     </label>
                 </div>
             </div>
@@ -35,8 +35,9 @@
         </div>
         <div class="form-row">
             {% if user.is_authenticated %}
+                <div class="col-sm-6 col-12">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>&nbsp;Passagers</button>
+                    <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>&nbsp;Passagers</button>
                     <div class="dropdown-menu">
                         {% for passenger in passengers %}
                             <div class="dropdown-item">
@@ -49,7 +50,7 @@
                         </div>
                         {% endif %}
                     </div>
-                </div>
+                </div></div>
             {% endif %}
             <div class="col-sm-6 col-12 mb-0 d-inline-block mx-auto">
                 <button type="submit" class="btn btn-info d-block w-100 mb-0">Rechercher</button>

@@ -10,14 +10,6 @@ div.global {
     max-width: 800px;
     margin: 2em auto 0 auto;
 }
-div.input-stack input { border-radius: 0; }
-div.input-stack input:first-child {
-    border-radius: 5px 5px 0 0;
-    margin-bottom: -1px;
-}
-div.input-stack input:last-child {
-    border-radius: 0 0 5px 5px;
-}
 nav.navbar ul.navbar-nav a.nav-link, button.btn {
     text-transform: uppercase;
     font-size: 90%;
@@ -40,22 +32,13 @@ nav.navbar ul.navbar-nav li.nav-item i {
     color: #17A2B8;
 }
 
-.price {
-    font-size: 150%;
-    text-align: center;
-}
+.price { font-size: 150%; }
+.hour { font-size: 130%; margin-right: 10px; }
+.train { margin-left: 15px; }
 
-.hour {
-font-size: 130%;
-margin-right: 10px;
-}
-
-.train {
-    margin-left: 15px;
-}
-
-.card-columns {
-    column-count: 2;
+.card-columns { column-count: 2; }
+@media screen and (max-width: 768px) {
+    .card-columns { column-count: 1; }
 }
 
 .bloc_erreurs {
@@ -68,15 +51,14 @@ margin-right: 10px;
     margin: 5em auto 0;
     border-radius: 20px;
 }
-
 .bloc_erreurs h1, .bloc_erreurs h2, .bloc_erreurs h3, 
-.bloc_erreurs h4, .bloc_erreurs h5, .bloc_erreursh6, .bloc_erreursp {
+.bloc_erreurs h4, .bloc_erreurs h5, .bloc_erreurs h6, .bloc_erreursp {
     font-size: 300%;
     color: #0A003F;
     text-shadow: 2px 2px white
 }
 
-.bloc_cards, .bloc_connexion{
+.bloc_cards, .bloc_connexion {
     display: block;
     background-color: rgba(255, 255, 255, 0.3);
     padding: 2em;
@@ -84,11 +66,10 @@ margin-right: 10px;
     border-radius: 10px;
 }
 
-.bloc_cards{
+.bloc_cards {
     width: 45rem;
     padding-top: 0px;
 }
-
 .bloc_connexion {
     width: 30rem;
     text-align: center;
@@ -106,10 +87,6 @@ margin-right: 10px;
     font-weight: bold;
 }
 
-.bloc_connexion h2 {
-    margin-bottom: 1em;
-}
-
 .titre {
     background-color: rgba(255, 255, 255, 0.5);
     color:  white;
@@ -123,11 +100,32 @@ margin-right: 10px;
     width: inherit;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    margin
 }
+.titre_bandeau h4 { margin: 10px; }
 
-.titre_bandeau h4 {
-    margin: 10px;
+.form-options {
+    border-radius: 5px;
+    color: #17a2b8;
+    background-color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-top: 0.637em;
+    font-size: 90%;
+    margin-top: 0 !important;
+}
+#dropdownMenuButton { margin-bottom: 1em; }
+
+@media screen and (min-width: 576px) {
+    .form-options {
+        border-top-right-radius: 0px; border-bottom-right-radius: 0px;
+    }
+    .bloc_connexion .justify-content-end .form-group:last-child {
+        margin-left: 0; padding-left: 0;
+    }
+    .custom-select {
+        border-top-left-radius: 0px; border-bottom-left-radius: 0px;
+    }
+    #dropdownMenuButton { margin-bottom: 0; }
 }
 
 .btn-align-middle {
@@ -145,21 +143,18 @@ margin-right: 10px;
     margin-bottom: 1.5em;
 }
 
-.passager .fa-pencil, .passager .editer{
-    color: #17A2B8;
-}
+.passager .fa-pencil, .passager .editer{ color: #17A2B8; }
+.passager .fa-trash, .passager .supprimer{ color: red; }
 
-.passager .fa-trash, .passager .supprimer{
-    color: red;
-}
+.bigger { font-size: 1.21em; }
+.btn-lg { font-size: 1.25em !important; }
 
-.bigger {
-    font-size: 1.21em;
-}
-
-.btn-lg {
-    font-size: 1.25em !important;
-}
 #map { height: 80vh; }
 .modal #map { height: 70vh; }
 .modal-dialog { max-width: initial; width: auto; margin: 10px; }
+
+@media screen and (max-width: 45rem) {
+    .bloc_cards, .bloc_connexion { width: 100%; padding-left: 1em; padding-right: 1em; }
+    .titre_bandeau { width: calc(99% + 4em); }
+    .row.titre_bandeau { margin-left: 0; margin-right: 0; }
+}
