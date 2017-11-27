@@ -135,7 +135,7 @@ Attributs publics statiques</h2></td></tr>
 <div class="textblock"><pre class="fragment">Décrit un billet de train. Un billet représente un voyage dans un seul
 train, d'un arrêt à un autre.
 </pre> 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00299">299</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00300">300</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 </div><h2 class="groupheader">Documentation des fonctions membres</h2>
 <a class="anchor" id="ab90bf3291557ab2c4a6a6bbb683e4e0d"></a>
 <div class="memitem">
@@ -151,7 +151,7 @@ train, d'un arrêt à un autre.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Représentation textuelle du billet pour affichage.</pre> 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00352">352</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00353">353</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -169,7 +169,7 @@ train, d'un arrêt à un autre.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Distance parcourue en kilomètres.</pre> 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00343">343</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00344">344</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -187,7 +187,7 @@ train, d'un arrêt à un autre.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Prix du billet.</pre> 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00348">348</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00349">349</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -213,7 +213,7 @@ train, d'un arrêt à un autre.
 <p>Arrêt de destination. </p>
 <p>L'accès en sens inverse depuis <a class="el" href="classmain_1_1models_1_1Halt.html">Halt</a> se fait avec Halt.ticket_end_set pour éviter une collision avec l'ensemble des tickets ayant l'arrêt de départ (ticket_start_set), qui s'appellerait aussi ticket_set par défaut. </p>
 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00321">321</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00322">322</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -238,7 +238,7 @@ train, d'un arrêt à un autre.
 <p>Numéro de séquence du billet dans un voyage. </p>
 <p>Base zéro. Permet d'ordonner les billets dans un voyage donné. </p>
 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00306">306</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00307">307</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -263,7 +263,7 @@ train, d'un arrêt à un autre.
 <p> Arrêt de départ. </p>
 <p>Ce n'est pas une station ou un train puisqu'il est tout à fait possible de monter dans un train à une gare intermédiaire. L'accès en sens inverse depuis <a class="el" href="classmain_1_1models_1_1Halt.html">Halt</a> se fait avec Halt.ticket_start_set pour éviter une collision avec l'ensemble des tickets ayant l'arrêt de destination (ticket_end_set), qui autrement s'appellerait aussi ticket_set par défaut. </p>
 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00313">313</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00314">314</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
@@ -287,7 +287,7 @@ train, d'un arrêt à un autre.
 <b>Valeur initiale :</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;= models.ForeignKey(</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;        <span class="stringliteral">&#39;Travel&#39;</span>, on_delete=models.CASCADE, verbose_name=<span class="stringliteral">&quot;Voyage associé&quot;</span>)</div></div><!-- fragment -->
 <p>Voyage contenant le billet. </p>
 
-<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00325">325</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
+<p>Définition à la ligne <a class="el" href="models_8py_source.html#l00326">326</a> du fichier <a class="el" href="models_8py_source.html">models.py</a>.</p>
 
 </div>
 </div>
