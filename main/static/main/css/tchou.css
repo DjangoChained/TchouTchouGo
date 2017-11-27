@@ -160,6 +160,24 @@ margin-right: 10px;
 .btn-lg {
     font-size: 1.25em !important;
 }
+
+.input-group {
+    margin: 0 auto;
+}
+
+.input-group span {
+    width: 5em;
+    text-align: center;
+    background-color: white;
+    color: #17A2B8;
+    font-weight: bold;
+}
+
+.input-group input {
+    border-color: #D9D9D9;
+}
+
+
 #map { height: 80vh; }
 .modal #map { height: 70vh; }
 .modal-dialog { max-width: initial; width: auto; margin: 10px; }

@@ -1,24 +1,35 @@
 {% extends 'main/base.html' %} {% block title %}Mise à jour{% endblock %} {% block content %}
-<div class="bloc_connexion">
+<div class="bloc_connexion pt-0">
+    <div class="container">
+        <div class="row justify-content-md-center titre_bandeau mb-3">
+            <h4 class="text-center">Mon compte</h4>
+        </div>
+    </div>
     <form method="post">
         {% csrf_token %} {% for error in field.errors %}
         <p style="color: red">{{ error }}</p>
         {% endfor %}
         
         <div class="form-group form-inline">
-            <label for="id_first_name" class="col-sm-3 col-12 col-form-label">Prénom </label>
-            <input id="id_first_name" name="first_name" type="text" class="form-control mb-2 col-sm-9 col-12" placeholder="Prénom" required="" value="{{ user.first_name }}"
-            />
+            <div class="input-group text-center">
+                <span id="addon-prenom" class="input-group-addon">Prénom </span>
+                <input id="id_first_name" name="first_name" type="text" class="form-control"
+                    placeholder="Prénom" required="" value="{{ user.first_name }}" aria-describedby="addon-prenom"/>
+            </div>
         </div>
         <div class="form-group form-inline">
-            <label for="id_last_name" class="col-sm-3 col-12 col-form-label">Nom </label>
-            <input id="id_last_name" name="last_name" type="text" class="form-control mb-2 col-sm-9 col-12" placeholder="Nom de famille" required=""
-                value="{{ user.last_name }}" />
+            <div class="input-group text-center">
+                <span id="addon-nom" class="input-group-addon">Nom </span>
+                <input id="id_last_name" name="last_name" type="text" class="form-control" placeholder="Nom de famille" required=""
+                    value="{{ user.last_name }}" aria-describedby="addon-nom" />
+            </div>
         </div>
         <div class="form-group form-inline">
-            <label for="id_email" class="col-sm-3 col-12 col-form-label">E-Mail</label>
-            <input id="id_email" name="email" type="email" class="form-control mb-2 col-sm-9 col-12" placeholder="E-mail" required="" value="{{ user.email }}"
-            />
+            <div class="input-group">
+                <span for="id_email" class="input-group-addon">E-Mail</span>
+                <input id="id_email" name="email" type="email" class="form-control"
+                    placeholder="E-mail" required="" value="{{ user.email }}" aria-describedby="addon-email"/>
+            </div>
         </div>
         <button class="btn btn-lg btn-info btn-block w-75 mx-auto mb-0" type="submit">Mettre à jour</button>
     </form>
