@@ -16,12 +16,11 @@ class Command(BaseCommand):
         for t in Travel.objects.all():
             if not t.booked:
                 t.delete()
-            else if t.user is None:
+            elif t.passengers_aboard.count() < 1:
                 self.stderr.write(self.style.WARNING(
                     "Le voyage ayant l'ID " + t.id +
                     " est marqué comme réservé, "
                     "mais n'a pas de passager associé."))
-        [p.delete() for p in Period.objects.all() if p.train_set.count() == 0]
         newcount = Travel.objects.count()
         self.stdout.write(self.style.SUCCESS(
             'Nettoyage des voyages non réservés effectués. ' +

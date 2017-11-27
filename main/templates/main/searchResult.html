@@ -6,9 +6,7 @@
 		{% for travel in results %}
 		<div class="card">
 			<div class="card-header">
-				<div class="float-right">
-					<a href="#" class="travel-modal" data-url="{% url 'travel_map' travel.id %}"><i class="fa fa-map-marker bigger" aria-hidden="true"></i></a>
-				</div>
+				<a href="#" class="travel-modal" data-url="{% url 'travel_map' travel.id %}"><i class="fa fa-map-marker bigger" aria-hidden="true"></i> Carte du trajet</a>
 			</div>
 			<ul class="list-group list-group-flush">
 				{% for ticket in travel.ticket_set.all %}
@@ -41,3 +39,4 @@
 </div>
 
 {% endblock %}
+
