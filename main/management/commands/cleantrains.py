@@ -15,7 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         oldcount = Train.objects.count()
         [t.delete() for t in Train.objects.all()
-         if t.period and datetime.now() > t.period.end_date and
+         if t.period and datetime.now().date() > t.period.end_date and
          True not in [h.ticket_start_set.count() > 0
                       or h.ticket_end_set.count() > 0
                       for h in t.halt_set.all()]]

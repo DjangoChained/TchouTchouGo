@@ -1,3 +1,12 @@
+function showLoader(text) {
+    hideLoader();
+    $(".global").append('<div class="loader loader-default is-active" data-half data-blink data-text="' + (text ? text : 'Chargement') + '"></div>');
+}
+
+function hideLoader() {
+    $(".loader").remove();
+}
+
 function createAutoComp(data) {
     $('#startStation, #endStation').autocomplete({
         source: function(request, response) {
@@ -27,4 +36,7 @@ $(function() {
         dateFormat: 'dd/mm/yy'
     });
     $("input[name=passengers]").first().prop('checked', true);
+    $("form").submit(function() {
+        showLoader("Calcul des trajets...");
+    });
 });
