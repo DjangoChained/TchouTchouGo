@@ -403,6 +403,11 @@ class Travel(models.Model):
         return sum([t.price for t in self.ticket_set.all()]) * self.passengers
 
     @property
+    def price_passenger(self):
+        """Prix par passager du voyage."""
+        return self.price / self.passengers
+
+    @property
     def total_distance(self):
         """Distance totale du voyage."""
         return sum([t.distance for t in self.ticket_set.all()])
