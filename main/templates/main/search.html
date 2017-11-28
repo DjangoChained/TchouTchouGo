@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="form-group col-sm-4 col-12">
-                <select class="custom-select form-control-lg d-block w-100" name="hour" required>
+                <select id="select_heure" class="custom-select form-control-lg d-block w-100" name="hour" required>
                     {% for h in hours %}
                         <option value={{h}}>{{h|stringformat:"02d"}}:00</option>
                     {% endfor %}
