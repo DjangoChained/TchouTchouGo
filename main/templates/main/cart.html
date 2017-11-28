@@ -44,7 +44,7 @@
 			<div class="col">
 				<a href="{% url "search" %}"><button type="button" class="btn btn-info pull-left btn-align-middle">Réserver un autre billet</button></a>
 			</div>
-			<div class="col"><a href="{% url "order" %}"><button type="button" class="btn btn-info btn-lg pull-right mb-0">Payer</button></a></div>
+			<div class="col"><a href="{% url "order" %}"><button type="button" class="btn btn-info btn-lg pull-right mb-0">Payer {{ total_price|stringformat:".2f" }} €</button></a></div>
 		</div>
 		{% empty %}
 	</div>

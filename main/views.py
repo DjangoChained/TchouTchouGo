@@ -80,7 +80,7 @@ class Cart(BaseCart):
 
 @login_required
 def cart_show(request):
-    return render(request, 'main/cart.html', dict(active="cart"))
+    return render(request, 'main/cart.html', dict(active="cart", total_price=sum(i.price for i in Cart(request).list_items())))
 
 
 @login_required
