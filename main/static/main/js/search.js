@@ -1,7 +1,12 @@
 function createAutoComp(data) {
     $('#startStation, #endStation').autocomplete({
-        source: data,
-        minLength: 3
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(data, request.term);
+    
+            response(results.slice(0, 10));
+        },
+        minLength: 3,
+        
     });
 }
 
