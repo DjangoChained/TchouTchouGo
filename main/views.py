@@ -225,9 +225,10 @@ def travel_map(request, travel_id):
 
 def travel_map_geojson(request, travel_id):
     from django.db.models import Q
-    stations = Station.objects.filter(
-        Q(halt__ticket_start_set__travel__id=travel_id) |
-        Q(halt__ticket_end_set__travel__id=travel_id)).distinct()
+    tr = get_object_or_404(Travel, id=travel_id)
+    stations = [t.start_halt.station for t in tr.ticket_set.all()]
+    stations.append(tr.ticket_set.reverse()[0].end_halt.station)
+    print(stations)
     data = [geojson.Feature(geometry=geojson.Point((s.lng, s.lat)),
                             properties={"title": s.name})
             for s in stations]
