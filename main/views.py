@@ -7,8 +7,8 @@ from .search import TimeOptions, search as search_trains
 
 from datetime import time
 from django.forms.models import model_to_dict
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate, update_session_auth_hash
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import \
@@ -273,6 +273,19 @@ def update_profile(request):
         })
     else:
         raise PermissionDenied
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('/train/search')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/updatePassword.html')
 
 
 def stations_json(request):

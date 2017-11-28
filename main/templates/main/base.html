@@ -43,7 +43,8 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle"></i> {{ user.first_name|default:user.username }}</a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="{% url "update_profile" %}"><i class="fa fa-pencil"></i> Mon compte</a>
+                            <a class="dropdown-item" href="{% url "update_profile" %}"><i class="fa fa-user-circle"></i> Mon compte</a>
+                            <a class="dropdown-item" href="{% url "update_password" %}"><i class="fa fa-pencil"></i> Mot de passe</a>
                             <a class="dropdown-item" href="{% url "passengers" %}"><i class="fa fa-user"></i> Passagers</a>
                             <a class="dropdown-item" href="{% url "logout" %}"><i class="fa fa-sign-out"></i> Déconnexion</a>
                         </div>

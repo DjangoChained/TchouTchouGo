@@ -76,7 +76,7 @@ class UserForm(forms.ModelForm):
         ## Champs associés au formulaire.
         #  Permet d'hériter automatiquement des champs depuis le formulaire
         #  par défaut pour l'utilisateur Django.
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('first_name', 'last_name', 'email', 'password')
 
 
 class PassengerForm(forms.ModelForm):
