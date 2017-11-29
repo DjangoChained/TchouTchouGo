@@ -80,7 +80,9 @@ class Cart(BaseCart):
 
 @login_required
 def cart_show(request):
-    return render(request, 'main/cart.html', dict(active="cart", total_price=sum(i.price for i in Cart(request).list_items())))
+    return render(request, 'main/cart.html', dict(
+        active="cart",
+        total_price=sum(i.price for i in Cart(request).list_items())))
 
 
 @login_required
@@ -247,7 +249,7 @@ def travel_map_geojson(request, travel_id):
 @login_required
 def print_ticket(request, travel_id):
     """Vue permettant l'impression d'un ensemble de billets."""
-    travel = get_object_or_404(Travel, id=travel_id,
+    travel = get_object_or_404(Travel.objects.distinct(), id=travel_id,
                                passengers_aboard__user=request.user)
     if not travel.booked:
         return HttpResponseBadRequest()

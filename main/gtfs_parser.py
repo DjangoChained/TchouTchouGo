@@ -143,7 +143,7 @@ def parse_gtfs_stops_station(lines):
                 if line[0].startswith("StopPoint") and not Station.objects
                 .filter(id=int(id_regex.sub('\\1', line[0]))).exists()]
     print("Writing to database...")
-    Station.objects.bulk_create(stations)
+    [s.save() for s in stations]
 
 
 def parse_gtfs_trains(trips, stop_times_path):
