@@ -22,7 +22,7 @@ from easycart import BaseCart
 
 def search(request):
     passengers = []
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         passengers = request.user.passenger_set.filter(display=True).all()
     if request.method == 'POST':
         form = SearchForm(request.POST, passengers=passengers)
@@ -46,7 +46,7 @@ def search(request):
                          time(hour=int(form.cleaned_data.get('hour'))), ps,
                          TimeOptions[form.cleaned_data.get('timeOptions')])))
     passengers = ""
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         passengers = request.user.passenger_set.filter(display=True)
     return render(request, 'main/search.html', dict(
         active="search", passengers=passengers, hours=range(5, 23)))
