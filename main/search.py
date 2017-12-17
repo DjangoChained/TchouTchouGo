@@ -47,7 +47,8 @@ def _search_zero(start_station, end_station, date, time, passengers,
     WHERE """ + time_setting.value + """ BETWEEN %s AND %s
     ORDER BY departure ASC, arrival ASC""",
         [start_station.id, end_station.id,
-         str(time.hour - 1) + ":00:00", str(time.hour + 1) + ":00:00"])
+         str(time.hour - 1).zfill(2) + ":00:00",
+         str(time.hour + 1).zfill(2) + ":00:00"])
 
     # Filtrer pour ne garder que les trains qui circulent à la date souhaitée,
     # et créer les résultats de recherche correspondants
@@ -96,7 +97,8 @@ def _search_one(start_station, end_station, date, time, passengers,
         WHERE first_train_id <> second_train_id AND """ + time_setting.value +
         """ BETWEEN %s AND %s ORDER BY D.departure ASC, A.arrival ASC;""",
         [start_station.id, end_station.id,
-         str(time.hour - 1) + ":00:00", str(time.hour + 1) + ":00:00"])
+         str(time.hour - 1).zfill(2) + ":00:00",
+         str(time.hour + 1).zfill(2) + ":00:00"])
 
     # Filtrer pour ne garder que les trains qui circulent à la date souhaitée,
     # et ont assez de place, et créer les résultats de recherche correspondants
