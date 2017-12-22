@@ -11,11 +11,22 @@ function createAutoComp(data) {
     $('#startStation, #endStation').autocomplete({
         source: function(request, response) {
             var results = $.ui.autocomplete.filter(data, request.term);
-    
             response(results.slice(0, 10));
         },
         minLength: 3,
-        
+    });
+    $('form').submit(function(event) {
+	$(".alert").remove();
+        labels = data.map(s => s.label.toLowerCase());
+        if(!labels.includes($("#startStation").val().trim().toLowerCase())) {
+            $('.input-stack').before('<div class="alert alert-danger alert-dismissible fade show" role="alert">Cette station de départ n\'existe pas.<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button></div>');
+            event.preventDefault();
+        } else if(!labels.includes($("#endStation").val().trim().toLowerCase())) {
+            $('.input-stack').before('<div class="alert alert-danger alert-dismissible fade show" role="alert">Cette station d\'arrivée n\'existe pas.<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button></div>');
+            event.preventDefault();
+        } else {
+        	showLoader("Calcul des trajets...");
+	}
     });
 }
 
@@ -36,7 +47,4 @@ $(function() {
         dateFormat: 'dd/mm/yy'
     });
     $("input[name=passengers]").first().prop('checked', true);
-    $("form").submit(function() {
-        showLoader("Calcul des trajets...");
-    });
 });
